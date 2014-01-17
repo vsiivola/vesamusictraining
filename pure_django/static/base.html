@@ -1,0 +1,53 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>{% block title %}{% endblock %}</title>
+
+  <script type="text/javascript"
+  src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript"
+  src="/site_media/js/jquery-ui-1.8.16.custom.min.js"></script>
+ <link type="text/css" rel="stylesheet"
+  href="/site_media/stylesheets/cupertino/jquery-ui-1.8.16.custom.css" ></link>
+  <link type="text/css" rel="stylesheet"
+  href="/site_media/stylesheets/custom.css" ></link>
+
+  {% block extra_head %}{% endblock %}
+</head>
+
+<body id="{% block body_id %}{% endblock %}" class="gradientN">
+
+<header class="ui-corner-all">
+ <nav class="ui-state-default ui-corner-bl ui-corner-tr">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li>
+        {% if user.is_authenticated %}
+          <a href="/accounts/logout">Sign Out</a>
+        {% else %}
+          <a href="/accounts/login">Sign In</a>
+        {% endif %}
+      </li>
+   </ul>
+    </nav>
+  <div class="htext ui-state-default ui-corner-all">
+    <img src="/site_media/generated_assets/images/logo.svg" width="65" padding="5" align="left"></img>
+    <a href="/"><h3 id="maintitle">Music training | {% block content_title %}{% endblock %}</h3></a>
+  </div>
+
+</header>
+<div id="debug"></div>
+<div id="body" class="ui-corner-all">
+ {% block body %}
+     <div class="content">
+        {% block content %}{% endblock %}
+      </div>
+    {% endblock %}
+  </div>
+</body>
+</html>
+  

@@ -1,0 +1,6 @@
+*.pyc
+work
+simple_html
+pure_django/media/generated_assets
+pure_django/dynamic/exercise/fixtures
+*~

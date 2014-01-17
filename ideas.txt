@@ -1,0 +1,19 @@
+CONTENT:
+ - scales
+ - chord inversions
+ - rhythms
+
+TODO:
+ - Fix the overlay color size for exercise_screen 
+ - Add useful links
+  * http://en.wikipedia.org/wiki/Musical_intervals
+  * http://en.wikipedia.org/wiki/Chord_%28music%29
+  * http://en.wikipedia.org/wiki/Chord_names_and_symbols_%28jazz_and_pop_music%29
+  * http://en.wikipedia.org/wiki/Chord_progression
+ - Write descriptions for each lecture
+ - Accordion leaf colors by level of lecture
+ - Write a landing page
+ - "We well never give out you e-mail address to 3rd parties. You may use guest/guet username/passwd to look around."
+
+IDAS:
+Album quiz: Take album, e.g. blues brothers. Show notes, ask "which one is the intro to She Caught the Katy". 

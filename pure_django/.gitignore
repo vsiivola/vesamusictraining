@@ -1,0 +1,5 @@
+*~
+*.pyc
+log
+tmp
+music_training.sqlite

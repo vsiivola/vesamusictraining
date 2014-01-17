@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block extra_head %}
+<script type="text/javascript" src="http://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>
+<script type="text/javascript" src="/site_media/js/chooser_screen.js"></script>
+<script type="text/javascript" src="/site_media/js/exercise_screen.js"></script>
+<script type="text/javascript" src="/site_media/js/result_screen.js"></script>
+<script type="text/javascript" src="/site_media/js/music_training.js"></script>
+<script type="text/javascript">
+//<![CDATA[
+$(document).ready(function(){
+  mc = new MainController();
+  mc.show();
+});
+//]]></script>
+{% endblock %}
+
+{% block content_title %}
+{% endblock %}
+
+{% block content %}
+<div style="margin:0 5%;" id="main"> </div>
+{% endblock %}

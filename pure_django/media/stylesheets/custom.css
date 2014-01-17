@@ -1,0 +1,155 @@
+a.signup_button {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  text-align: center;
+  width: 190px;
+  color: #FFFFFF;
+  background: #006400;
+  font-size: 150%;
+  font-weight: bold;
+  padding: 20px;
+}
+
+a.signup_button:visited {
+  color: #FFFFFF;
+}
+
+a.signup_button:link {
+  color: #FFFFFF;
+}
+
+header {
+    margin-left : 5%;
+    margin-right : 5%;
+    margin-bottom : 1em;
+}
+
+div.htext h3 {
+    float: center;
+    margin-left : auto;
+    margin-right : auto;
+    text-align: center;
+}
+
+div#body {
+    margin-left : 5%;
+    margin-right : 5%;
+    padding : 0.7em 0.7em;
+}
+
+nav {
+  float: right;
+}
+
+nav {
+  padding: 0 0.7em;
+  white-space: nowrap;
+}
+
+nav ul {
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  list-style-type: none;
+  display: inline-block;
+  padding: 0.2em 0;
+}
+
+nav ul li a {
+  padding: 0 5px;
+  font-weight: bold;
+}
+
+ 
+.gradientN {
+    /* From http://ie.microsoft.com/testdrive/graphics/cssgradientbackgroundmaker/default.html */
+    /* fallback */
+    background: #1111CC;
+
+    /* IE10 */ 
+    background-image: -ms-linear-gradient(top left, #CAC2FF 0%, #003954 100%);
+    
+    /* Mozilla Firefox */ 
+    background-image: -moz-linear-gradient(top left, #CAC2FF 0%, #003954 100%);
+    
+    /* Opera */ 
+    background-image: -o-linear-gradient(top left, #CAC2FF 0%, #003954 100%);
+    
+    /* Webkit (Safari/Chrome 10) */ 
+    background-image: -webkit-gradient(linear, left top, right bottom, color-stop(0, #CAC2FF), color-stop(1, #003954));
+    
+    /* Webkit (Chrome 11+) */ 
+    background-image: -webkit-linear-gradient(top left, #CAC2FF 0%, #003954 100%);
+    
+    /* Proposed W3C Markup */ 
+    background-image: linear-gradient(top left, #CAC2FF 0%, #003954 100%);
+}
+    
+ul.formlist { list-style: none; width: 100%;}
+ul.formlist li { 
+ margin: 0 0 10px; 
+ width: 300px; 
+}
+
+ul.formlist label { 
+    font-size:11px;
+    color:#666; 
+    font-weight: bold;
+    margin: 0 10px 0 0;
+}
+
+ul.formlist input, ul.formlist textarea, ul.formlist select{ 
+    font-size:12px,
+    font: inherit;
+    padding: 2px;
+    width: 300px;
+}
+
+div.results {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  text-align: center;
+  width: 190px;
+  color: #FFFFFF;
+  background: #006400;
+  font-size: 250%;
+  font-weight: bold;
+  padding: 20px;
+  font-family:"Arial",sans-serif;
+}
+
+ul.lecture_info  li{
+  list-style-type: none;
+  padding: 0.2em 0;
+}
+
+.overlay {
+  display: block;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 0px;
+  height: 0px;
+}
+
+span.span_icon {
+  position: absolute;
+}
+
+span.qmark {
+ position: absolute;
+ opacity: 0;
+ font-size: 30pt;
+ font-weight: bold;
+}
+
+div#body {
+  font-family: Verdana, Helvetica, sans-serif;
+  background-color: #DDDDFF;
+}
+
+

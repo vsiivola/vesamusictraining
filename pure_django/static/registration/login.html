@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content_title %}
+Sign In
+{% endblock %}
+
+{% block content %}
+
+{% if form.errors %}
+<p class="error">Sorry, that's not a valid username or password.</p>
+{% endif %}
+
+<form action='.' method='post'>{% csrf_token %}
+  <ul class="formlist">
+    <li>
+    <label for="username">Username:</label>
+    <input type="text" name="username" value="" id="username">
+    </li>
+    <li>
+    <label for="password">Password:</label>
+    <input type="password" name="password" value="" id="password">
+    </li>
+    <li>
+    <input type="submit" value="Sign In"class="ui-button
+  ui-widget ui-state-default ui-corner-all" />
+    <input type="hidden" name="next" value="/" />
+    </li>
+  </form>
+
+{% endblock %}
