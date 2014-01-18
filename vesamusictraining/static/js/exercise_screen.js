@@ -11,7 +11,7 @@ function Choice(type, image, ogg, mp3) {
             return;
         }
 
-        var empty_stave_td = $('<td align="center" width="200"><img src="/site_media/generated_assets/images/empty_stave.png" class="empty_image"></img></td>');
+        var empty_stave_td = $('<td align="center" width="200"><img src="/static/generated_assets/images/empty_stave.png" class="empty_image"></img></td>');
 
         if (this.type == "audio_question") {
             this.dom = empty_stave_td;

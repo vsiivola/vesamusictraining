@@ -15,3 +15,7 @@ binaries for lilypond, timidity and sox are assumed to
 exist. The option "-t simple_html" will generate a 
 rough web page for debugging.
 
+Steps to get a heroku dyno running:
+virtualenv --no-site-packages --distribute venv #-p /usr/bin/python3.3
+pip install django-toolbelt
+# test with "foreman start"

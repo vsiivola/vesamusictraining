@@ -1,6 +1,6 @@
-from django.conf.urls.defaults import patterns, url
+from django.conf.urls import patterns, url, include
 
-urlpatterns = patterns('exercise.views',
+urlpatterns = patterns('vesamusictraining.exercise.views',
                        (r'^$', "exercise"),
                        url(r'^list_lectures/$', "list_lectures"),
                        url(r'^(?P<lecture_name>.*?)/lecture/', "lecture"),

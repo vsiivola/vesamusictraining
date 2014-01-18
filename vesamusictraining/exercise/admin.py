@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from exercise.models import Lecture, Log, UserLecture, Exercise, Choice
+from vesamusictraining.exercise.models import Lecture, Log, UserLecture, Exercise, Choice
 
 class ExerciseInline(admin.StackedInline):
   model = Exercise

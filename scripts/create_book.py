@@ -34,24 +34,28 @@ class BuildTarget:
     shutil.copy("content/empty_stave.png", self.pngdir)
     shutil.copy("content/logo.svg", self.pngdir)
 
-class AppEngineTarget(BuildTarget):
-  pass
-    
 class PureDjangoTarget(BuildTarget):
-  def __init__(self):
+  def __init__(self, media_target_dir=None, fixture_target_dir=None):
+    if not media_target_dir:
+      self.media_target_dir = os.path.join(os.path.dirname(__file__), "..", "vesamusictraining",
+                                      "static", "generated_assets")
     try:
-      os.mkdir("pure_django/media/generated_assets")
-      os.mkdir("pure_django/media/generated_assets/sounds")
-      os.mkdir("pure_django/media/generated_assets/images")
+      sound_dir = os.path.join(self.media_target_dir, "sounds")
+      image_dir = os.path.join(self.media_target_dir, "images")
+      os.makedirs(sound_dir)
+      os.makedirs(image_dir)
     except OSError:
       pass
 
+    if not fixture_target_dir:
+      fixture_dir = os.path.join(os.path.dirname(__file__), "..", "vesamusictraining",
+                                "exercise", "fixtures")
     try:
-      os.mkdir("pure_django/dynamic/exercise/fixtures")
+      os.mkdir(fixture_dir)
     except OSError:
       pass
 
-    BuildTarget.__init__(self, "pure_django/dynamic/exercise/fixtures/initial_data.yaml", "pure_django/media/generated_assets/images", "pure_django/media/generated_assets/sounds/")
+    BuildTarget.__init__(self, os.path.join(fixture_dir, "initial_data.yaml"), image_dir, sound_dir)
 
   def write(self, index):
     ofh = open(self.yaml_fname, "w")
@@ -60,7 +64,7 @@ class PureDjangoTarget(BuildTarget):
 
   def fixturize(self, index):
     def clean_fname(fname):
-      return re.sub('^pure_django/media', "/site_media", fname)
+      return re.sub(self.media_target_dir, "/static/generated_assets", fname) # FIXME: hardcoded path
 
     fy = []
     eidx = 0

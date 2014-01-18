@@ -7,9 +7,9 @@ from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 
-from django.utils import simplejson
+import json
 
-from exercise.models import Lecture, Exercise, UserLecture, Log
+from vesamusictraining.exercise.models import Lecture, Exercise, UserLecture, Log
 
 from django.db.models import Avg, Max, Min, Count
 
@@ -43,7 +43,7 @@ def list_lectures(request):
     full_info.append(res)
   
   return HttpResponse(
-    content = simplejson.dumps({"lectures": full_info})) #,
+    content = json.dumps({"lectures": full_info})) #,
     #mimetype = 'application/json') # This breaks everything ?
 
 
@@ -59,7 +59,7 @@ def lecture(request, lecture_name):
 
     if ei>=l.exercise_set.count() + first_exercise_idx: # FIXME: debug
       sys.stderr.write("Quick out\n")
-      return HttpResponse(content = simplejson.dumps(""))
+      return HttpResponse(content = json.dumps(""))
     e = l.exercise_set.get(pk=ei)
     if ei == first_exercise_idx:
       try:
@@ -97,7 +97,7 @@ def lecture(request, lecture_name):
         res_message["alt%d_ogg" % i] = a.ogg
         res_message["alt%d_mp3" % i] = a.mp3
         
-    return HttpResponse(content = simplejson.dumps(res_message))
+    return HttpResponse(content = json.dumps(res_message))
 
 @login_required
 def verify(request, lecture_name):
@@ -124,7 +124,7 @@ def verify(request, lecture_name):
       "ogg": alt.ogg if alt else None
       }
 
-    return HttpResponse(content = simplejson.dumps(res_message))
+    return HttpResponse(content = json.dumps(res_message))
 
 
 @login_required
