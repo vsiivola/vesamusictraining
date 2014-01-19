@@ -2,7 +2,8 @@ VesaMusicTutor is a simple multiple choice html5 web app,
 that is designed to teach or refresh the basic concepts
 of rhythm, notes and harmony and their musical notation.
 
-The code is currently in somewhat rought shape.
+You can find the app running at 
+http://vesamusictraining.herokuapp.com/exercise/
 
 You'll need python2, python-yaml, lilypond, timidity and 
 sox to generate the exercises.
@@ -15,7 +16,3 @@ binaries for lilypond, timidity and sox are assumed to
 exist. The option "-t simple_html" will generate a 
 rough web page for debugging.
 
-Steps to get a heroku dyno running:
-virtualenv --no-site-packages --distribute venv #-p /usr/bin/python3.3
-pip install django-toolbelt
-# test with "foreman start"
