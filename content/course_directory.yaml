@@ -411,7 +411,7 @@ Exercises:
   generate: all
   style: interval
   notes: \relative f' { c e g c a, c e a f, a c f g b d g}
-  annotation: I _ _ _ iv _ _ _ IV _ _ _ V _ _ _ _
+  annotation: I _ _ _ vi _ _ _ IV _ _ _ V _ _ _ _
   hidden_tempo: 180
   confusers:
    - notes: \relative f' { c e g c bes, d f bes f, a c f g b d g }
