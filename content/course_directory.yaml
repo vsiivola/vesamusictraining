@@ -301,23 +301,23 @@ Exercises:
      annotation: _ "Iaug" _
    - notes: c4:aug7 c4:aug7 c2:aug7
      annotation: _ "Iaug7" _
----
-Title: Rhythms
-Version: 0.0
-Level: 2
-Outside_information: 
-- name: Wikipedia article on chord progressions
-  link: http://en.wikipedia.org/wiki/Rhythm
-Exercises:
-- name: Placeholder
-  generate: 2 first
-  notes: \relative f' { c e <c e>2 }
-  question_type: audio
-  answer_type: image
-  hidden_tempo: 100
-  confusers:
-   - notes: \relative c' { c gis' <c, gis'>2}
-   - notes: \relative c' {c g' <c, g'>2}
+#---
+# Title: Rhythms
+# Version: 0.0
+# Level: 2
+# Outside_information: 
+# - name: Wikipedia article on chord progressions
+#   link: http://en.wikipedia.org/wiki/Rhythm
+# Exercises:
+# - name: Placeholder
+#   generate: 2 first
+#   notes: \relative f' { c e <c e>2 }
+#   question_type: audio
+#   answer_type: image
+#   hidden_tempo: 100
+#   confusers:
+#    - notes: \relative c' { c gis' <c, gis'>2}
+#    - notes: \relative c' {c g' <c, g'>2}
 ---
 Title: More Intervals
 Version: 0.0
@@ -440,23 +440,23 @@ Exercises:
      annotation: ii _ _ _ vi _ _ _ I _ _ _ _
    - notes: \relative f' { e' b g e d' a f d c' g e c}
      annotation: iii _ _ _ ii _ _ _ I _ _ _ 
----
-Title: Chord Inversions 
-Version: 0.0
-Level: 2
-Outside_information: 
-- name: Wikipedia article on chord progressions
-  link: http://en.wikipedia.org/wiki/Chord_progression
-Exercises:
-- name: Placeholder
-  generate: 2 first
-  notes: \relative f' { c e <c e>2 }
-  question_type: audio
-  answer_type: image
-  hidden_tempo: 100
-  confusers:
-   - notes: \relative c' { c gis' <c, gis'>2}
-   - notes: \relative c' {c g' <c, g'>2}
+# ---
+# Title: Chord Inversions 
+# Version: 0.0
+# Level: 2
+# Outside_information: 
+# - name: Wikipedia article on chord progressions
+#   link: http://en.wikipedia.org/wiki/Chord_progression
+# Exercises:
+# - name: Placeholder
+#   generate: 2 first
+#   notes: \relative f' { c e <c e>2 }
+#   question_type: audio
+#   answer_type: image
+#   hidden_tempo: 100
+#   confusers:
+#    - notes: \relative c' { c gis' <c, gis'>2}
+#    - notes: \relative c' {c g' <c, g'>2}
 ---
 Title: Chords 2
 Level: 3
@@ -538,34 +538,34 @@ Exercises:
      annotation: '"Iaug7" _ _'
    - notes: c4:3-.5-.6+ c4:3-.5-.6+ c2:3-.5-.6+
      annotation: '"Idim7" _ _'
----
-Title: Debug
-Version: 0.0
-Level: 0
-Rounds: [normal, transpose random]
-Outside_information: 
-- name: Link to nowhere
-  link: http://locahost:8000
-Exercises:
-- name: Major third, Perfect fifth or Octave
-  style: interval
-  notes: \relative f' { c g' <c, g'>2 }
-  annotation: _ "P5" _
-  hidden_tempo: 100
-  confusers:
-   - notes: \relative c' {c c' <c, c'>2}
-     annotation: _ "P8" _
-   - notes: \relative c' { c e <c e>2}
-     annotation: _ "M3" _
-- name: Placeholder
-  generate: 2 first
-  style: chord
-  notes: c4:m c:m c2:m
-  annotation: _ Im _
-  question_type: random
-  hidden_tempo: 100
-  confusers:
-   - notes: c4 c4 c2
-     annotation: _ I _
-   - notes: c4:sus4 c4:sus4 c2:sus4
-     annotation: _ "Isus4" _
+# ---
+# Title: Debug
+# Version: 0.0
+# Level: 0
+# Rounds: [normal, transpose random]
+# Outside_information: 
+# - name: Link to nowhere
+#   link: http://locahost:8000
+# Exercises:
+# - name: Major third, Perfect fifth or Octave
+#   style: interval
+#   notes: \relative f' { c g' <c, g'>2 }
+#   annotation: _ "P5" _
+#   hidden_tempo: 100
+#   confusers:
+#    - notes: \relative c' {c c' <c, c'>2}
+#      annotation: _ "P8" _
+#    - notes: \relative c' { c e <c e>2}
+#      annotation: _ "M3" _
+# - name: Placeholder
+#   generate: 2 first
+#   style: chord
+#   notes: c4:m c:m c2:m
+#   annotation: _ Im _
+#   question_type: random
+#   hidden_tempo: 100
+#   confusers:
+#    - notes: c4 c4 c2
+#      annotation: _ I _
+#    - notes: c4:sus4 c4:sus4 c2:sus4
+#      annotation: _ "Isus4" _
