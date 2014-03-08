@@ -3,7 +3,7 @@ that is designed to teach or refresh the basic concepts
 of rhythm, notes and harmony and their musical notation.
 
 You can find the app running at 
-http://vesamusictraining.herokuapp.com/exercise/
+http://vesamusictraining.herokuapp.com/
 
 You'll need python2, python-yaml, lilypond, timidity and 
 sox to generate the exercises.

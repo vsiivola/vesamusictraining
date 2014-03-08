@@ -90,10 +90,57 @@ Exercises:
     - notes: \relative f' { c c g' g a a g2 f4 f e e d d c2}
     - notes:  \relative f' { c c <g' e> <g e> <a f> <a f> <g e>2 <f d>4 <f d> <e c> <e c> <d b> <d b> c2}
 ---
+Title: Major and Minor Scales and Chords
+Version: 0.1
+Level: 1
+Outside_information: 
+- name: Wikipedia article on major and minor
+  link: http://en.wikipedia.org/wiki/Major_and_minor
+Rounds: [normal, transpose random]
+Exercises:
+- name: Major, minor and pentatonic scales
+  generate: all
+  notes: \relative f' { c8 d8 e8 f8 g8 a8 b8 c8 }
+  annotation: '"Major"'
+  style: scale
+  question_type: random
+  hidden_tempo: 150
+  confusers:
+#   - notes: \relative f' { c8 d8 es8 f8 g8 aes8 bes8 c8 }
+#     annotation: '"Natural minor scale"'
+   - notes: \relative f' { c8 d8 es8 f8 g8 a8 b8 c8 }
+     annotation: '"Melodic minor"'
+   - notes: \relative f' { c8 d8 e8 g8 a8 c8 }
+     annotation: '"Pentatonic"'
+- name: Major, minor and fifth chords 
+  generate: all
+  style: chord
+  notes: c1
+  annotation: I
+  question_type: random
+  hidden_tempo: 150
+  confusers:
+   - notes: c1:m
+     annotation: i
+   - notes: c1:1.5
+     annotation: '"I5"'
+- name: Major, minor and pentatonic descending scales
+  generate: all
+  notes: \relative f'' { c8 b8 a8 g8 f8 e8 d8 c8 }
+  annotation: '"Major"'
+  question_type: random
+  style: scale
+  hidden_tempo: 150
+  confusers:
+   - notes: \relative f'' { c8 a8 g8 e8 d8 c8 }
+     annotation: '"Pentatonic"'
+   - notes: \relative f'' { c8 bes8 aes8 g8 f8 es8 d8 c8 }
+     annotation: '"Melodic minor"'
+---
 Title: Basic Intervals
 Version: 0.2
 Level: 1
-Rounds: [normal, transpose random, transpose random]
+Rounds: [normal, transpose random]
 Outside_information: 
 - name: Wikipedia article on intervals
   link: http://en.wikipedia.org/wiki/Musical_intervals
@@ -167,7 +214,7 @@ Exercises:
 Title: Scales
 Version: 0.0
 Level: 1
-Rounds: [normal, transpose random, transpose random]
+Rounds: [normal, transpose random]
 Outside_information: 
 - name: Wikipedia article on scales
   link: http://en.wikipedia.org/wiki/List_of_musical_scales_and_modes
@@ -239,7 +286,7 @@ Level: 1
 Outside_information: 
 - name: Wikipedia article on chords
   link: http://en.wikipedia.org/wiki/Chord_%28music%29
-Rounds: [normal, transpose random, transpose random]
+Rounds: [normal, transpose random]
 Exercises:
 - name: Major and minor triads, dominant seventh
   generate: all
