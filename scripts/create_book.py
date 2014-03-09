@@ -62,68 +62,76 @@ class PureDjangoTarget(BuildTarget):
     ofh.write(yaml.dump(self.fixturize(index)))
     ofh.close()
 
-  def fixturize(self, index):
+  def fixturize(self, index, lang="fi"):
     def clean_fname(fname):
       return re.sub(self.media_target_dir, "/static/generated_assets", fname) # FIXME: hardcoded path
 
     fy = []
     eidx = 0
     cidx = 0
+    lidx = -1
     
-    for i, doc in enumerate(index):
-      fields_dict = {
-                    "title" : doc["Title"],
-                    "version" : doc["Version"]
-                    }
-      if "Outside_information" in doc:
-        oi = doc["Outside_information"]
-        assert(len(oi)==1)
-        oi=oi[0]
-        fields_dict["outside_info_name"] = oi["name"]
-        fields_dict["outside_info_link"] = oi["link"]
-      fy.append({"model": "exercise.Lecture",
-                  "pk": i,
-                  "fields": fields_dict
-                 })
-      
-      for e in doc["Exercises"]:
-        e["correct"] = True
-        for c in e["confusers"]:
-          c["correct"] = False
+    for doc in index:
+      for lang, ldoc in doc["languages"].items():
+        fields_dict = {
+          "title" : ldoc["Title"],
+          "version" : doc["Version"],
+          "language": lang
+        }
+        if "Outside_information" in ldoc:
+          oi = ldoc["Outside_information"]
+          assert("name" in oi and "link" in oi)
+          fields_dict["outside_info_name"] = oi["name"]
+          fields_dict["outside_info_link"] = oi["link"]
 
-        alts = [e] + e["confusers"]
-        random.shuffle(alts)
+        if "Instructions" in doc:
+          fields_dict["instructions"] = ldoc["Instructions"]
 
-        fy.append({"model": "exercise.Exercise",
+        lidx += 1
+        fy.append({"model": "exercise.Lecture",
+                    "pk": lidx,
+                    "fields": fields_dict
+                   })
+        
+        for e in doc["Exercises"]:
+          e["correct"] = True
+          for c in e["confusers"]:
+            c["correct"] = False
+
+          alts = [e] + e["confusers"]
+          random.shuffle(alts)
+
+          #print repr(e)
+          fy.append({"model": "exercise.Exercise",
                     "pk": eidx,
                     "fields": {
-                      "title" : e["name"],
+                      "title" : e["name"][lang],
                       "question_type" : e["question_type"],
-                      "lecture" : i,
+                      "lecture" : lidx,
                       "question_mp3" : clean_fname(e["mp3"]),
                       "question_ogg" : clean_fname(e["ogg"]),
                       "question_image": clean_fname(e["image_png"])
                       }})
 
-        for a in alts:
-          fields = {
-            "answer_type" : e["answer_type"],
-            "exercise" : eidx,
-            "correct" : a["correct"]}
+          for a in alts:
+            fields = {
+              "answer_type" : e["answer_type"],
+              "exercise" : eidx,
+              "correct" : a["correct"]}
 
-          #if e["answer_type"] == "image":
-          fields["image"] = clean_fname(a["image_png"])
-          #elif e["answer_type"] == "audio":
-          fields["ogg"] = clean_fname(a["ogg"])
-          fields["mp3"] = clean_fname(a["mp3"])
-          #else:
-          #  assert(False)
+            #if e["answer_type"] == "image":
+            fields["image"] = clean_fname(a["image_png"])
+            #elif e["answer_type"] == "audio":
+            fields["ogg"] = clean_fname(a["ogg"])
+            fields["mp3"] = clean_fname(a["mp3"])
+            #else:
+            #  assert(False)
 
-          fy.append({"model" : "exercise.Choice",
+            fy.append({"model" : "exercise.Choice",
                       "pk" : cidx,
                       "fields" : fields})
-          cidx += 1
-        eidx +=1
+            cidx += 1
+          eidx +=1
     return fy
 
 
@@ -277,7 +285,7 @@ naturalizeMusic =
     self.index = [i for i in yaml.load_all(fh)]
     fh.close()
     if lecture:
-      self.index=[i for i in self.index if i["Title"]==lecture]
+      self.index=[i for i in self.index if i["languages"]["en"]["Title"]==lecture]
 
     for d in self.index:
       if not "Exercises" in d:
@@ -328,7 +336,7 @@ naturalizeMusic =
     s = ""
     for d in self.index:
       exercises = d["Exercises"]
-      s+= "%s (%d exercises)\n" % (d["Title"], len(exercises))
+      s+= "%s (%d exercises)\n" % (d["languages"]["en"]["Title"], len(exercises))
       for e in exercises:
         s += "  %s: question type '%s', answer type '%s'\n" % (e["name"], e["question_type"] if "question_type" in e else "random", e["answer_type"] if "answer_type" in e else "random")
         s += "    Reference: '%s'\n" % e["notes"]
@@ -402,7 +410,9 @@ naturalizeMusic =
             
         random.shuffle(permutations)
         for i, p in enumerate(permutations):
-          p["name"] += " %d" % (i+1)
+          #print repr(p)
+          for lang in p["name"].keys():
+            p["name"][lang] += " %d" % (i+1)
           d["Exercises"].append(p)
     
   def compile(self):
@@ -419,7 +429,8 @@ naturalizeMusic =
       
 
       for i, conv in enumerate(to_png):
-        title_us = re.sub("\s", "_", d["Title"])
+        #print repr(d["languages"]["en"]["Title"])
+        title_us = re.sub("\s", "_", d["languages"]["en"]["Title"])
         conv["image_png"] = os.path.join(self.target.pngdir, "%s-%d.png" % (title_us, i))
         conv["image_svg"] = os.path.join(self.target.pngdir, "%s-%d.svg" % (title_us, i))
         conv["mp3"] = os.path.join(self.target.mp3dir, "%s-%d.mp3" % (title_us, i))

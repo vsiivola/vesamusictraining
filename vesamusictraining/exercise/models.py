@@ -3,15 +3,18 @@ from django.contrib.auth.models import User
 
 class Lecture(models.Model):
   title = models.CharField(max_length=200)
+  language = models.CharField(max_length=10)
   version = models.CharField(max_length=10)
   outside_info_name = models.CharField(max_length=200)
   outside_info_link = models.CharField(max_length=200)
+  instructions = models.CharField(max_length=8000)
 
   def __unicode__(self):
     return "%s, version %s" % (self.title, self.version)
     
 class Exercise(models.Model):
   lecture = models.ForeignKey(Lecture)
+  language = models.CharField(max_length=10)
   title = models.CharField(max_length=200)
   question_type = models.CharField(max_length=10)
   question_image = models.CharField(max_length=200)

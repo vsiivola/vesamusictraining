@@ -1,12 +1,23 @@
 ---
-Title: Musical notation basics
-Version: 0.1
+Version: 0.2
 Level: 0
-Outside_information: 
-- name: Wikipedia article on musical symbols                      
-  link: http://en.wikipedia.org/wiki/Modern_musical_symbols]
+languages:
+  en:
+    Title: Musical notation basics
+    Outside_information:
+      name: Wikipedia article on musical symbols                    
+      link: http://en.wikipedia.org/wiki/Modern_musical_symbols
+    Instructions: Every sound corresponds to one note. Higher pitches are higher on the staff.
+  fi:
+    Title: Nuottien perusteet
+    Outside_information:
+      name: Nuotit Wikipediassa
+      link: http://fi.wikipedia.org/wiki/Nuotit
+    Instructions: Joka nuotti vastaa yhtä ääntä. Korkeammat äänet ovat ylemäpänä viivastolla.
 Exercises:
-- name: Note durations
+- name: 
+    en: Note durations
+    fi: Nuotin kestot
   notes: c'4 c' c'2
   question_type: audio
   answer_type: image
@@ -14,7 +25,9 @@ Exercises:
   confusers:
    - notes: c'1
    - notes: c'4 c' c' c'8 c'
-- name: Durations2
+- name: 
+    en: Durations2
+    fi: Kestot2
   instrument: acoustic grand
   notes: c' d'8 d' e'16 e' e' e' f'32 f' f' f' f' f' f' f'
   question_type: audio
@@ -22,7 +35,9 @@ Exercises:
   confusers:
     - notes: c' d' e' f'
     - notes: c'16 c' c' c' d' d' d' d' e' e' e' e' f' f' f' f'               
-- name: Rest
+- name: 
+    en: Rest
+    fi: Tauko
   instrument: acoustic grand
   notes: c'8 d' c'4\rest c'16 d' c' d' r8 c' 
   question_type: audio
@@ -30,7 +45,9 @@ Exercises:
   confusers:
     - notes: c'16 c' c'\rest c' c' c' c' c' d' d' r d' d' d' d' d' 
     - notes: c'4 c'\rest d' d'
-- name: Pitch
+- name: 
+    en: Pitch
+    fi: Äänenkorkeus
   instrument: acoustic guitar (steel)
   notes: c' d' e' f'
   question_type: image
@@ -38,7 +55,9 @@ Exercises:
   confusers:
     - notes: c'2 c'
     - notes: c' f' c' f'
-- name: Pitch2
+- name: 
+    en: Pitch2
+    fi: Äänenkorkeus2
   instrument: random
   notes: f' e' d' c'
   question_type: image
@@ -46,7 +65,9 @@ Exercises:
   confusers:
     - notes: c' d' e' f'
     - notes: c' f' c' f'
-- name: Pitch3
+- name: 
+    en: Pitch3
+    fi: Äänenkorkeus3
   instrument: random
   notes: c' c'' c' c''
   question_type: audio
@@ -54,7 +75,9 @@ Exercises:
   confusers:
     - notes: c'' c' c'' c'
     - notes: c' d' c' b
-- name: Frere Jacob
+- name: 
+    en: Frere Jacob
+    fi: Jaakko-kulta
   instrument: random
   question_type: audio
   answer_type: image
@@ -63,7 +86,9 @@ Exercises:
   confusers:
     - notes: c' e' g' c' c' e' g' c' e' f' g' g' f' e'
     - notes: e' d' c' c' e' d' c' c' c'2 g c'1
-- name: Multiple tones
+- name: 
+    en: Multiple tones
+    fi: Useampi ääni
   instrument: random
   question_type: audio
   answer_type: image
@@ -71,7 +96,9 @@ Exercises:
   confusers:
     - notes: \relative c' { c <c f> g' <e' g> }
     - notes: \relative c' { c <c e g c> <c e g> <c e> }
-- name: Frere Jacob 2
+- name: 
+    en: Frere Jacob 2
+    fi: Jaakko-kulta 2
   instrument: random
   question_type: image
   answer_type: audio
@@ -80,7 +107,9 @@ Exercises:
   confusers:
     - notes: \relative c' {c d e c c d e c}
     - notes: \relative c' {<c e> <d f> <e g> <c e> <c e g> < d f a> < e g b> <c e g>}
-- name: Twinkler
+- name: 
+    en: Twinkler
+    fi: Tuikkija
   instrument: random
   question_type: audio
   answer_type: image
@@ -90,15 +119,24 @@ Exercises:
     - notes: \relative f' { c c g' g a a g2 f4 f e e d d c2}
     - notes:  \relative f' { c c <g' e> <g e> <a f> <a f> <g e>2 <f d>4 <f d> <e c> <e c> <d b> <d b> c2}
 ---
-Title: Major and Minor Scales and Chords
 Version: 0.1
 Level: 1
-Outside_information: 
-- name: Wikipedia article on major and minor
-  link: http://en.wikipedia.org/wiki/Major_and_minor
+languages:
+  en:
+    Title: Major and Minor Scales and Chords
+    Outside_information: 
+      name: Wikipedia article on major and minor
+      link: http://en.wikipedia.org/wiki/Major_and_minor
+  fi:
+    Title: Duuri ja molli
+    Outside_information: 
+      name: Duuri Wikipediassa
+      link: http://fi.wikipedia.org/wiki/Duuri
 Rounds: [normal, transpose random]
 Exercises:
-- name: Major, minor and pentatonic scales
+- name: 
+    en: Major, minor and pentatonic scales
+    fi: Duuri-, molli- ja pentatoninen asteikko
   generate: all
   notes: \relative f' { c8 d8 e8 f8 g8 a8 b8 c8 }
   annotation: '"Major"'
@@ -112,7 +150,9 @@ Exercises:
      annotation: '"Melodic minor"'
    - notes: \relative f' { c8 d8 e8 g8 a8 c8 }
      annotation: '"Pentatonic"'
-- name: Major, minor and fifth chords 
+- name: 
+    en: Major, minor and fifth chords 
+    fi: Duuri-, mollisoinnut, kvintti
   generate: all
   style: chord
   notes: c1
@@ -124,7 +164,9 @@ Exercises:
      annotation: i
    - notes: c1:1.5
      annotation: '"I5"'
-- name: Major, minor and pentatonic descending scales
+- name: 
+    en : Major, minor and pentatonic descending scales
+    fi : Laskevat duuri-, molli- ja pentatoniset asteikot
   generate: all
   notes: \relative f'' { c8 b8 a8 g8 f8 e8 d8 c8 }
   annotation: '"Major"'
@@ -137,15 +179,24 @@ Exercises:
    - notes: \relative f'' { c8 bes8 aes8 g8 f8 es8 d8 c8 }
      annotation: '"Melodic minor"'
 ---
-Title: Basic Intervals
-Version: 0.2
+Version: 0.3
 Level: 1
+languages:
+  en: 
+    Title: Basic Intervals
+    Outside_information: 
+      name: Wikipedia article on intervals
+      link: http://en.wikipedia.org/wiki/Musical_intervals
+  fi: 
+    Title: Perusintervallit
+    Outside_information: 
+      name: Intervallit Wikipediassa
+      link: http://fi.wikipedia.org/wiki/Intervalli
 Rounds: [normal, transpose random]
-Outside_information: 
-- name: Wikipedia article on intervals
-  link: http://en.wikipedia.org/wiki/Musical_intervals
 Exercises:
-- name: Major third, Perfect fifth or Octave
+- name: 
+    en: Major third, Perfect fifth or Octave
+    fi: Suuri terssi, kvintti, oktaavi
   style: interval
   notes: \relative f' { c g' <c, g'>2 }
   annotation: _ "P5" _
@@ -155,7 +206,9 @@ Exercises:
      annotation: _ "P8" _
    - notes: \relative c' { c e <c e>2}
      annotation: _ "M3" _
-- name: Minor third, Major third or Minor Seventh
+- name: 
+    en: Minor third, Major third or Minor Seventh
+    fi: Pieni ja suuri terssi, pieni septimi
   generate: all
   style: interval
   notes: \relative f' { c es <c es>2 }
@@ -166,7 +219,9 @@ Exercises:
      annotation: _ "M3" _
    - notes: \relative f' { c bes' <c, bes'>2}
      annotation: _ "m7" _
-- name: Unison, Major second, Minor Third
+- name: 
+    en: Unison, Major second, Minor Third
+    fi: Unisoono, suuri sekunti, pieni terssi
   generate: all
   style: interval
   notes: \relative f' {c c <c c>2}
@@ -177,7 +232,9 @@ Exercises:
      annotation: _ "m3" _
    - notes: \relative f' { c d <c d>2}
      annotation: _ "M2" _
-- name: Minor third, Perfect Fourth, Minor Seventh
+- name: 
+    en: Minor third, Perfect Fourth, Minor Seventh
+    fi: Pieni terssi, kvartti, pieni septimi
   generate: all
   style: interval
   notes:  \relative f' { c bes' <c, bes'>2}
@@ -188,7 +245,9 @@ Exercises:
      annotation: _ "m3" _
    - notes: \relative f' {c f <c f>2}
      annotation: _ "P4" _
-- name: Fourth, Minor Seventh, Major Seventh
+- name: 
+    en: Fourth, Minor Seventh, Major Seventh
+    fi: Kvartti, pieni ja suuri septimi
   generate: all
   style: interval
   notes: \relative f' { c bes' <c, bes'>2}
@@ -199,7 +258,9 @@ Exercises:
      annotation: _ "P4" _
    - notes: \relative f' { c b' <c, b'>2}
      annotation: _ "M7" _
-- name: Fifth, Major Sixth, Minor Seventh
+- name: 
+    en: Fifth, Major Sixth, Minor Seventh
+    fi: Kvintti, suuri seksti, pieni septimi
   generate: all
   style: interval
   notes:  \relative f' {c g' <c, g'>2}
@@ -211,15 +272,24 @@ Exercises:
    - notes: \relative f' { c bes' <c, bes'>2}
      annotation: _ "m7" _
 ---
-Title: Scales
-Version: 0.0
+Version: 0.1
 Level: 1
+languages:
+  en:
+    Title: Scales
+    Outside_information: 
+      name: Wikipedia article on scales
+      link: http://en.wikipedia.org/wiki/List_of_musical_scales_and_modes
+  fi:
+    Title: Asteikot
+    Outside_information: 
+      name: Asteikot wikipediassa
+      link: http://fi.wikipedia.org/wiki/S%C3%A4velasteikko
 Rounds: [normal, transpose random]
-Outside_information: 
-- name: Wikipedia article on scales
-  link: http://en.wikipedia.org/wiki/List_of_musical_scales_and_modes
 Exercises:
-- name: Diatonics - Ionian, Dorian, Phrygian
+- name: 
+    en: Diatonics - Ionian, Dorian, Phrygian
+    fi: Diatoniset asteikot (Jooninen, Doorinen, Phryyginen) - tarkista suomennos!
   generate: all
   style: scale
   notes: \relative f' { c d es f g a bes c }
@@ -231,7 +301,9 @@ Exercises:
      annotation: _ _ "Phrygian"
    - notes: \relative f' { c d e f g a b c }
      annotation: _ _ "Ionian"
-- name: Diatonics (Lydian and Aeolian mode), Blues
+- name: 
+    en: Diatonics (Lydian and Aeolian mode), Blues
+    fi: Diatoniset (Lyydinen ja Aeolinen), blues
   generate: all
   style: scale
   notes: \relative f' { c d es f g as bes c }
@@ -243,7 +315,9 @@ Exercises:
      annotation: _ _ Blues
    - notes: \relative f' { c d e fis g a b c }
      annotation: _ _ "Lydian"
-- name: Diatonic Locrian mode, Major Bebop, Chromatic
+- name: 
+    en: Diatonic Locrian mode, Major Bebop, Chromatic
+    fi: Lokrinen, Duuri-bebop ja kromaattinen
   generate: all
   style: scale
   notes: \relative f' { c des es f ges as bes c des es f ges as1}
@@ -255,7 +329,9 @@ Exercises:
      annotation: _ _ "Major Bepop"
    - notes: \relative f' { c cis d dis e f fis g gis a ais b c1 }
      annotation: _ _ "Chromatic"
-- name: Diatonic Mixolydian mode, Major and Minor pentatonic
+- name: 
+    en: Diatonic Mixolydian mode, Major and Minor pentatonic
+    fi: Mixolyydinen, duuri- ja mollipentatoninen
   generate: all
   style: scale
   notes: \relative f' { c d e f g a bes c}
@@ -267,7 +343,9 @@ Exercises:
      annotation: _ _ "Major Pentatonic"
    - notes: \relative f' { c e f g b c e f}
      annotation: _ _ "Minor Pentatonic"
-- name: Melodic Minor, Diatonic (Aeolian), Blues
+- name: 
+    en: Melodic Minor, Diatonic (Aeolian), Blues
+    fi: Meloninen molli, Aeolinen, Blues
   generate: all
   style: scale
   notes: \relative f' { c d es f g a b c c bes as g f es d c}
@@ -280,15 +358,24 @@ Exercises:
    - notes: \relative f' { c es f fis g bes c es es c bes g fis f es c}
      annotation: _ _ "Blues"
 ---
-Title: Chords
-Version: 0.1
+Version: 0.2
 Level: 1
-Outside_information: 
-- name: Wikipedia article on chords
-  link: http://en.wikipedia.org/wiki/Chord_%28music%29
+languages:
+  en: 
+    Title: Chords
+    Outside_information: 
+      name: Wikipedia article on chords
+      link: http://en.wikipedia.org/wiki/Chord_%28music%29
+  fi:
+    Title: Soinnut             
+    Outside_information: 
+      name: Soinnut wikipediassa
+      link: http://fi.wikipedia.org/wiki/Sointu
 Rounds: [normal, transpose random]
 Exercises:
-- name: Major and minor triads, dominant seventh
+- name: 
+    en: Major and minor triads, dominant seventh
+    fi: Duuri- ja mollikolmisoinnut, pienseptimi
   generate: all
   style: chord
   notes: c4:m c:m c2:m
@@ -300,7 +387,9 @@ Exercises:
      annotation: _ I _
    - notes: c4:7 c4:7 c2:7
      annotation: _ "I7" _
-- name: Augmented triad, sixth, dominant seventh
+- name: 
+    en: Augmented triad, sixth, dominant seventh
+    fi: Ylinouseva kolmisointu, lisäseksti, pienseptimi
   generate: all
   style: chord
   notes: c4:aug c:aug c2:aug
@@ -312,7 +401,9 @@ Exercises:
      annotation: _ "I6" _
    - notes: c4:7 c4:7 c2:7
      annotation: _ "I7" _
-- name: Major triad, suspended triads
+- name: 
+    en: Major triad, suspended triads
+    fi: Duurikolmisointu, pidätetyt kolmisoinnut
   generate: all
   style: chord
   notes: c4 c c2
@@ -324,7 +415,9 @@ Exercises:
      annotation: _ "Isus2" _
    - notes: c4:sus4 c4:sus4 c2:sus4
      annotation: _ "Isus4" _
-- name: Minor seventh, major seventh, dominanth seventh
+- name: 
+    en: Minor seventh, major seventh, dominant seventh
+    fi: Pienseptimi, suuri septimi, vähennetty septimi
   generate: all
   style: chord
   notes: c4:7 c:7 c2:7
@@ -336,7 +429,9 @@ Exercises:
      annotation: _ "i7" _
    - notes: c4:maj7 c4:maj7 c2:maj7
      annotation: _ "Imaj7" _
-- name: Diminished triad, augmented triad, diminished seventh
+- name:
+    en: Diminished triad, augmented triad, diminished seventh
+    fi: Vähennetty kolmisointu, ylinouseva kolmisointu, pienseptimi
   generate: all
   style: chord
   notes: c4:dim c:dim c2:dim
@@ -366,15 +461,24 @@ Exercises:
 #    - notes: \relative c' { c gis' <c, gis'>2}
 #    - notes: \relative c' {c g' <c, g'>2}
 ---
-Title: More Intervals
-Version: 0.0
+Version: 0.1
 Level: 2
+languages:
+  en: 
+    Title: More Intervals
+    Outside_information: 
+      name: Wikipedia article on intervals
+      link: http://en.wikipedia.org/wiki/Musical_intervals
+  fi: 
+    Title: Lisää intervalleja
+    Outside_information: 
+      name: Intervallit Wikipediassa
+      link: http://fi.wikipedia.org/wiki/Intervalli
 Rounds: [normal, transpose random, transpose random]
-Outside_information: 
-- name: Wikipedia article on intervals
-  link: http://en.wikipedia.org/wiki/Musical_intervals
 Exercises:
-- name: Major third, Perfect fifth or Minor sixth
+- name: 
+    en: Major third, Perfect fifth or Minor sixth
+    fi: Suuri terssi, kvintti, pieni seksti
   generate: 2 first
   style: interval
   notes: \relative f' { c e <c e>2 }
@@ -386,7 +490,9 @@ Exercises:
      annotation: _ "m6" _
    - notes: \relative c' {c g' <c, g'>2}
      annotation: _ "P5" _
-- name: Major sixth, Minor seventh, Major seventh
+- name: 
+    en: Major sixth, Minor seventh, Major seventh
+    fi: Suuri seksti, pieni septimi, suuri septimi
   generate: 2 first
   style: interval
   notes: \relative c' { c a' <c, a'>2 }
@@ -398,7 +504,9 @@ Exercises:
      annotation: _ "m7" _
    - notes: \relative c' {c b' <c, b'>2}
      annotation: _ "M7" _
-- name: Minor second, Diminished fifth, Minor sixth
+- name: 
+    en: Minor second, Diminished fifth, Minor sixth
+    fi: Pieni sekunti, vähennetty kvintti, pieni seksti
   generate: all
   style: interval
   notes: \relative f' { c cis <c cis>2 }
@@ -410,7 +518,9 @@ Exercises:
      annotation: _ "d5" _
    - notes: \relative c' {c gis' <c, gis'>2}
      annotation: _ "m6" _
-- name: Perfect fourth, Minor sixth, Major sixth
+- name: 
+    en: Perfect fourth, Minor sixth, Major sixth
+    fi: Kvartti, pieni ja suuri seksti
   generate: all
   style: interval
   notes: \relative f' { c f <c f>2 }
@@ -422,7 +532,9 @@ Exercises:
      annotation: _ "m6" _
    - notes: \relative c' {c a' <c, a'>2}
      annotation: _ "M6" _
-- name: Minor second, Major second, Minor Third
+- name: 
+    en: Minor second, Major second, Minor Third
+    fi: Pieni ja suuri sekuntu, pieni terssi
   generate: all
   style: interval
   notes: \relative f' { c cis <c cis>2 }
@@ -435,15 +547,24 @@ Exercises:
    - notes: \relative f' {c es <c es>2}
      annotation: _ "m3" _
 ---
-Title: Chord Progressions 
-Version: 0.0
+Version: 0.1
 Level: 2
+languages:
+  en: 
+    Title: Chord Progressions 
+    Outside_information: 
+      name: Wikipedia article on chord progressions
+      link: http://en.wikipedia.org/wiki/Chord_progression
+  fi: 
+    Title: Sointukulut
+    Outside_information: 
+      name: Sointukulut Wikipediassa
+      link: http://fi.wikipedia.org/wiki/Sointukulku
 Rounds: [normal, transpose random]
-Outside_information: 
-- name: Wikipedia article on chord progressions
-  link: http://en.wikipedia.org/wiki/Chord_progression
 Exercises:
-- name: Basic A
+- name: 
+    en: Basic A
+    fi: Perus A
   generate: all
   style: chord
   notes: c2  c r4 f f r g2 g
@@ -454,7 +575,9 @@ Exercises:
      annotation: I _ vi _ V _ _
    - notes: a2:m a:m r4 f f r g2 g
      annotation: im _ VI _ VIIb _ _
-- name: Chords from notes
+- name: 
+    en: Chords from notes
+    fi: Soinnut sävelistä
   generate: all
   style: interval
   notes: \relative f' { c e g c a, c e a f, a c f g b d g}
@@ -465,7 +588,9 @@ Exercises:
      annotation: I _ _ _ VIIb _ _ _ IV _ _ _ V _ _ _ _
    - notes: \relative f' { c e g c d, f a d e, g b e f, a c f }
      annotation: I _ _ _ ii _ _ _ iii _ _ _ IV _ _ _ _
-- name: Basic B
+- name: 
+    en: Basic B
+    fi: Perus B
   generate: all
   style: chord
   notes: a,2:m  a:m e:7 e:7 d:m d:m
@@ -476,7 +601,9 @@ Exercises:
      annotation: i _ "VI7" _ "V7" _ 
    - notes: c2 c'2 f:7 f:7 e:7 e:7 
      annotation: I _ "IV7" _ "VIIb7" _ "III7" _
-- name: Chords from notes again
+- name: 
+    en: Chords from notes again
+    fi: Soinnut sävelistä uudestaan
   generate: all
   style: interval
   notes: \relative f' { d' a f d g d b g c' g e c}
@@ -505,15 +632,24 @@ Exercises:
 #    - notes: \relative c' { c gis' <c, gis'>2}
 #    - notes: \relative c' {c g' <c, g'>2}
 ---
-Title: Chords 2
 Level: 3
-Version: 0.0
-Outside_information: 
-- name: Wikipedia article on chords
-  link: http://en.wikipedia.org/wiki/Chord_names_and_symbols_%28jazz_and_pop_music%29
+Version: 0.1
+languages:
+  en: 
+    Title: Chords 2
+    Outside_information: 
+      name: Wikipedia article on chords
+      link: http://en.wikipedia.org/wiki/Chord_names_and_symbols_%28jazz_and_pop_music%29
+  fi:
+    Title: Soinnut 2             
+    Outside_information: 
+      name: Soinnut wikipediassa
+      link: http://fi.wikipedia.org/wiki/Sointu
 Rounds: [normal, transpose random]
 Exercises:
-- name: Major sixth, dominant seventh, dominant ninth
+- name: 
+    en: Major sixth, dominant seventh, dominant ninth
+    fi: Lisäseksti, pienseptimi, suuri nooni
   generate: 2 first
   style: chord
   notes: c4:6 c4:6 c2:6
@@ -525,7 +661,9 @@ Exercises:
      annotation: _ "I9" _
    - notes: c4:7 c4:7 c2:7
      annotation: _ "I7" _
-- name: Dominant ninth, Dominant eleventh, Dominanat thirteenth
+- name: 
+    en: Dominant ninth, Dominant eleventh, Dominanat thirteenth
+    fi: Suuri nooni, undesimi, tredesimi
   generate: all
   style: chord
   notes: c4:9 c4:9 c2:9
@@ -537,7 +675,9 @@ Exercises:
      annotation: _ "I11" _
    - notes: c4:13.11 c4:13.11 c2:13.11
      annotation: _ "I13" _
-- name: Augmented seventh, Diminished seventh, add ninth
+- name: 
+    en: Augmented seventh, Diminished seventh, add ninth
+    fi: ylinouseva septimi, vähennetty septimi, lisätty nooni
   generate: all
   style: chord
   notes: c4:aug7 c4:aug7 c2:aug7
@@ -549,7 +689,9 @@ Exercises:
      annotation: '"Idim7" _ _'
    - notes: c4:5.9 c4:5.9 c2:5.9
      annotation: '"Iadd9" _ _'
-- name: Minor dominant eleventh, Minor dominant ninth, add ninth
+- name: 
+    en: Minor dominant eleventh, Minor dominant ninth, add ninth
+    fi: molliundesimi, mollinooni, lisätty nooni
   generate: all
   style: chord
   notes: c4:m11 c4:m11 c2:m11
@@ -561,7 +703,9 @@ Exercises:
      annotation: _ "i9" _
    - notes: c4:5.9 c4:5.9 c2:5.9
      annotation: '"Iadd9" _ _'
-- name: Minor major ninth, Major 11th, Half-diminished seventh
+- name: 
+    en: Minor major ninth, Major 11th, Half-diminished seventh
+    fi: molliduurinooni, duurundesimi, puolivähennetty septimi
   generate: all
   style: chord
   notes: c4:3-.5.7+.9 c4:3-.5.7+.9 c2:3-.5.7+.9
@@ -573,7 +717,9 @@ Exercises:
      annotation: '"imaj11" _ _'
    - notes: c4:3-.5-.7 c4:7.5-.3- c2:7.5-.3-
      annotation: '"i7dim5" _ _'
-- name: Augmented major seventh, Augmented seventh, Diminished seventh
+- name: 
+    en: Augmented major seventh, Augmented seventh, Diminished seventh
+    fi: ylinouseva suuri septimi, ylinouseva septimi, vähennetty septimi
   generate: all
   style: chord
   notes: c4:5+.7+ c4:5+.7+ c2:5+.7+

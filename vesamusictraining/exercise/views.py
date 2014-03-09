@@ -29,6 +29,12 @@ def list_lectures(request):
       "num_exercises" : l.exercise_set.count()
       }
 
+    if l.language:
+      res["language"] =  l.language
+
+    if l.instructions:
+      res["instructions"] = l.instructions
+      
     if l.outside_info_name:
       res["outside_info_name"] = l.outside_info_name
       res["outside_info_link"] = l.outside_info_link

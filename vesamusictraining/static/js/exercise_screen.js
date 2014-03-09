@@ -1,3 +1,12 @@
+lang = "fi"
+
+if (lang=="fi") {
+    maintitle_preuistr = "Musiikinopettelu"
+    play_uistr = "Soita"
+} else if (lang=="en") {
+    maintitle_preuistr = "Music Training"
+    play_uistr = "Play"
+}
 
 function Choice(type, image, ogg, mp3) {
     this.type = type;
@@ -18,7 +27,7 @@ function Choice(type, image, ogg, mp3) {
             return
         }
 
-        this.dom = $('<td align="center" width="200"><table class="buttontable"><tr class="empty_stave"></tr><tr><td align="center"><button class="ui-button-text">Play</button></td></tr></table>');
+        this.dom = $('<td align="center" width="200"><table class="buttontable"><tr class="empty_stave"></tr><tr><td align="center"><button class="ui-button-text">'+play_uistr+'</button></td></tr></table>');
         $("tr.empty_stave", this.dom).append(empty_stave_td);
     }
 
@@ -157,7 +166,7 @@ function ExerciseScreen(mainWindow) {
 
     this.real_render = function(response) {
         this.mainWindow.num_exercises = response.num_exercises
-        $("#maintitle").html("Music Training | " + this.mainWindow.course_name);
+        $("#maintitle").html(maintitle_preuistr+" | " + this.mainWindow.course_name);
         var tstring = ( 
             '<h2 class="ui-widget-header ui-corner-all" style="text-align:center;">'+response.name
                 + " ("+(this.mainWindow.exercise_index+1)+"/" + (this.mainWindow.num_exercises) 
