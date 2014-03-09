@@ -127,11 +127,16 @@ languages:
     Outside_information: 
       name: Wikipedia article on major and minor
       link: http://en.wikipedia.org/wiki/Major_and_minor
+    Instructions: Capital chord 'I' is major (happy) and lowercase 'i' is minor (sad). The I5 chord is neither.
   fi:
     Title: Duuri ja molli
     Outside_information: 
       name: Duuri Wikipediassa
       link: http://fi.wikipedia.org/wiki/Duuri
+    Instructions: |
+             Major on duuri eli iloinen. Minor on molli eli surullinen. Pentatoninen on
+             duuri josta on otettu säveliä pois. Isolla kirjaimella kirjoitettu sointu "I" 
+             on duuri, pienellä "i" on molli. I5 on sointu, joka ei ole duuri eikä molli.
 Rounds: [normal, transpose random]
 Exercises:
 - name: 

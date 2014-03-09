@@ -9,6 +9,8 @@ if (lang == "fi") {
     moreinfo_uistr = "Lisätietoja";
     enter_uistr = "Aloita";
     exercises_uistr = "harjoitusta";
+    instructions_uistr = "Ohjeita";
+    lectinfo_uistr = "Tietoja harjoituksesta"
 } else if (lang == "en") {
     maintitle_uistr = "Music Training | Choose your exercise";
     version_uistr = "version";
@@ -18,6 +20,8 @@ if (lang == "fi") {
     moreinfo_uistr = "More information";
     enter_uistr = "Enter";
     exercises_uistr = "exercises";
+    instructions_uistr = "Hints";
+    lectinfo_uistr = "Exercise information"
 }
 
 
@@ -48,6 +52,16 @@ function ChooserScreen(mainWindow) {
                 tstring += ' inactive-lecture'
             tstring += '"><a href="#">'+lecture.title+'</a></h3>';
             tstring += '<div id="acc' +j + '" class="ui-accordion-content">';
+            if (lecture.instructions)
+                tstring += '<H3>'+instructions_uistr+'</H3><p>'+lecture.instructions+'</p>';
+
+            if (lecture.outside_info_name) {
+                tstring += '<H3>'+moreinfo_uistr+'</H3>'+'<a class="outside" href="' + 
+                    lecture.outside_info_link +
+                    '"> ' + lecture.outside_info_name + "</a>"
+            }
+
+            tstring += '<H3>' + lectinfo_uistr + '</H3>'
             tstring += '<ul class="lecture_info">';
             tstring += '<li> version ' +  lecture.version + '</li>';
             tstring += '<li> ' +  lecture.num_exercises + ' '+exercises_uistr+'</li>';
@@ -57,13 +71,7 @@ function ChooserScreen(mainWindow) {
                 tstring += '<li>'+score_uistr+' ' + lecture.score + '</li>';
                 tstring += '<li>'+on_uistr+' ' + lecture.complete_date + "</li></ul>";
             }
-            if (lecture.outside_info_name) {
-                tstring += '<li>'+moreinfo_uistr+': <a class="outside" href="' + 
-                    lecture.outside_info_link +
-                    '"> ' + lecture.outside_info_name + "</a>"
-            }
             tstring += '</ul>';
-            //tstring += '<p>This is the description of the exercise.</p>';
             tstring += '</div>';
             j=j+1
         }

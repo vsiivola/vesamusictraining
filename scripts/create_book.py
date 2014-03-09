@@ -84,7 +84,7 @@ class PureDjangoTarget(BuildTarget):
           fields_dict["outside_info_name"] = oi["name"]
           fields_dict["outside_info_link"] = oi["link"]
 
-        if "Instructions" in doc:
+        if "Instructions" in ldoc:
           fields_dict["instructions"] = ldoc["Instructions"]
 
         lidx += 1
