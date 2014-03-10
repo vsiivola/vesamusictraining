@@ -16,6 +16,7 @@ class Exercise(models.Model):
   lecture = models.ForeignKey(Lecture)
   language = models.CharField(max_length=10)
   title = models.CharField(max_length=200)
+  text = models.CharField(max_length=200)
   question_type = models.CharField(max_length=10)
   question_image = models.CharField(max_length=200)
   question_mp3 = models.CharField(max_length=200)
@@ -31,7 +32,8 @@ class Choice(models.Model):
   image = models.CharField(max_length=200)
   mp3 = models.CharField(max_length=200)
   ogg = models.CharField(max_length=200)
-
+  text = models.CharField(max_length=200)
+  
   def __unicode__(self):
     return """Choice
 correct: %s,

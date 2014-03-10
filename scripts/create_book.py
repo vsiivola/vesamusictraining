@@ -110,7 +110,8 @@ class PureDjangoTarget(BuildTarget):
                       "lecture" : lidx,
                       "question_mp3" : clean_fname(e["mp3"]),
                       "question_ogg" : clean_fname(e["ogg"]),
-                      "question_image": clean_fname(e["image_png"])
+                      "question_image": clean_fname(e["image_png"]),
+                      "text": e["text"][lang] if "text" in e and e["text"] else ""
                       }})
 
           for a in alts:
@@ -124,6 +125,7 @@ class PureDjangoTarget(BuildTarget):
             #elif e["answer_type"] == "audio":
             fields["ogg"] = clean_fname(a["ogg"])
             fields["mp3"] = clean_fname(a["mp3"])
+            fields["text"] = a["text"][lang] if "text" in a and a["text"] else ""
             #else:
             #  assert(False)
 
@@ -382,7 +384,8 @@ naturalizeMusic =
       orig["image_png"] = new["image_png"]
       orig["ogg"] = new["ogg"]
       orig["mp3"] = new["mp3"]
-
+      orig["text"] = new["text"] if "text" in new else None
+      
     for d in self.index:
       tmp_exercises = d["Exercises"]
       d["Exercises"] = []

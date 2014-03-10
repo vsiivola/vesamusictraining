@@ -8,15 +8,16 @@ if (lang=="fi") {
     play_uistr = "Play"
 }
 
-function Choice(type, image, ogg, mp3) {
+function Choice(type, image, ogg, mp3, text) {
     this.type = type;
     this.image = image;
     this.ogg = ogg;
     this.mp3 = mp3;
+    this.text = text;
 
     this.build_dom = function () {
         if (this.type == "image_question" || this.type == "image_response") {
-            this.dom = $('<td align="center" width="200"><img src="' + this.image + '"></img></td>');
+            this.dom = $('<td align="center" width="200"><img src="' + this.image + '"></img><br>' + this.text +'</td>');
             return;
         }
 
@@ -134,6 +135,7 @@ function Choice(type, image, ogg, mp3) {
                       athis.image=respi["image"];
                       athis.mp3=respi["mp3"];
                       athis.ogg=respi["ogg"];
+                      athis.text=respi["text"]
                       athis.display_result(respi["correct"]);
                       //$("div#debug").append("exnum " + ethis.mainWindow.exercise_index)
                       $("div", athis.dom).animate({opacity:0.2, easing:'linear'}, 1500, function () {
@@ -181,7 +183,7 @@ function ExerciseScreen(mainWindow) {
         $("div#main").html(tstring);
 
         var q = new Choice(response.question_type+"_question", response.question_image, 
-                           response.question_ogg, response.question_mp3);
+                           response.question_ogg, response.question_mp3, response.text);
         q.build_dom();
         $("tr#question").append(q.dom);
 
@@ -189,9 +191,9 @@ function ExerciseScreen(mainWindow) {
         this.choices = []
         for (var i=0; i<response.num_alt; i++) {
             if (response.question_type == "audio") {
-                var c = new Choice("image_response", response["alt"+i+"_image"], null, null);
+                var c = new Choice("image_response", response["alt"+i+"_image"], null, null, response["alt"+i+"_text"]);
             } else {
-                var c = new Choice("audio_response", null, response["alt"+i+"_ogg"], response["alt"+i+"_mp3"]);
+                var c = new Choice("audio_response", null, response["alt"+i+"_ogg"], response["alt"+i+"_mp3"], response["alt"+i+"_text"]);
             }
             c.build_dom();
             $("tr#alttr").append(c.dom);

@@ -145,16 +145,22 @@ Exercises:
   generate: all
   notes: \relative f' { c8 d8 e8 f8 g8 a8 b8 c8 }
   annotation: '"Major"'
-  style: scale
+  text:
+    en: Major
+    fi: Duuri
   question_type: random
   hidden_tempo: 150
   confusers:
 #   - notes: \relative f' { c8 d8 es8 f8 g8 aes8 bes8 c8 }
 #     annotation: '"Natural minor scale"'
    - notes: \relative f' { c8 d8 es8 f8 g8 a8 b8 c8 }
-     annotation: '"Melodic minor"'
+     text: 
+       en: Minor (melodic)
+       fi: Molli (melodinen)
    - notes: \relative f' { c8 d8 e8 g8 a8 c8 }
-     annotation: '"Pentatonic"'
+     text: 
+       en: Pentatonic
+       fi: Pentatoninen
 - name: 
     en: Major, minor and fifth chords 
     fi: Duuri-, mollisoinnut, kvintti
@@ -174,15 +180,20 @@ Exercises:
     fi : Laskevat duuri-, molli- ja pentatoniset asteikot
   generate: all
   notes: \relative f'' { c8 b8 a8 g8 f8 e8 d8 c8 }
-  annotation: '"Major"'
+  text:
+    en: Major
+    fi: Duuri
   question_type: random
-  style: scale
   hidden_tempo: 150
   confusers:
    - notes: \relative f'' { c8 a8 g8 e8 d8 c8 }
-     annotation: '"Pentatonic"'
+     text:
+       en: Pentatonic
+       fi: Pentatoninen
    - notes: \relative f'' { c8 bes8 aes8 g8 f8 es8 d8 c8 }
-     annotation: '"Melodic minor"'
+     text:
+       en: Minor (Melodic)
+       fi: Molli (melodinen)
 ---
 Version: 0.3
 Level: 1

@@ -87,6 +87,7 @@ def lecture(request, lecture_name):
       "num_exercises" : l.exercise_set.count()
     }
 
+    res_message["text"] = e.text
     if e.question_type == "audio":
       res_message["question_ogg"] = e.question_ogg
       res_message["question_mp3"] = e.question_mp3
@@ -97,6 +98,7 @@ def lecture(request, lecture_name):
     random.shuffle(choices)
     res_message["num_alt"] = len(choices)
     for i, a in enumerate(choices):
+      res_message["alt%d_text" %i] = a.text
       if a.answer_type == "image":
         res_message["alt%d_image" %i] = a.image
       else:
