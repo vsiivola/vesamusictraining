@@ -134,7 +134,7 @@ languages:
       name: Duuri Wikipediassa
       link: http://fi.wikipedia.org/wiki/Duuri
     Instructions: |
-             Major on duuri eli iloinen. Minor on molli eli surullinen. Pentatoninen on
+             Duuriasteikko kuulostaa iloinen ja molliasteikko surulliselta. Pentatoninen on
              duuri josta on otettu säveliä pois. Isolla kirjaimella kirjoitettu sointu "I" 
              on duuri, pienellä "i" on molli. I5 on sointu, joka ei ole duuri eikä molli.
 Rounds: [normal, transpose random]
