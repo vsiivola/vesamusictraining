@@ -174,14 +174,14 @@ class SimpleHtmlTarget(BuildTarget):
     s += "<h2>Musical Notation Trainer</h2>\n"
     s += "<ul>\n"
     for d in content_index:
-      s += "<li>%s (%d exercises)</li>\n" % (d["Title"], len(d["Exercises"]))
+      s += "<li>%s (%d exercises)</li>\n" % (d["languages"]["en"]["Title"], len(d["Exercises"]))
     s += "</ul>\n"
     s += "</p>\n\n"
 
     for d in [doc for doc in content_index if len(doc["Exercises"])>0]:
-      s+="<h2>%s</h2>\n" % d["Title"]
+      s+="<h2>%s</h2>\n" % d["languages"]["en"]["Title"]
       for e in d["Exercises"]:
-        s+="<h3>%s</h3>\n" % e["name"].capitalize()
+        s+="<h3>%s</h3>\n" % e["name"]["en"].capitalize()
         s+='<table cellpadding="10" border="1">\n'
         s += '<tr><td colspan="3" align="center">'
         if e["question_type"] == "audio":
@@ -191,15 +191,22 @@ class SimpleHtmlTarget(BuildTarget):
         s+= "</td></tr>\n"
         alternatives = []
         for a in [e] + e["confusers"]:
+          text = a["text"]["en"] if "text" in a else None
           if e["answer_type"] == "image":
-            alternatives.append((image_str(a["image_png"]), audio_str(a["ogg"], a["mp3"])))
+            alternatives.append((image_str(a["image_png"]), audio_str(a["ogg"], a["mp3"]), text))
           elif e["answer_type"] == "audio":
-            alternatives.append((audio_str(a["ogg"], a["mp3"]), image_str(a["image_png"])))
+            alternatives.append((audio_str(a["ogg"], a["mp3"]), image_str(a["image_png"]), text))
         s += "<tr>\n"
 
         # FIXME: randomize order
         s += '<td align="center">' + '</td>\n<td align="center">'.join([atmp[0] for atmp in alternatives])+"</td>"
         s += "</tr>\n"
+        if any([atmp[2] for atmp in alternatives]):
+          s += "<tr>\n"
+          s += '<td align="center">' + '</td>\n<td align="center">'.join([atmp[2] for atmp in alternatives])+"</td>"
+          s += "</tr>\n"
+
+
         s += "<tr>\n"
         s += '<td align="center">' + '</td>\n<td align="center">'.join([atmp[1] for atmp in alternatives])+"</td>"
         s += "</tr>\n"
