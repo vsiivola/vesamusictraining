@@ -1,16 +1,20 @@
 {% extends "base.html" %}
 
+{% block extra_head %}
+<script type="text/javascript">
+//<![CDATA[
+$(document).ready(function(){
+  translate_page("indexpage", lang);
+});
+//]]></script>
+{% endblock %}
+
 {% block content_title %}
 Home
 {% endblock %}
 
 {% block content %}
- <!--a href="/accounts/register" class="signup_button
- ui-corner-all">Sign up now!</a -->
 <P>
-<a href="/accounts/login">Kirjaudu sisään</a> tai <a href="/accounts/register">luo tunnus</a>.
-</P>
-<P>
-Please <a href="/accounts/login">sign in</a> or <a href="/accounts/register">sign up</a>.
+<a href="/accounts/login"><span class="localizestring">Please sign in</span></a> <span class="localizestring">or</span> <a href="/accounts/register"><span class="localizestring">sign up</span></a>.
 </P>
 {% endblock %}

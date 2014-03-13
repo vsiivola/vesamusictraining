@@ -1,29 +1,4 @@
-lang = "fi"
-
-if (lang == "fi") {
-    maintitle_uistr = "Musiikinopettelu | Valitse harjoitus";
-    version_uistr = "versio";
-    completed_uistr = "tehty";
-    score_uistr = "pisteet";
-    on_uistr = "";
-    moreinfo_uistr = "Lisätietoja";
-    enter_uistr = "Aloita";
-    exercises_uistr = "harjoitusta";
-    instructions_uistr = "Ohjeita";
-    lectinfo_uistr = "Tietoja harjoituksesta"
-} else if (lang == "en") {
-    maintitle_uistr = "Music Training | Choose your exercise";
-    version_uistr = "version";
-    completed_uistr = "completed";
-    score_uistr = "score";
-    on_uistr = "on";
-    moreinfo_uistr = "More information";
-    enter_uistr = "Enter";
-    exercises_uistr = "exercises";
-    instructions_uistr = "Hints";
-    lectinfo_uistr = "Exercise information"
-}
-
+ct = new Translator("chooserpage", lang);
 
 function ChooserScreen(mainWindow) {
     this.mainWindow = mainWindow;
@@ -35,7 +10,7 @@ function ChooserScreen(mainWindow) {
     //}
 
     this.render_full = function() {
-        $("#maintitle").html(maintitle_uistr);
+        $("#maintitle").html(ct.tp("Music Training | Choose your exercise"));
             
         var clist = this.course_list.lectures;
         var tstring = '<div id="courses" class="ui-accordion">';
@@ -53,23 +28,23 @@ function ChooserScreen(mainWindow) {
             tstring += '"><a href="#">'+lecture.title+'</a></h3>';
             tstring += '<div id="acc' +j + '" class="ui-accordion-content">';
             if (lecture.instructions)
-                tstring += '<H3>'+instructions_uistr+'</H3><p>'+lecture.instructions+'</p>';
+                tstring += '<H3>'+ct.tp("Hints")+'</H3><p>'+lecture.instructions+'</p>';
 
             if (lecture.outside_info_name) {
-                tstring += '<H3>'+moreinfo_uistr+'</H3>'+'<a class="outside" href="' + 
+                tstring += '<H3>'+ct.tp("More information")+'</H3>'+'<a class="outside" href="' + 
                     lecture.outside_info_link +
                     '"> ' + lecture.outside_info_name + "</a>"
             }
 
-            tstring += '<H3>' + lectinfo_uistr + '</H3>'
+            tstring += '<H3>' + ct.tp("Exercise information") + '</H3>'
             tstring += '<ul class="lecture_info">';
             tstring += '<li> version ' +  lecture.version + '</li>';
-            tstring += '<li> ' +  lecture.num_exercises + ' '+exercises_uistr+'</li>';
+            tstring += '<li> ' +  lecture.num_exercises + ' '+ct.tp("exercises")+'</li>';
             if (lecture.complete) {
-                tstring += '<li>'+completed_uistr+'<ul>';
-                tstring += '<li>'+version_uistr+' ' + lecture.version + '</li>';
-                tstring += '<li>'+score_uistr+' ' + lecture.score + '</li>';
-                tstring += '<li>'+on_uistr+' ' + lecture.complete_date + "</li></ul>";
+                tstring += '<li>'+ct.tp("completed")+'<ul>';
+                tstring += '<li>'+ct.tp("version")+' ' + lecture.version + '</li>';
+                tstring += '<li>'+ct.tp("score")+' ' + lecture.score + '</li>';
+                tstring += '<li>'+ct.tp("on")+' ' + lecture.complete_date + "</li></ul>";
             }
             tstring += '</ul>';
             tstring += '</div>';
@@ -85,7 +60,7 @@ function ChooserScreen(mainWindow) {
             obj.type = "button";
             obj.id = "btn"+i;
             obj.name = lclist[i].title
-            obj.value = enter_uistr;
+            obj.value = ct.tp("Enter");
             obj.className = "ui-button-text"
             obj.onclick = function() {
                 that.mainWindow.course_name = this.name;
