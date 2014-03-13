@@ -478,6 +478,7 @@ Exercises:
 #    - notes: \relative c' {c g' <c, g'>2}
 ---
 Version: 0.1
+Title: More Intervals
 Level: 2
 languages:
   en: 
@@ -648,6 +649,7 @@ Exercises:
 #    - notes: \relative c' { c gis' <c, gis'>2}
 #    - notes: \relative c' {c g' <c, g'>2}
 ---
+Title: Chords 2
 Level: 3
 Version: 0.1
 languages:

@@ -37,7 +37,7 @@ function get_transtable(pagename, language) {
             ttable["score"] = "pisteet";
             ttable["on"] = "";
             ttable["More information"] = "Lisätietoja";
-            //ttable["Enter"] = "Aloita";
+            ttable["Enter"] = "Aloita";
             ttable["exercises"] = "harjoitusta";
             ttable["Hints"] = "Ohjeita";
             ttable["Exercise information"] = "Tietoja harjoituksesta"
