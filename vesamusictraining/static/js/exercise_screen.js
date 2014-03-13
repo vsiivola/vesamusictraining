@@ -55,20 +55,23 @@ function Choice(type, image, ogg, mp3, text) {
         this.dom.append(span_icon)
 
         if (this.type == "audio_question" || this.type == "audio_response") {
-            var span_qmark = $('<span class="qmark altaudio">?</span>');
-            span_qmark.css("top", img.offset().top + "px");
-            span_qmark.css("left", img.offset().left + 60 + "px");
-            this.dom.append(span_qmark)
-            $(".empty_image", this).animate({opacity:0.2}, 3000);
-            span_qmark.animate({opacity:1.0}, 3000);
+            aathis = this;
+            $(document).ready(function() {
+                var span_qmark = $('<span class="qmark altaudio">?</span>');
+                span_qmark.css("top", img.offset().top + "px");
+                span_qmark.css("left", img.offset().left + 60 + "px");
+                aathis.dom.append(span_qmark)
+                $(".empty_image", aathis).animate({opacity:0.2}, 3000);
+                span_qmark.animate({opacity:1.0}, 3000);
 
-            if (this.type == "audio_question") {
-                span_icon.addClass("ui-icon ui-icon-circle-triangle-e")
-                uthis=this;
-                this.dom.click(function () {
-                    uthis.play_audio();
-                });
-            }
+                if (aathis.type == "audio_question") {
+                    span_icon.addClass("ui-icon ui-icon-circle-triangle-e")
+                    uthis=aathis;
+                    aathis.dom.click(function () {
+                        uthis.play_audio();
+                    });
+                }
+            })
         }
     }
 
