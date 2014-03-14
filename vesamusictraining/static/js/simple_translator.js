@@ -139,6 +139,12 @@ function append_lang() {
         $('a').each(function() {
             this.href += (/\?/.test(this.href) ? '&' : '?') + 'lang='+lang;
         });
+        $("input.ui-button").each(function() {
+            var t = transtable[$(this).val()]
+            if (t) {
+                $(this).val(t);
+            }
+        });
     }
 }
 
