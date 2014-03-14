@@ -1,11 +1,22 @@
 {% extends "base.html" %}
 
+{% block extra_head %}
+<script type="text/javascript">
+//<![CDATA[
+$(document).ready(function(){
+  tt = new Translator("regformpage", lang);
+  tt.translate_page();
+  tt.translate_form();
+});
+//]]></script>
+{% endblock %}
+
 {% block content_title %}
-Register
+<span class="localizestring">Register</span>
 {% endblock %}
 
 {% block content %}
-<h2>Register</h2>
+<h2><span class="localizestring">Register</span></h2>
 <form action="/accounts/register/" method="POST">{% csrf_token %}
   <table>
     {{ form.as_table }}
