@@ -1,28 +1,36 @@
 {% extends "base.html" %}
 
+{% block extra_head %}
+<script type="text/javascript">
+//<![CDATA[
+$(document).ready(function(){
+  translate_page("loginpage", lang);
+});
+//]]></script>
+{% endblock %}
+
 {% block content_title %}
-Sign In
+<span class="localizestring">Sign in</span>
 {% endblock %}
 
 {% block content %}
 
 {% if form.errors %}
-<p class="error">Sorry, that's not a valid username or password.</p>
+<p class="error"><span class="localizestring">Sorry, that's not a valid username or password</span>.</p>
 {% endif %}
 
 <form action='.' method='post'>{% csrf_token %}
   <ul class="formlist">
     <li>
-    <label for="username">Username:</label>
+    <label for="username"><span class="localizestring">Username</span>:</label>
     <input type="text" name="username" value="" id="username">
     </li>
     <li>
-    <label for="password">Password:</label>
+    <label for="password"><span class="localizestring">Password</span>:</label>
     <input type="password" name="password" value="" id="password">
     </li>
     <li>
-    <input type="submit" value="Sign In"class="ui-button
-  ui-widget ui-state-default ui-corner-all" />
+    <input type="submit" value="Sign in" class="ui-button ui-widget ui-state-default ui-corner-all" />
     <input type="hidden" name="next" value="/" />
     </li>
   </form>

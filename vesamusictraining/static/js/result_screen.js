@@ -1,12 +1,4 @@
-lang = "fi"
-
-if (lang=="fi") {
-    maintitle_resuistr = "Musiikinopettelu | Tulokset"
-    continue_uistr = "Jatka"
-} else if (lang=="en") {
-    maintitle_resuistr = "Music Training | Results"
-    continue_uistr = "Continue"
-}
+rt = new Translator("resultpage", lang);
 
 function ResultScreen(mainWindow) {
     this.mainWindow = mainWindow
@@ -22,7 +14,7 @@ function ResultScreen(mainWindow) {
     }
 
     this.get_server_info2 = function(foo, bar) { // not really getting any info nowsen
-        $("#maintitle").html(maintitle_resuistr);
+        $("#maintitle").html(rt.tp("Music Training | Results"));
         var mdiv = $("div#main");
         mdiv.html(
                   '<div class="results ui-corner-all">'+ that.mainWindow.correct_clicks + " / " + that.mainWindow.num_exercises +"</div>");
@@ -32,7 +24,7 @@ function ResultScreen(mainWindow) {
               function () {
                   var obj = document.createElement("input");
                   obj.type = "button";
-                  obj.value = continue_uistr;
+                  obj.value = rt.tp("Continue");
                   obj.className = "ui-button-text"
                   obj.onclick = function () {
                       that.mainWindow.course_name = null;

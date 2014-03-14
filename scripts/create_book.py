@@ -31,8 +31,8 @@ class BuildTarget:
     ofh.close()
 
   def copy_files(self):
-    shutil.copy("content/empty_stave.png", self.pngdir)
-    shutil.copy("content/logo.svg", self.pngdir)
+    for f in ["empty_stave.png", "logo.svg", "fi.png", "gb.png"]:
+      shutil.copy(os.path.join("content", f), self.pngdir)
 
 class PureDjangoTarget(BuildTarget):
   def __init__(self, media_target_dir=None, fixture_target_dir=None):

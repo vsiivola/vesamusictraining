@@ -4,11 +4,6 @@ function ChooserScreen(mainWindow) {
     this.mainWindow = mainWindow;
     this.course_list =  [];
 
-    //this.render_full = function() {
-    //    var that2 = this
-    //    $("div#main").slideUp("slow", function () {that2.real_render.apply(that2);})
-    //}
-
     this.render_full = function() {
         $("#maintitle").html(ct.tp("Music Training | Choose your exercise"));
             

@@ -5,6 +5,7 @@ function MainController() {
     var exercise_screen = new ExerciseScreen(this);
     var result_screen = new ResultScreen(this);
     var m_screen = null;
+    var lchooser_shown = false;
 
     this.show = function() {
         if (this.course_name == null) {
@@ -20,6 +21,10 @@ function MainController() {
         }
         //$("div#debug").html(this.course_name + " " + this.exercise_index + " " + this.num_exercises + " " + this.exercise_index < this.num_exercises)
         m_screen.get_server_info(this.course_name, this.exercise_index);
+        if (! lchooser_shown) {
+            lchooser_shown = true;
+            insert_langchooser();
+        } 
    }
 }
 

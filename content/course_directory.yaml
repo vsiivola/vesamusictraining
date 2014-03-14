@@ -168,13 +168,22 @@ Exercises:
   style: chord
   notes: c1
   annotation: I
+  text:
+    en: Major
+    fi: Duuri
   question_type: random
   hidden_tempo: 150
   confusers:
    - notes: c1:m
      annotation: i
+     text:
+       en: Minor
+       fi: Molli
    - notes: c1:1.5
      annotation: '"I5"'
+     text:
+       en: Neutral
+       fi: Neutraali
 - name: 
     en : Major, minor and pentatonic descending scales
     fi : Laskevat duuri-, molli- ja pentatoniset asteikot
