@@ -8,7 +8,7 @@ function ResultScreen(mainWindow) {
         that = this
         $("span").removeClass("ui-icon-circle-check");
         $("span").removeClass("ui-icon-circle-close");
-        $("span").css("opacity", "0.0");
+        $("span.checkremove").css("opacity", "0.0");
 
         $("div#main").slideUp("slow", function () {that.get_server_info2.apply(that);})
     }

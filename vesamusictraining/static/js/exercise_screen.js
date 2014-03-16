@@ -72,10 +72,10 @@ function Choice(type, image, ogg, mp3, text) {
         var img = $("img", this.dom);
         
         if (correct) {
-            span_icon.addClass("ui-icon ui-icon-circle-check");
+            span_icon.addClass("ui-icon ui-icon-circle-check checkremove");
             color = "rgb(100,200,100)";
         } else {
-            span_icon.addClass("ui-icon ui-icon-circle-close");
+            span_icon.addClass("ui-icon ui-icon-circle-close checkremove");
             color = "rgb(200,100,100)";
             if (this.type=="image_response") {
                 this.play_audio()
@@ -220,7 +220,7 @@ function ExerciseScreen(mainWindow) {
     }
 
     this.clear_statics = function (callback) {
-        $("span").removeClass("ui-icon ui-icon-circle-triangle-e ui-icon-circle-check ui-icon-circle-close");
+        $("span").removeClass("ui-icon ui-icon-circle-triangle-e ui-icon-circle-check ui-icon-circle-close checkremove");
         $("div.overlay").css("opacity", "0.0")
         $("span.qmark").css("opacity", "0.0")
         callback();

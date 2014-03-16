@@ -7,6 +7,8 @@ if (result) {
     lang =  unescape(result[1]);
 }
 var firstrun = true;
+var firstbasetrans = true;
+var firstlangchooser = true;
 
 function get_transtable(pagename, language) {
     var ttable = {};
@@ -16,7 +18,8 @@ function get_transtable(pagename, language) {
         ttable["Home"] = "Koti";
     }
 
-    if (pagename=="basepage") {
+    if (pagename=="basepage" && firstbasetrans) {
+        firstbasetrans = false;
         if (language=="fi") {
             ttable["Sign out"] = "Kirjaudu ulos";
             ttable["Sign in"] = "Kirjaudu sisään";
@@ -156,12 +159,19 @@ function Translator(pagename, language) {
 
     if (this.transtable) {
         this.tp = function(phrase) {
-            return this.transtable[phrase];
+            var t = this.transtable[phrase];
+            if (t) {
+                return this.transtable[phrase];
+            }
+            return phrase;
         }
 
         this.translate_form = function() {
             $("label").each(function() {
-                $( this ).html(transtable[$(this).text()]);
+                var t = transtable[$(this).text()];
+                if (t) {
+                    $( this ).html(t);
+                }
             });
 
             $("input").each(function() {
@@ -187,6 +197,10 @@ function Translator(pagename, language) {
 }
 
 function insert_langchooser() {
+    if (!firstlangchooser) {
+        return;
+    }
+    firstlangchooser = false;
     if (lang=="fi") {
         var langimages= $('<li class="langchooser"><img src="/static/generated_assets/images/gb.png" /></li>');
         langimages.click(function() {
