@@ -17,7 +17,7 @@ function Choice(type, image, ogg, mp3, text) {
 
         if (this.type == "audio_question") {
             this.dom = empty_stave_td;
-            return
+            return;
         }
 
         this.dom = $('<td align="center" width="200"><table class="buttontable"><tr class="empty_stave"></tr><tr><td align="center"><button class="ui-button-text">'+et.tp("Play")+'</button></td></tr></table>');
@@ -48,22 +48,20 @@ function Choice(type, image, ogg, mp3, text) {
 
         if (this.type == "audio_question" || this.type == "audio_response") {
             aathis = this;
-            $(document).ready(function() {
-                var span_qmark = $('<span class="qmark altaudio">?</span>');
-                span_qmark.css("top", img.offset().top + "px");
-                span_qmark.css("left", img.offset().left + 60 + "px");
-                aathis.dom.append(span_qmark)
-                $(".empty_image", aathis).animate({opacity:0.2}, 3000);
-                span_qmark.animate({opacity:1.0}, 3000);
+            var span_qmark = $('<span class="qmark altaudio">?</span>');
+            span_qmark.css("top", img.offset().top + "px");
+            span_qmark.css("left", img.offset().left + 60 + "px");
+            aathis.dom.append(span_qmark)
+            $(".empty_image", aathis).animate({opacity:0.2}, 3000);
+            span_qmark.animate({opacity:1.0}, 3000);
 
-                if (aathis.type == "audio_question") {
-                    span_icon.addClass("ui-icon ui-icon-circle-triangle-e")
-                    uthis=aathis;
-                    aathis.dom.click(function () {
-                        uthis.play_audio();
-                    });
-                }
-            })
+            if (aathis.type == "audio_question") {
+                span_icon.addClass("ui-icon ui-icon-circle-triangle-e")
+                uthis=aathis;
+                aathis.dom.click(function () {
+                    uthis.play_audio();
+                });
+            }
         }
     }
 
@@ -198,11 +196,13 @@ function ExerciseScreen(mainWindow) {
         this.num_clicks=0;
         $("div#main").slideDown(function() { 
             q.play_audio();
-            q.initial_overlays();
-            for (var i=0; i<response.num_alt; i++) {
-                ethis.choices[i].initial_overlays();
-                ethis.choices[i].bind_events(ethis);
-            }
+            $(this).ready(function () {
+                q.initial_overlays();
+                for (var i=0; i<response.num_alt; i++) {
+                    ethis.choices[i].initial_overlays();
+                    ethis.choices[i].bind_events(ethis);
+                }
+            });
         });
     }
 
