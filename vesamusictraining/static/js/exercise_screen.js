@@ -135,13 +135,13 @@ function Choice(type, image, ogg, mp3, text) {
         var clickable = null;
         if (this.type == "audio_response") {
             $("button", this.dom).click(function () {athis.play_audio()}); 
-            clickable = $(".altaudio", this.dom);
+            clickable = $(".empty_stave, .altaudio", this.dom);
         } else {
             clickable = this.dom;
         }
         
         clickable.one("click", function () {
-            $(".altaudio", athis).off("click");
+            $(".empty_stave, .altaudio", athis).off("click");
             ethis.num_clicks+=1;
             //$("div#debug").append("cidx " + athis.idstring + ", img" + athis.image);
             $.get('/exercise/'+ethis.mainWindow.course_name+'/verify/', 
