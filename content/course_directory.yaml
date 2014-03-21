@@ -13,7 +13,7 @@ languages:
     Outside_information:
       name: Nuotit Wikipediassa
       link: http://fi.wikipedia.org/wiki/Nuotit
-    Instructions: Joka nuotti vastaa yhtä ääntä. Korkeammat äänet ovat ylemäpänä viivastolla.
+    Instructions: Joka nuotti vastaa yhtä ääntä. Korkeammat äänet ovat ylempänä viivastolla.
 Exercises:
 - name: 
     en: Note durations
