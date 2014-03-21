@@ -476,6 +476,7 @@ naturalizeMusic =
 
           else:
             body += conv["notes"]
+            staffstring = "Staff"
           lyfh.write(self.lilypond_template % (staffstring, conv["instrument"], body))
           lyfh.close()
 
