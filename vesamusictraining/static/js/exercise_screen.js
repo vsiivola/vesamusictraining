@@ -9,18 +9,18 @@ function Choice(type, image, ogg, mp3, text) {
 
     this.build_dom = function () {
         if (this.type == "image_question" || this.type == "image_response") {
-            this.dom = $('<td align="center" width="200"><img src="' + this.image + '"></img><br>' + this.text +'</td>');
+            this.dom = $('<td align="center" width="260"><img src="' + this.image + '"></img><br>' + this.text +'</td>');
             return;
         }
 
-        var empty_stave_td = $('<td align="center" width="200"><img src="/static/generated_assets/images/empty_stave.png" class="empty_image"></img></td>');
+        var empty_stave_td = $('<td align="center" width="260"><img src="/static/generated_assets/images/empty_stave.png" class="empty_image"></img></td>');
 
         if (this.type == "audio_question") {
             this.dom = empty_stave_td;
             return;
         }
 
-        this.dom = $('<td align="center" width="200"><table class="buttontable"><tr class="empty_stave"></tr><tr><td align="center"><button class="ui-button-text">'+et.tp("Play")+'</button></td></tr></table>');
+        this.dom = $('<td align="center" width="260"><table class="buttontable"><tr class="empty_stave"></tr><tr><td align="center"><button class="ui-button-text">'+et.tp("Play")+'</button></td></tr></table>');
         $("tr.empty_stave", this.dom).append(empty_stave_td);
     }
 
