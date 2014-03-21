@@ -193,7 +193,7 @@ class SimpleHtmlTarget(BuildTarget):
         s+= "</td></tr>\n"
         alternatives = []
         for a in [e] + e["confusers"]:
-          text = a["text"]["en"] if "text" in a else None
+          text = a["text"]["en"] if "text" in a and a["text"] else None
           if e["answer_type"] == "image":
             alternatives.append((image_str(a["image_png"]), audio_str(a["ogg"], a["mp3"]), text))
           elif e["answer_type"] == "audio":
@@ -281,7 +281,7 @@ naturalizeMusic =
 }
 """ + naturalize_transpose_ly + """
 \\score {
-  \\new Staff {
+  \\new %s {
     \\set Staff.midiInstrument = "%s"
   { %s } }
  \\layout {}
@@ -467,9 +467,16 @@ naturalizeMusic =
             if s=="chord" or s=="interval" or s=="scale":
               body += "\\addlyrics { " + conv["annotation"] +" } >>"
 
+            if s=="drums":
+              #body += "\\new DrumStaff { \drummode { " + conv["notes"] + "} }"
+              body += "{ \drummode { " + conv["notes"] + "} }"
+              staffstring = "DrumStaff"
+            else:
+              staffstring = "Staff"
+
           else:
             body += conv["notes"]
-          lyfh.write(self.lilypond_template % (conv["instrument"], body))
+          lyfh.write(self.lilypond_template % (staffstring, conv["instrument"], body))
           lyfh.close()
 
           fnull = open(os.devnull, 'w')

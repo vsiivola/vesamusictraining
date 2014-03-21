@@ -204,6 +204,69 @@ Exercises:
        en: Minor (Melodic)
        fi: Molli (melodinen)
 ---
+Version: 0.1
+Level: 1
+languages:
+  en:
+    Title: Basic rhythms
+    Outside_information: 
+      name: Wikipedia article on rhythm
+      link: http://en.wikipedia.org/wiki/Rhythm
+  fi:
+    Title: Perusrytmit
+    Outside_information: 
+      name: Rytmi Wikipediassa 
+      link: http://fi.wikipedia.org/wiki/Rytmi
+Exercises:
+- name: 
+    en: Quarters and eights
+    fi: Neljäsosa ja kahdeksasosa
+  generate: all
+  style: drums
+  notes: hihat hihat hihat8 hihat8 hihat4 hihat8 hihat8 hihat8 hihat8 hihat4 hihat4
+  question_type: audio
+  answer_type: image
+  hidden_tempo: 180
+  confusers:
+   - notes: hihat8 hihat8 hihat4 hihat8 hihat8 hihat4 hihat8 hihat8 hihat8 hihat8 hihat4 hihat4
+   - notes: hihat8 hihat8 hihat8 hihat8 hihat8 hihat8 hihat4 hihat8 hihat8 hihat8 hihat8 hihat8 hihat8 hihat4
+- name: 
+    en: Halfs, Quarters and eights
+    fi: Puolikkas, Neljäsosa ja kahdeksasosa
+  generate: all
+  style: drums
+  notes: hihat4 hihat8 hihat8 hihat8 hihat8 hihat8 hihat8
+  question_type: audio
+  answer_type: image
+  hidden_tempo: 180
+  confusers:
+   - notes: hihat4 hihat4 hihat4 hihat4
+   - notes: hihat4 hihat2 hihat4
+- name: 
+    en: Waltz and march
+    fi: Valssi ja marssi
+  generate: all
+  style: drums
+  notes: snare4 hihat8 hihat hihat4 hihat4 snare hihat4 hihat8 hihat hihat4 snare4 hihat8 hihat hihat4 hihat4 snare hihat4 hihat8 hihat hihat4 
+  question_type: audio
+  hidden_tempo: 180
+  answer_type: image
+  confusers:
+   - notes: \time 3/4 snare4 hihat4 hihat4 snare hihat8 hihat8 hihat4 snare4 hihat4 hihat4 snare hihat8 hihat8 hihat4
+   - notes: \time 2/4 snare4 hihat4 snare hihat snare hihat snare hihat snare4 hihat4 snare hihat snare hihat snare hihat
+- name: 
+    en: Tuplet
+    fi: Trioli
+  generate: all
+  style: drums
+  hidden_tempo: 180
+  notes: hihat \times 2/3 {hihat8 hihat hihat} hihat4 hihat4 
+  question_type: audio
+  answer_type: image
+  confusers:
+   - notes: hihat4 hihat8 hihat hihat hihat hihat4 
+   - notes: hihat4 \times 2/3 {hihat8 hihat hihat} hihat4 \times 2/3 {hihat8 hihat hihat}
+---
 Version: 0.3
 Level: 1
 languages:
@@ -468,23 +531,6 @@ Exercises:
      annotation: _ "Iaug" _
    - notes: c4:aug7 c4:aug7 c2:aug7
      annotation: _ "Iaug7" _
-#---
-# Title: Rhythms
-# Version: 0.0
-# Level: 2
-# Outside_information: 
-# - name: Wikipedia article on chord progressions
-#   link: http://en.wikipedia.org/wiki/Rhythm
-# Exercises:
-# - name: Placeholder
-#   generate: 2 first
-#   notes: \relative f' { c e <c e>2 }
-#   question_type: audio
-#   answer_type: image
-#   hidden_tempo: 100
-#   confusers:
-#    - notes: \relative c' { c gis' <c, gis'>2}
-#    - notes: \relative c' {c g' <c, g'>2}
 ---
 Version: 0.1
 Title: More Intervals
