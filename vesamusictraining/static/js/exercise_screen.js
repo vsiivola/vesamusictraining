@@ -65,7 +65,7 @@ function Choice(type, image, ogg, mp3, text) {
         }
     }
 
-    this.display_result = function(correct) {
+    this.display_result = function(myex, parent, correct) {
         var span_icon = $("span.span_icon", this.dom);
         var img = $("img", this.dom);
         
@@ -84,14 +84,24 @@ function Choice(type, image, ogg, mp3, text) {
             img.attr("src", this.image);
             $(".empty_image", this.dom).animate({opacity:0.8}, 3000);
 
-            var span_qmark = $("span.qmark", this.dom);
-            span_icon.css("top", img.offset().top + "px");
-            span_icon.css("left", img.offset().left - 2 + "px");
-            span_qmark.css("top", img.offset().top + "px");
-            span_qmark.css("left", img.offset().left + 60 + "px");
-            span_qmark.animate({opacity:0.0}, 3000);
+            var mydom = this.dom;
+            var topobj = this;
+            img.load(function() {
+                var span_qmark = $("span.qmark", mydom);
+                span_icon.css("top", $(this).offset().top + "px");
+                span_icon.css("left", $(this).offset().left - 2 + "px");
+                span_qmark.css("top", $(this).offset().top + "px");
+                span_qmark.css("left", $(this).offset().left + 60 + "px");
+                span_qmark.animate({opacity:0.0}, 3000);
+                
+                topobj.do_overlay(myex, parent, mydom, img, color, span_icon, correct);
+            });
+        } else {
+            this.do_overlay(myex, parent, this.dom, img, color, span_icon, correct)
         }
+    }
 
+    this.do_overlay = function(ex, parenta, mydom, img, color, span_icon, correct) {
         overlay = $('<div class="overlay"></div>')
         overlay.width(img.css("width"));
         overlay.height(img.css("height"));
@@ -99,8 +109,25 @@ function Choice(type, image, ogg, mp3, text) {
         overlay.css("left", img.offset().left + "px");
         overlay.css("background-color", color);
         overlay.css("opacity", "0.7");
-        this.dom.append(overlay)
+        mydom.append(overlay)
         span_icon.animate({opacity:1.0}, 3000);
+
+        //$("div#debug").append("exnum " + ex.mainWindow.exercise_index)
+        parenta.dom.ready( function() {
+            $("div", parenta.dom).animate({opacity:0.2}, {duration: 1500, easing: 'linear', complete: function () {
+                if (correct) {
+                    if (ex.num_clicks==1) {
+                        ex.mainWindow.correct_clicks += 1;
+                    }
+                    ex.mainWindow.exercise_index += 1;
+                    ex.clear_statics(function () {
+                        ex.mainWindow.show.apply(ex.mainWindow);
+                    });
+                    return;
+                }
+            }});
+        });
+        
     }
 
     this.bind_events = function (ethis) {
@@ -129,20 +156,8 @@ function Choice(type, image, ogg, mp3, text) {
                       athis.mp3=respi["mp3"];
                       athis.ogg=respi["ogg"];
                       athis.text=respi["text"]
-                      athis.display_result(respi["correct"]);
-                      //$("div#debug").append("exnum " + ethis.mainWindow.exercise_index)
-                      $("div", athis.dom).animate({opacity:0.2, easing:'linear'}, 1500, function () {
-                          if (respi["correct"]) {
-                              if (ethis.num_clicks==1) {
-                                  ethis.mainWindow.correct_clicks += 1;
-                              }
-                              ethis.mainWindow.exercise_index += 1;
-                              ethis.clear_statics(function () {
-                                  ethis.mainWindow.show.apply(ethis.mainWindow);
-                              });
-                              return;
-                          }
-                      });
+                      //$("div#debug").append("cidx " + athis.idstring + ", img" + athis.image);
+                      athis.display_result(ethis, athis, respi["correct"]);
                   });
         });
 
