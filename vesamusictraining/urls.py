@@ -6,6 +6,10 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 admin.autodiscover()
 
+# porting to py3, why is this needed
+import sys, os
+sys.path.append(os.path.dirname(__file__))
+
 import settings
 import os
 
