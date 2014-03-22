@@ -35,6 +35,8 @@ function get_transtable(pagename, language) {
             ttable["Please sign in"] = "Kirjaudu sisään";
             ttable["sign up"] = "luo_tunnus";
             ttable["or"] = "tai";
+            ttable["Welcome"] = "Astu sisään";
+            ttable["This is a simple app for improvings skills to hear different musical constructs and to read the corresponding musical notation."] = "Tämä on yksinkertainen harjoitus, jonka tarkoituksena on opettaa kuulemaan erilaisia musiikillisia rakenteita ja tunnistamaan niitä vastaava nuotinnos."
             return ttable;
         }
         return null;
@@ -104,6 +106,14 @@ function get_transtable(pagename, language) {
             ttable["Password (again):"] = "Salasana (uudestaan):";
             ttable["Submit"] = "Lähetä";
             ttable["Enter a valid email address."] = "Anna toimiva sähköpostiosoite";
+            return ttable;
+        }
+        return null;
+    }
+
+    if (pagename=="newspage") {
+        if (language=="fi") {
+            ttable["News"] = "Uutiset";
             return ttable;
         }
         return null;

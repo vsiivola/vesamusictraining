@@ -1,11 +1,13 @@
 {% extends "base.html" %}
 
 {% block extra_head %}
+  <script type="text/javascript" src="/static/js/news.js"></script>
 <script type="text/javascript">
 //<![CDATA[
 $(document).ready(function(){
   translate_page("indexpage", lang);
   insert_langchooser();
+  showNews($("span.news"));
 });
 //]]></script>
 {% endblock %}
@@ -15,7 +17,11 @@ Home
 {% endblock %}
 
 {% block content %}
+<H3><span class="localizestring">Welcome</span></H3>
+<P>
+<span class="localizestring">This is a simple app for improvings skills to hear different musical constructs and to read the corresponding musical notation.</span></P>
 <P>
 <a href="/accounts/login"><span class="localizestring">Please sign in</span></a> <span class="localizestring">or</span> <a href="/accounts/register"><span class="localizestring">sign up</span></a>.
 </P>
+<span class="news" />
 {% endblock %}
