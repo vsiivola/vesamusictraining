@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'registration',
     'vesamusictraining.exercise',
+    'south',
 )
 
 MIDDLEWARE_CLASSES = (
