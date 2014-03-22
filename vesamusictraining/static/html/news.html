@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block extra_head %}
+  <script type="text/javascript" src="/static/js/news.js"></script>
+<script type="text/javascript">
+//<![CDATA[
+$(document).ready(function(){
+  translate_page("newspage", lang);
+  insert_langchooser();
+  showNews($("span.news"));
+});
+//]]></script>
+{% endblock %}
+
+{% block content_title %}
+News
+{% endblock %}
+
+{% block content %}
+<span class="news" />
+{% endblock %}

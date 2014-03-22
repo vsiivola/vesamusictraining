@@ -24,6 +24,7 @@ function get_transtable(pagename, language) {
             ttable["Sign out"] = "Kirjaudu ulos";
             ttable["Sign in"] = "Kirjaudu sisään";
             ttable["Contact"] = "Ota yhteyttä";
+            ttable["News"] = "Uutiset";
             ttable["Music training"] = "Musiikinharjoittelu";
             return ttable;
         }
