@@ -5,7 +5,7 @@ of rhythm, notes and harmony and their musical notation.
 You can find the app running at 
 http://vesamusictraining.herokuapp.com/
 
-You'll need python2, python-yaml, lilypond, timidity and 
+You'll need python, python-yaml, lilypond, timidity and 
 sox to generate the exercises.
 
 Running "create_book.py" will generate a django web 
@@ -16,3 +16,7 @@ binaries for lilypond, timidity and sox are assumed to
 exist. The option "-t simple_html" will generate a 
 rough web page for debugging.
 
+South is a db migration tool. Initialize with
+  python manage.py schemamigration exercise --initial
+and apply changes with
+  python manage.py schemamigration exercise --auto
