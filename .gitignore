@@ -3,6 +3,9 @@ work
 simple_html
 vesamusictraining/static/generated_assets
 vesamusictraining/exercise/fixtures
+vesamusictraining/exercise/migrations
+vesamusictraining/news/fixtures
+vesamusictraining/news/migrations
 *~
 venv
 db.sqlite3

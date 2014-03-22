@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'registration',
     'vesamusictraining.exercise',
+    'vesamusictraining.news',
     'south',
 )
 

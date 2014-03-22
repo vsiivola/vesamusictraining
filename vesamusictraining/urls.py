@@ -22,5 +22,6 @@ urlpatterns = patterns('',
     url(r'^static/(?P<path>.*?)$', 'django.views.static.serve', {'document_root': settings.STATIC_DIR, 'show_indexes': True}),
     url(r'^accounts/', include('registration.backends.simple.urls')),
     url(r'^exercise/', include('vesamusictraining.exercise.urls')),
+    url(r'^news/', include('vesamusictraining.news.urls')),
     url(r'^users/', "vesamusictraining.user.views.home"),
 )
