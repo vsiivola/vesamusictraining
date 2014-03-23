@@ -6,7 +6,7 @@ from vesamusictraining.news.models import NewsItem
 
 def list_news(request, lang):
     all_news = []
-    for l in NewsItem.objects.filter(language=lang):
+    for l in NewsItem.objects.filter(language=lang).order_by('-date'):
         res = {
             "title": l.title,
             "year": "%d" % l.date.year,
