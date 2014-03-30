@@ -46,7 +46,7 @@ function Choice(type, image, ogg, mp3, text) {
 
         span_icon.css("top", img.offset().top + "px");
         span_icon.css("left", img.offset().left - 2 + "px");
-        aathis.dom.append(span_icon)
+        span_icon.ready(function () {aathis.dom.append(span_icon)})
         
         if (aathis.type == "audio_question" || aathis.type == "audio_response") {
             
