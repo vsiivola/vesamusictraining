@@ -54,11 +54,13 @@ function Choice(type, image, ogg, mp3, text) {
             span_qmark.css("top", img.offset().top + "px");
             span_qmark.css("left", img.offset().left + 60 + "px");
             aathis.dom.append(span_qmark)
-            $(".empty_image", aathis).animate({opacity:0.2}, 3000);
-            span_qmark.animate({opacity:1.0}, 3000);
+            $(".empty_image", aathis).delay( 500).animate({opacity:0.2}, 3000);
+            span_qmark.delay( 500 ).animate({opacity:1.0}, 3000);
             
             if (aathis.type == "audio_question") {
-                span_icon.addClass("ui-icon ui-icon-circle-triangle-e")
+                setTimeout( function () {
+                    span_icon.addClass("ui-icon ui-icon-circle-triangle-e")
+                    }, 1000);
                 uthis=aathis;
                 aathis.dom.click(function () {
                     uthis.play_audio();
