@@ -46,7 +46,7 @@ function Choice(type, image, ogg, mp3, text) {
 
         span_icon.css("top", img.offset().top + "px");
         span_icon.css("left", img.offset().left - 2 + "px");
-        span_icon.ready(function () {aathis.dom.append(span_icon)})
+        aathis.dom.append(span_icon);
         
         if (aathis.type == "audio_question" || aathis.type == "audio_response") {
             
@@ -215,13 +215,11 @@ function ExerciseScreen(mainWindow) {
         this.num_clicks=0;
         $("div#main").slideDown(function() { 
             q.play_audio();
-            $().ready(function () {
-                q.initial_overlays();
-                for (var i=0; i<response.num_alt; i++) {
-                    ethis.choices[i].initial_overlays();
-                    ethis.choices[i].bind_events(ethis);
-                }
-            });
+            q.initial_overlays();
+            for (var i=0; i<response.num_alt; i++) {
+                ethis.choices[i].initial_overlays();
+                ethis.choices[i].bind_events(ethis);
+            }
         });
     }
 
