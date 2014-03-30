@@ -44,29 +44,31 @@ function Choice(type, image, ogg, mp3, text) {
         var span_icon = $('<span class="span_icon"></span>');
         var aathis = this;
 
-        span_icon.css("top", img.offset().top + "px");
-        span_icon.css("left", img.offset().left - 2 + "px");
-        aathis.dom.append(span_icon);
+        setTimeout( function () {
+            span_icon.css("top", img.offset().top + "px");
+            span_icon.css("left", img.offset().left - 2 + "px");
+            aathis.dom.append(span_icon);
         
-        if (aathis.type == "audio_question" || aathis.type == "audio_response") {
-            
-            var span_qmark = $('<span class="qmark altaudio">?</span>');
-            span_qmark.css("top", img.offset().top + "px");
-            span_qmark.css("left", img.offset().left + 60 + "px");
-            aathis.dom.append(span_qmark)
-            $(".empty_image", aathis).delay( 500).animate({opacity:0.2}, 3000);
-            span_qmark.delay( 500 ).animate({opacity:1.0}, 3000);
-            
-            if (aathis.type == "audio_question") {
-                setTimeout( function () {
-                    span_icon.addClass("ui-icon ui-icon-circle-triangle-e")
-                    }, 1000);
-                uthis=aathis;
-                aathis.dom.click(function () {
-                    uthis.play_audio();
-                });
+            if (aathis.type == "audio_question" || aathis.type == "audio_response") {
+                
+                var span_qmark = $('<span class="qmark altaudio">?</span>');
+                span_qmark.css("top", img.offset().top + "px");
+                span_qmark.css("left", img.offset().left + 60 + "px");
+                aathis.dom.append(span_qmark)
+                $(".empty_image", aathis).delay( 500).animate({opacity:0.2}, 3000);
+                span_qmark.delay( 200 ).animate({opacity:1.0}, 3000);
+                
+                if (aathis.type == "audio_question") {
+                    setTimeout( function () {
+                        span_icon.addClass("ui-icon ui-icon-circle-triangle-e")
+                    }, 200);
+                    uthis=aathis;
+                    aathis.dom.click(function () {
+                        uthis.play_audio();
+                    });
+                }
             }
-        }
+        }, 2000);
     }
 
     this.display_result = function(myex, parent, correct) {
