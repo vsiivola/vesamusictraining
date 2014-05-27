@@ -1,8 +1,12 @@
+/*jslint
+   sub: true
+*/
+/*globals lang, window, unescape, $*/
 // Parse lang
 
 if (typeof lang === 'undefined') { var lang = "fi";}
 // See if we pass the lang in from the url
-var result = new RegExp("lang=([^&]*)", "i").exec(window.location.search); 
+var result = new RegExp("lang=([^&]*)", "i").exec(window.location.search);
 if (result) {
     lang =  unescape(result[1]);
 }
@@ -11,16 +15,17 @@ var firstbasetrans = true;
 var firstlangchooser = true;
 
 function get_transtable(pagename, language) {
+    "use strict";
     var ttable = {};
-    
+
    // global translation strings
-    if  (language=="fi") {
+    if  ( language === "fi") {
         ttable["Home"] = "Koti";
     }
 
-    if (pagename=="basepage" && firstbasetrans) {
+    if (pagename === "basepage" && firstbasetrans) {
         firstbasetrans = false;
-        if (language=="fi") {
+        if (language === "fi") {
             ttable["Sign out"] = "Kirjaudu ulos";
             ttable["Sign in"] = "Kirjaudu sisään";
             ttable["Contact"] = "Ota yhteyttä";
@@ -28,11 +33,11 @@ function get_transtable(pagename, language) {
             ttable["Music training"] = "Musiikinharjoittelu";
             return ttable;
         }
-        return null
+        return null;
     }
 
-    if (pagename=="indexpage") {
-        if (language=="fi") {
+    if (pagename === "indexpage") {
+        if (language === "fi") {
             ttable["Please sign in"] = "Kirjaudu sisään";
             ttable["sign up"] = "luo_tunnus";
             ttable["or"] = "tai";
@@ -43,8 +48,8 @@ function get_transtable(pagename, language) {
         return null;
     }
 
-    if (pagename=="chooserpage") {
-        if (language=="fi") {
+    if (pagename === "chooserpage") {
+        if (language === "fi") {
             ttable["Music Training | Choose your exercise"] = "Musiikinharjoittelu | Valitse harjoitus";
             ttable["version"] = "versio";
             ttable["completed"] = "tehty";
@@ -60,8 +65,8 @@ function get_transtable(pagename, language) {
         return null;
     }
 
-    if (pagename=="exercisepage") {
-        if (language=="fi") {
+    if (pagename === "exercisepage") {
+        if (language === "fi") {
             ttable["Music Training"] = "Musiikinharjoittelu";
             ttable["Play"] = "Soita";
             return ttable;
@@ -69,8 +74,8 @@ function get_transtable(pagename, language) {
         return null;
     }
 
-    if (pagename=="resultpage") {
-        if (language=="fi") {
+    if (pagename === "resultpage") {
+        if (language === "fi") {
             ttable["Music Training | Results"] = "Musiikinharjoittelu | Tulokset";
             ttable["Continue"] = "Jatka";
             return ttable;
@@ -78,8 +83,8 @@ function get_transtable(pagename, language) {
         return null;
     }
 
-    if (pagename=="loginpage") {
-        if (language=="fi") {
+    if (pagename === "loginpage") {
+        if (language === "fi") {
             ttable["Username"] = "Käyttäjätunnus";
             ttable["Sign in"] = "Kirjaudu sisään";
             ttable["Sorry, that's not a valid username or password"] = "Väärä tunnus tai salasana";
@@ -89,8 +94,8 @@ function get_transtable(pagename, language) {
         return null;
     }
 
-    if (pagename=="logoutpage") {
-        if (language=="fi") {
+    if (pagename === "logoutpage") {
+        if (language === "fi") {
             ttable["Sign out"] = "Kirjaudu ulos";
             ttable["You have succesfully signed out"] = "Olet kirjautunut ulos";
             return ttable;
@@ -98,8 +103,8 @@ function get_transtable(pagename, language) {
         return null;
     }
 
-    if (pagename=="regformpage") {
-        if (language=="fi") {
+    if (pagename === "regformpage") {
+        if (language === "fi") {
             ttable["Register"] = "Luo käyttäjätunnus";
             ttable["Username:"] = "Käyttäjätunnus";
             ttable["E-mail:"] = "Sähköpostiosoite:";
@@ -122,22 +127,24 @@ function get_transtable(pagename, language) {
 }
 
 function translate_page(pagename, language) {
+    "use strict";
     var transtable = get_transtable(pagename, language);
 
     real_translate_page(transtable);
 }
 
 function real_translate_page(transtable) {
+    "use strict";
     if (transtable) {
-        $(".localizestring").each(function() {
-            var newtext = transtable[$(this).text()]
+        $(".localizestring").each(function () {
+            var newtext = transtable[$(this).text()];
             if (newtext) {
-                $( this ).html(newtext);
+                $(this).html(newtext);
             }
         });
 
-        $("input.ui-button").each(function() {
-            var t = transtable[$(this).val()]
+        $("input.ui-button").each(function () {
+            var t = transtable[$(this).val()];
             if (t) {
                 $(this).val(t);
             }
@@ -147,15 +154,16 @@ function real_translate_page(transtable) {
 }
 
 function append_lang() {
+    "use strict";
     // Rewrite all links to use lang parameter
     if (firstrun) {
         firstrun = false;
-        $('a').each(function() {
-            this.href += (/\?/.test(this.href) ? '&' : '?') + 'lang='+lang;
+        $('a').each(function () {
+            this.href += (/\?/.test(this.href) ? '&' : '?') + 'lang=' + lang;
         });
         if (! typeof transtable === 'undefined') {
-            $("input.ui-button").each(function() {
-                var t = transtable[$(this).val()]
+            $("input.ui-button").each(function () {
+                var t = transtable[$(this).val()];
                 if (t) {
                     $(this).val(t);
                 }
@@ -165,64 +173,69 @@ function append_lang() {
 }
 
 function Translator(pagename, language) {
+    "use strict";
     this.transtable = get_transtable(pagename, language);
     var transtable = this.transtable;
 
-    this.translate_page = function() { real_translate_page(this.transtable); }
+    this.translate_page = function () {
+        real_translate_page(this.transtable);
+    };
 
     if (this.transtable) {
-        this.tp = function(phrase) {
+        this.tp = function (phrase) {
             var t = this.transtable[phrase];
             if (t) {
                 return this.transtable[phrase];
             }
             return phrase;
-        }
+        };
 
-        this.translate_form = function() {
-            $("label").each(function() {
+        this.translate_form = function () {
+            $("label").each(function () {
                 var t = transtable[$(this).text()];
                 if (t) {
                     $( this ).html(t);
                 }
             });
 
-            $("input").each(function() {
-                var t = transtable[$(this).val()]
+            $("input").each(function () {
+                var t = transtable[$(this).val()];
                 if (t) {
                     $(this).val(t);
                 }
             });
 
-            $("li").each(function() {
-                var t = transtable[$(this).text()]
+            $("li").each(function () {
+                var t = transtable[$(this).text()];
                 if (t) {
                     $(this).html(t);
                 }
             });
-        }
+        };
     } else {
-        this.tp = function(phrase) {
+        this.tp = function (phrase) {
             return phrase;
-        }
-        this.translate_form = function() { }
+        };
+        this.translate_form = function () { };
     }
 }
 
 function insert_langchooser() {
+    "use strict";
     if (!firstlangchooser) {
         return;
     }
     firstlangchooser = false;
-    if (lang=="fi") {
-        var langimages= $('<li class="langchooser"><img src="/static/generated_assets/images/gb.png" /></li>');
-        langimages.click(function() {
-            window.location.href = window.location.href.substring(0, window.location.href.indexOf('&'))+"?lang=en";
+    var langimages;
+    if (lang === "fi") {
+        langimages = $('<li class="langchooser"><img src="/static/generated_assets/images/gb.png" /></li>');
+        langimages.click(function () {
+            window.location.href = window.location.href.substring(0, window.location.href.indexOf('&')) + "?lang=en";
         });
     } else {
-        var langimages= $('<li class="langchooser"><img src="/static/generated_assets/images/fi.png" /></li>');
-        langimages.click(function() {
-            window.location.href = window.location.href.substring(0, window.location.href.indexOf('&'))+"?lang=fi";
+        langimages = $('<li class="langchooser"><img src="/static/generated_assets/images/fi.png" /></li>');
+        langimages.click(function () {
+            window.location.href = window.location.href.substring(0, window.location.href.indexOf('&')) + "?lang=fi";
         });
     }
 

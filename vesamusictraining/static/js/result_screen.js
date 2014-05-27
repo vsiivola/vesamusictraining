@@ -1,38 +1,47 @@
-rt = new Translator("resultpage", lang);
+/*globals Translator, lang, document, $*/
+
+var rt = new Translator("resultpage", lang),
+    result_context;
+
 
 function ResultScreen(mainWindow) {
-    this.mainWindow = mainWindow
-    that = this
+    "use strict";
+    this.mainWindow = mainWindow;
+    result_context = this;
 
     this.get_server_info = function () {
-        that = this
+        result_context = this;
         $("span").removeClass("ui-icon-circle-check");
         $("span").removeClass("ui-icon-circle-close");
         $("span.checkremove").css("opacity", "0.0");
 
-        $("div#main").slideUp("slow", function () {that.get_server_info2.apply(that);})
-    }
+        $("div#main").slideUp("slow", function () {
+            result_context.get_server_info2.apply(result_context);
+        });
+    };
 
-    this.get_server_info2 = function(foo, bar) { // not really getting any info nowsen
+    this.get_server_info2 = function (foo, bar) { // not really getting any info nowsen
         $("#maintitle").html(rt.tp("Music Training | Results"));
         var mdiv = $("div#main");
-        mdiv.html(
-                  '<div class="results ui-corner-all">'+ that.mainWindow.correct_clicks + " / " + that.mainWindow.num_exercises +"</div>");
+        mdiv.html('<div class="results ui-corner-all">' +
+                  result_context.mainWindow.correct_clicks +
+                  " / " + result_context.mainWindow.num_exercises + "</div>");
 
-        $.get(that.mainWindow.course_name+'/complete/', {
-            'num_correct': JSON.stringify(that.mainWindow.correct_clicks)},
+        $.get(result_context.mainWindow.course_name + '/complete/', {
+            'num_correct': JSON.stringify(result_context.mainWindow.correct_clicks)
+        },
               function () {
-                  var obj = document.createElement("input");
-                  obj.type = "button";
-                  obj.value = rt.tp("Continue");
-                  obj.className = "ui-button-text"
-                  obj.onclick = function () {
-                      that.mainWindow.course_name = null;
-                      that.mainWindow.exercise_index = 0;
-                      that.mainWindow.show.apply(that.mainWindow);
-                  }
-                  mdiv.append(obj);
-                  $("div#main").slideDown("slow");
-              });
-    }
+                var obj = document.createElement("input");
+                obj.type = "button";
+                obj.value = rt.tp("Continue");
+                obj.className = "ui-button-text";
+                obj.onclick = function () {
+                    result_context.mainWindow.course_name = null;
+                    result_context.mainWindow.exercise_index = 0;
+                    result_context.mainWindow.show.apply(result_context.mainWindow);
+                };
+                mdiv.append(obj);
+                $("div#main").slideDown("slow");
+            });
+    };
 }
