@@ -63,45 +63,45 @@ nav ul li a {
   font-weight: bold;
 }
 
- 
+
 .gradientN {
     /* From http://ie.microsoft.com/testdrive/graphics/cssgradientbackgroundmaker/default.html */
     /* fallback */
     background: #1111CC;
 
-    /* IE10 */ 
+    /* IE10 */
     background-image: -ms-linear-gradient(top left, #CAC2FF 0%, #003954 100%);
-    
-    /* Mozilla Firefox */ 
+
+    /* Mozilla Firefox */
     background-image: -moz-linear-gradient(top left, #CAC2FF 0%, #003954 100%);
-    
-    /* Opera */ 
+
+    /* Opera */
     background-image: -o-linear-gradient(top left, #CAC2FF 0%, #003954 100%);
-    
-    /* Webkit (Safari/Chrome 10) */ 
+
+    /* Webkit (Safari/Chrome 10) */
     background-image: -webkit-gradient(linear, left top, right bottom, color-stop(0, #CAC2FF), color-stop(1, #003954));
-    
-    /* Webkit (Chrome 11+) */ 
+
+    /* Webkit (Chrome 11+) */
     background-image: -webkit-linear-gradient(top left, #CAC2FF 0%, #003954 100%);
-    
-    /* Proposed W3C Markup */ 
+
+    /* Proposed W3C Markup */
     background-image: linear-gradient(top left, #CAC2FF 0%, #003954 100%);
 }
-    
+
 ul.formlist { list-style: none; width: 100%;}
-ul.formlist li { 
- margin: 0 0 10px; 
- width: 300px; 
+ul.formlist li {
+ margin: 0 0 10px;
+ width: 300px;
 }
 
-ul.formlist label { 
+ul.formlist label {
     font-size:11px;
-    color:#666; 
+    color:#666;
     font-weight: bold;
     margin: 0 10px 0 0;
 }
 
-ul.formlist input, ul.formlist textarea, ul.formlist select{ 
+ul.formlist input, ul.formlist textarea, ul.formlist select{
     font-size:12px,
     font: inherit;
     padding: 2px;
@@ -129,19 +129,14 @@ ul.lecture_info  li{
 
 .overlay {
   display: block;
-  position: absolute;
+  position: relative;
   top: 0px;
   left: 0px;
   width: 0px;
   height: 0px;
 }
 
-span.span_icon {
-  position: absolute;
-}
-
 span.qmark {
- position: absolute;
  opacity: 0;
  font-size: 30pt;
  font-weight: bold;

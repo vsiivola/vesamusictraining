@@ -95,7 +95,7 @@ function ChooserScreen(mainWindow) {
     this.get_server_info = function (foo, bar) {
         chooser_screen_context = this; //preserve context for callback
         $.get(
-            '/exercise/list_lectures',
+            '/exercise/list_lectures/',
             null,
             function (response) {
                 chooser_screen_context.res.apply(chooser_screen_context, arguments);
