@@ -1,7 +1,8 @@
 /*jslint
-     continue: true
+  browser: true,
+  continue: true
 */
-/*globals Translator, lang, $, document*/
+/*globals Translator, lang, $*/
 
 var ct = new Translator("chooserpage", lang),
     chooser_screen_context;

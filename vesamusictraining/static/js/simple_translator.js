@@ -1,7 +1,9 @@
 /*jslint
-   sub: true
+  browser: true,
+  sub: true
 */
-/*globals lang, window, unescape, $*/
+/*globals lang, unescape, $*/
+
 // Parse lang
 
 if (typeof lang === 'undefined') { var lang = "fi";}

@@ -1,4 +1,5 @@
-/*globals Translator, lang, document, $*/
+/*jslint browser: true */
+/*globals Translator, lang, $*/
 
 var rt = new Translator("resultpage", lang),
     result_context;
