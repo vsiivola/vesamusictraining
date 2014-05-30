@@ -41,10 +41,10 @@ function get_transtable(pagename, language) {
     if (pagename === "indexpage") {
         if (language === "fi") {
             ttable["Please sign in"] = "Kirjaudu sisään";
-            ttable["sign up"] = "luo_tunnus";
+            ttable["sign up"] = "Luo_tunnus";
             ttable["or"] = "tai";
             ttable["Welcome"] = "Astu sisään";
-            ttable["This is a simple app for improvings skills to hear different musical constructs and to read the corresponding musical notation."] = "Tämä on yksinkertainen harjoitus, jonka tarkoituksena on opettaa kuulemaan erilaisia musiikillisia rakenteita ja tunnistamaan niitä vastaava nuotinnos."
+            ttable["This is a simple app for improvings skills to hear different musical constructs and to read the corresponding musical notation."] = "Tämän sivuston avulla opit kuulemaan kuulemaan erilaisia musiikillisia rakenteita ja tunnistamaan niitä vastaavat nuotit."
             return ttable;
         }
         return null;
@@ -241,5 +241,5 @@ function insert_langchooser() {
         });
     }
 
-    $("ul.headerlist").append(langimages);
+    $("ul.navbar-nav").append(langimages);
 }

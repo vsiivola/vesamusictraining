@@ -1,4 +1,32 @@
-a.signup_button {
+/* No overlap for bootstrap divs
+ * http://stackoverflow.com/questions/11124777/twitter-bootstrap-navbar-fixed-top-overlapping-site
+ */
+body { padding-top: 40px; }
+@media screen and (max-width: 768px) {
+    body { padding-top: 0px; }
+}
+
+/* chooser screen */
+h2.lecture-title {
+    color: #2262f2
+}
+div.col-lecture {
+  margin: 40px 0px;
+}
+.row {
+    zoom: 1;
+    margin-left: -20px;
+}
+
+/* Exercise screen */
+span.qmark {
+ opacity: 0;
+ font-size: 30pt;
+ font-weight: bold;
+}
+
+
+/*a.signup_button {
   margin-left: auto;
   margin-right: auto;
   display: block;
@@ -64,28 +92,28 @@ nav ul li a {
 }
 
 
-.gradientN {
+.gradientN {*/
     /* From http://ie.microsoft.com/testdrive/graphics/cssgradientbackgroundmaker/default.html */
     /* fallback */
-    background: #1111CC;
+    /*background: #1111CC;*/
 
     /* IE10 */
-    background-image: -ms-linear-gradient(top left, #CAC2FF 0%, #003954 100%);
+    /*background-image: -ms-linear-gradient(top left, #CAC2FF 0%, #003954 100%);*/
 
     /* Mozilla Firefox */
-    background-image: -moz-linear-gradient(top left, #CAC2FF 0%, #003954 100%);
+    /*background-image: -moz-linear-gradient(top left, #CAC2FF 0%, #003954 100%);*/
 
     /* Opera */
-    background-image: -o-linear-gradient(top left, #CAC2FF 0%, #003954 100%);
+    /*background-image: -o-linear-gradient(top left, #CAC2FF 0%, #003954 100%);*/
 
     /* Webkit (Safari/Chrome 10) */
-    background-image: -webkit-gradient(linear, left top, right bottom, color-stop(0, #CAC2FF), color-stop(1, #003954));
+    /*background-image: -webkit-gradient(linear, left top, right bottom, color-stop(0, #CAC2FF), color-stop(1, #003954)); */
 
     /* Webkit (Chrome 11+) */
-    background-image: -webkit-linear-gradient(top left, #CAC2FF 0%, #003954 100%);
+    /*background-image: -webkit-linear-gradient(top left, #CAC2FF 0%, #003954 100%);*/
 
     /* Proposed W3C Markup */
-    background-image: linear-gradient(top left, #CAC2FF 0%, #003954 100%);
+    /*background-image: linear-gradient(top left, #CAC2FF 0%, #003954 100%);
 }
 
 ul.formlist { list-style: none; width: 100%;}
@@ -136,15 +164,10 @@ ul.lecture_info  li{
   height: 0px;
 }
 
-span.qmark {
- opacity: 0;
- font-size: 30pt;
- font-weight: bold;
-}
 
 div#body {
   font-family: Verdana, Helvetica, sans-serif;
   background-color: #DDDDFF;
 }
 
-
+*/

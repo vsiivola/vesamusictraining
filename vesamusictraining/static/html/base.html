@@ -1,66 +1,87 @@
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
-   "http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="fi">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>{% block title %}{% endblock %}</title>
+  <!-- TODO
+       * set html lang tag dynamically
+       * add logo
+       -->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Music training | {% block content_title %}{% endblock %}</title>
 
-  <script type="text/javascript"
-  src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-  <script type="text/javascript"
-  src="/static/js/jquery-ui-1.10.4.custom.min.js"></script>
- <link type="text/css" rel="stylesheet"
-  href="/static/stylesheets/cupertino/jquery-ui-1.10.4.custom.css" ></link>
-  <link type="text/css" rel="stylesheet"
-  href="/static/stylesheets/custom.css" ></link>
+    <!-- Bootstrap -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script type="text/javascript"src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/stylesheets/custom.css" ></link>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
   <script type="text/javascript" src="/static/js/simple_translator.js"></script>
-  <script type="text/javascript">
+
+  {% block extra_head %}{% endblock %}
+
 //<![CDATA[
 $(document).ready(function(){
   translate_page("basepage", lang);
 });
 //]]></script>
 
-  {% block extra_head %}{% endblock %}
-</head>
+  </head>
 
-<body id="{% block body_id %}{% endblock %}" class="gradientN">
 
-<header class="ui-corner-all">
- <nav class="ui-state-default ui-corner-bl ui-corner-tr">
-    <ul class="headerlist">
-      <li><a href="/"><span class="localizestring">Home</span></a></li>
-      <li>
-        {% if user.is_authenticated %}
-          <a href="/accounts/logout"><span class="localizestring">Sign out</span></a>
-        {% else %}
-          <a href="/accounts/login"><span class="localizestring">Sign in</span></a>
-        {% endif %}
-      </li>
-      <li>
-        <a href="/news"><span class="localizestring">News</span></a>
-      </li>
-      <li>
-        <a href="https://spreadsheets.google.com/spreadsheet/viewform?hl=en&key=0AoJvB3OLWygjdEFXODBQTWM3NWNFLUZidzZqLWM0cVE"><span class="localizestring">Contact</span></a>
-      </li>
-   </ul>
-    </nav>
-  <div class="htext ui-state-default ui-corner-all">
-    <img src="/static/generated_assets/images/logo.svg" width="65" padding="5" align="left"></img>
-    <a href="/"><h3 id="maintitle"><span class="localizestring">Music training</span> | {% block content_title %}{% endblock %}</h3></a>
-  </div>
+  <body id="{% block body_id %}{% endblock %}" role="document">
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <img src="/static/generated_assets/images/logo.svg" width="35" align="left" padding="1"/>
 
-</header>
-<div id="debug"></div>
-<div id="body" class="ui-corner-all">
- {% block body %}
-     <div class="content">
-        {% block content %}{% endblock %}
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Vesa's Music Trainer</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/"><span class="localizestring">Home</span></a></li>
+            <li>
+              {% if user.is_authenticated %}
+              <a href="/accounts/logout"><span class="localizestring">Sign out</span></a>
+              {% else %}
+              <a href="/accounts/login"><span class="localizestring">Sign in</span></a>
+              {% endif %}
+            </li>
+            <li>
+              <a href="/news"><span class="localizestring">News</span></a>
+            </li>
+            <li>
+              <a href="https://spreadsheets.google.com/spreadsheet/viewform?hl=en&key=0AoJvB3OLWygjdEFXODBQTWM3NWNFLUZidzZqLWM0cVE"><span class="localizestring">Contact</span></a>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
       </div>
+    </div>
+
+    <div class="container-fluid">
+    {% block body %}
+    {% block content %}{% endblock %}
     {% endblock %}
-  </div>
-</body>
+    </div>
+
+    <div id="debug"></div>
+  </body>
 </html>
-  
+</htmlfoo-->
+

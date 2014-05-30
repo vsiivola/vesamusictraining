@@ -16,7 +16,7 @@ function ChooserScreen(mainWindow) {
         $("#maintitle").html(ct.tp("Music Training | Choose your exercise"));
 
         var clist = this.course_list.lectures,
-            tstring = '<div id="courses" class="ui-accordion">',
+            tstring = '<div id="courses" class="row">',
             lclist,
             i,
             j,
@@ -32,12 +32,11 @@ function ChooserScreen(mainWindow) {
                 continue;
             }
             lclist.push(lecture);
-            tstring += '<h3 class="ui-accordion-header';
+            tstring += '<div id="acc' + j + '" class="col-xs-4 col-lecture';
             if (lecture.complete) {
                 tstring += ' inactive-lecture';
             }
-            tstring += '"><a href="#">' + lecture.title + '</a></h3>';
-            tstring += '<div id="acc' + j + '" class="ui-accordion-content">';
+            tstring += '"><h2 class="lecture-title">' + lecture.title + '</h2>';
             if (lecture.instructions) {
                 tstring += '<H3>' + ct.tp("Hints") + '</H3><p>' + lecture.instructions + '</p>';
             }
@@ -62,6 +61,9 @@ function ChooserScreen(mainWindow) {
             tstring += '</ul>';
             tstring += '</div>';
             j += 1;
+            if (j % 3 === 0) {
+                tstring += '</div><div class="row">';
+            }
         }
         tstring += "</div>";
         $("div#main").html(tstring);
@@ -78,8 +80,8 @@ function ChooserScreen(mainWindow) {
             obj.type = "button";
             obj.id = "btn" + i;
             obj.name = lclist[i].title;
-            obj.value = ct.tp("Enter");
-            obj.className = "ui-button-text";
+            obj.value = ct.tp("Enter") + $('<div/>').html(" &raquo;").text();
+            obj.className = "btn btn-lg btn-primary btn-block";
             obj.onclick = set_obj_onclick;
             myDiv.appendChild(obj);
         }

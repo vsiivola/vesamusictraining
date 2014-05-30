@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block extra_head %}
-  <script type="text/javascript" src="/static/js/news.js"></script>
+<script type="text/javascript" src="/static/js/news.js"></script>
 <script type="text/javascript">
 //<![CDATA[
 $(document).ready(function(){
@@ -17,11 +17,18 @@ Home
 {% endblock %}
 
 {% block content %}
-<H3><span class="localizestring">Welcome</span></H3>
-<P>
-<span class="localizestring">This is a simple app for improvings skills to hear different musical constructs and to read the corresponding musical notation.</span></P>
-<P>
-<a href="/accounts/login"><span class="localizestring">Please sign in</span></a> <span class="localizestring">or</span> <a href="/accounts/register"><span class="localizestring">sign up</span></a>.
-</P>
-<span class="news" />
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron">
+  <h1><span class="localizestring">Welcome</span></h1>
+  <p><span class="localizestring">This is a simple app for improvings skills to hear different musical constructs and to read the corresponding musical notation.</span></p>
+  <div class="btn-group btn-group-justified">
+    <p>
+      <a href="/accounts/login" class="btn btn-primary btn-lg" role="button"><span class="localizestring">Please sign in</span> &raquo;</a>
+      <!-- span class="localizestring">or</span -->
+      <a href="/accounts/register" class="btn btn-primary btn-lg" role="button"><span class="localizestring">sign up</span> &raquo;</a>
+    </p>
+  </div>
+</div>
+
+<!-- span class="news" / -->
 {% endblock %}

@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block extra_head %}
+<link href="/static/stylesheets/signin.css" rel="stylesheet">
 <script type="text/javascript">
 //<![CDATA[
 $(document).ready(function(){
@@ -15,24 +16,19 @@ $(document).ready(function(){
 
 {% block content %}
 
+<form action='.' method='post' class="form-signin" role="form">{% csrf_token %}
+  <h2 class="form-signin-heading">Please sign in</h2>
 {% if form.errors %}
-<p class="error"><span class="localizestring">Sorry, that's not a valid username or password</span>.</p>
+  <p class="error"><span class="localizestring">Sorry, that's not a valid username or password</span>.</p>
 {% endif %}
 
-<form action='.' method='post'>{% csrf_token %}
-  <ul class="formlist">
-    <li>
-    <label for="username"><span class="localizestring">Username</span>:</label>
-    <input type="text" name="username" value="" id="username">
-    </li>
-    <li>
-    <label for="password"><span class="localizestring">Password</span>:</label>
-    <input type="password" name="password" value="" id="password">
-    </li>
-    <li>
-    <input type="submit" value="Sign in" class="ui-button ui-widget ui-state-default ui-corner-all" />
-    <input type="hidden" name="next" value="/" />
-    </li>
-  </form>
+  <input type="username" class="form-control" placeholder="username" id="username" name="username" required autofocus>
+  <input type="password" class="form-control" placeholder="Password" id="password" name="password" required>
+  <!-- label class="checkbox">
+       <input type="checkbox" value="remember-me"> Remember me
+  </label -->
+   <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+   <input type="hidden" name="next" value="/" />
+</form>
 
 {% endblock %}
