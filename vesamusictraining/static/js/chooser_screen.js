@@ -16,7 +16,7 @@ function ChooserScreen(mainWindow) {
         $("#maintitle").html(ct.tp("Music Training | Choose your exercise"));
 
         var clist = this.course_list.lectures,
-            tstring = '<div id="courses" class="row">',
+            tstring = '<div id="courses" class="row whitebg">',
             lclist,
             i,
             j,
@@ -85,8 +85,6 @@ function ChooserScreen(mainWindow) {
             obj.onclick = set_obj_onclick;
             myDiv.appendChild(obj);
         }
-
-        $("#courses").accordion();
     };
 
     this.res = function (response) {

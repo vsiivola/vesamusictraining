@@ -24,9 +24,9 @@ function ResultScreen(mainWindow) {
     this.get_server_info2 = function (foo, bar) { // not really getting any info nowsen
         $("#maintitle").html(rt.tp("Music Training | Results"));
         var mdiv = $("div#main");
-        mdiv.html('<div class="results ui-corner-all">' +
+        mdiv.html('<div class="jumbotron"><h1>Congratulations</h1><p>You got ' +
                   result_context.mainWindow.correct_clicks +
-                  " / " + result_context.mainWindow.num_exercises + "</div>");
+                  " / " + result_context.mainWindow.num_exercises + "correct</p></div>");
 
         $.get(result_context.mainWindow.course_name + '/complete/', {
             'num_correct': JSON.stringify(result_context.mainWindow.correct_clicks)

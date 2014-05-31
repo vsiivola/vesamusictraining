@@ -13,43 +13,37 @@ function Choice(type, image, ogg, mp3, text) {
 
     this.build_dom = function () {
         var empty_stave_td,
-            span_icon,
             span_qmark;
 
-        if (this.type === "image_question" || this.type === "image_response") {
-            this.dom = $('<td align="center" width="260">' +
-                         '<img style="position:relative" src="' + this.image + '"/>' +
-                         '<br>' + this.text +
-                         '</br></td>');
+        if (this.type === "image_response") {
+            this.dom = $('<div class="text-center col-xs-4 col-lecture">' +
+                         '<img class="image_answer" src="' + this.image + '"/>' +
+                         '<p><h3>' + this.text + '</h3></p></div>');
+            return;
+        }
+
+        if (this.type === "image_question") {
+            this.dom = $('<div class="text-center">' +
+                         '<img class="image_answer" src="' + this.image + '"/>' +
+                         '<p><h3>' + this.text + '</h3></p></div>');
             return;
         }
 
         empty_stave_td = $(
-            '<td align="center" width="260">' +
-                '<img src="/static/generated_assets/images/empty_stave.png" ' +
-                'class="empty_image" style="position:relative"/>' +
-                '</td>');
-        span_icon = $('<span class="span_icon" style="position:relative" />');
-        span_qmark = $('<span class="qmark altaudio" style="position:relative">?</span>');
+            '<div class="text-center"><img src="/static/generated_assets/images/empty_stave.png" ' +
+                'class="empty_image image_question" /></div>');
+        span_qmark = $('<span class="qmark altaudio">?</span>');
+        empty_stave_td.append(span_qmark);
 
         if (this.type === "audio_question") {
-            span_qmark.css("left", -60 + "px");
-            span_qmark.css("top", -15 + "px");
-            span_icon.css("top", -55 + "px");
-            span_icon.css("left", -65 + "px");
             this.dom = empty_stave_td;
-            this.dom.append(span_qmark);
-            this.dom.append(span_icon);
-        } else {
-            span_qmark.css("left", -120 + "px");
-            span_qmark.css("top", -1 + "px");
-            span_icon.css("top", -40 + "px");
-            span_icon.css("left", -210 + "px");
-            this.dom = $('<td align="center" width="260"><table class="buttontable"><tr class="empty_stave"></tr><tr><td align="center"><button class="ui-button-text">' + et.tp("Play") + '</button></td></tr></table>');
-            $("tr.empty_stave", this.dom).append(empty_stave_td);
-            $("tr.empty_stave", this.dom).append(span_qmark);
-            $("tr.empty_stave", this.dom).append(span_icon);
+            return;
         }
+
+        this.dom = $('<div class="text-center col-xs-4 col-lecture">');
+        this.dom.append(empty_stave_td);
+        this.dom.append( $('<div><button class="btn btn-lg btn-primary btn-block">' + et.tp("Play") + '</button></div>'));
+
     };
 
     this.play_audio = function () {
@@ -77,7 +71,6 @@ function Choice(type, image, ogg, mp3, text) {
         $("span.qmark", this.dom).delay(200).animate({opacity: 1.0}, 3000);
 
         if (this.type === "audio_question") {
-            $("span.span_icon", this.dom).addClass("ui-icon ui-icon-circle-triangle-e");
             var overlay_context = this;
             this.dom.click(function () {
                 overlay_context.play_audio();
@@ -85,15 +78,12 @@ function Choice(type, image, ogg, mp3, text) {
         }
     };
 
-    this.display_result = function (myex, parent, correct) {
-        var span_icon = $("span.span_icon", this.dom),
-            color;
+    this.display_result = function (myex, correct) {
+        var color;
 
         if (correct) {
-            span_icon.addClass("ui-icon ui-icon-circle-check checkremove");
             color = "rgb(100,200,100)";
         } else {
-            span_icon.addClass("ui-icon ui-icon-circle-close checkremove");
             color = "rgb(200,100,100)";
             if (this.type === "image_response") {
                 this.play_audio();
@@ -105,7 +95,6 @@ function Choice(type, image, ogg, mp3, text) {
             $(".empty_image", this.dom).animate({opacity: 0.8}, 3000);
         }
         $("span.qmark", this.dom).animate({opacity: 1.0}, 3000);
-        span_icon.animate({opacity: 1.0}, 3000);
         $("img", this.dom).css("background-color", color);
         if (correct) {
             if (myex.num_clicks === 1) {
@@ -148,7 +137,7 @@ function Choice(type, image, ogg, mp3, text) {
                     event_context.ogg = respi.ogg;
                     event_context.text = respi.text;
                     //$("div#debug").append("cidx " + athis.idstring + ", img" + athis.image);
-                    event_context.display_result(ethis, event_context, respi.correct);
+                    event_context.display_result(ethis, respi.correct);
                 });
         });
     };
@@ -215,24 +204,17 @@ function ExerciseScreen(mainWindow) {
                 this.mainWindow.course_name
         );
         var tstring = (
-            '<h2 class="ui-widget-header ui-corner-all" style="text-align:center;">' +
+            '<h2>' +
                 response.name +
                 " (" + (this.mainWindow.exercise_index + 1) +
                 "/" + (this.mainWindow.num_exercises)
-                + ')</h2>\
-<div class="ui-widget-content" id="test_images">\
- <table width="100%" cellpadding="20%">\
-  <tr id="question"></tr></table>\
- <table width="100%" class="alttable">\
-  <tr id="alttr"></tr>\
- </table>\
-</div>'),
+                + ')</h2><div class="text-center" id="test_images"><div id="question"/><div class="clearfix"/><div class="alttable row text-center" id="alttr"/></div>'),
             render_context,
             i,
             cur_choice;
 
         $("div#main").html(tstring);
-        $("tr#question").append(this.question.dom);
+        $("div#question").append(this.question.dom);
         this.question.initial_overlays(); // FIXME, ui glitches
 
         render_context = this;
@@ -240,7 +222,7 @@ function ExerciseScreen(mainWindow) {
             render_context.question.play_audio();
             for (i = 0; i < response.num_alt; i += 1) {
                 cur_choice = render_context.choices[i];
-                $("tr#alttr").append(cur_choice.dom);
+                $("div#alttr").append(cur_choice.dom);
                 cur_choice.initial_overlays();
                 cur_choice.bind_events(render_context);
             }
@@ -262,7 +244,7 @@ function ExerciseScreen(mainWindow) {
     };
 
     this.clear_statics = function (callback) {
-        $("span").removeClass("ui-icon ui-icon-circle-triangle-e ui-icon-circle-check ui-icon-circle-close checkremove");
+        //$("span").removeClass("ui-icon ui-icon-circle-triangle-e ui-icon-circle-check ui-icon-circle-close checkremove");
         $("div.overlay").css("opacity", "0.0");
         $("span.qmark").css("opacity", "0.0");
         callback();

@@ -1,9 +1,16 @@
 /* No overlap for bootstrap divs
  * http://stackoverflow.com/questions/11124777/twitter-bootstrap-navbar-fixed-top-overlapping-site
  */
-body { padding-top: 40px; }
+body {
+    padding-top: 40px;
+    /*background-color: #999999;*/
+}
 @media screen and (max-width: 768px) {
     body { padding-top: 0px; }
+}
+
+div.container-fluid {
+    background-color: #ffffff;
 }
 
 /* chooser screen */
@@ -12,6 +19,7 @@ h2.lecture-title {
 }
 div.col-lecture {
   margin: 40px 0px;
+
 }
 .row {
     zoom: 1;
@@ -21,9 +29,27 @@ div.col-lecture {
 /* Exercise screen */
 span.qmark {
  opacity: 0;
- font-size: 30pt;
+ /*font-size: 20vh;*/
+ /*left: -15%;*/
+ /*top: 50%;*/
+ font-size: 50px;
+ left: -60px;
+ top: 10px;
  font-weight: bold;
+ position: relative;
 }
+
+img.image_question {
+/*    width: 25%;
+    overflow: hidden;*/
+
+}
+
+img.image_answer {
+/*    width: 95%;
+    overflow: hidden;*/
+}
+
 
 
 /*a.signup_button {
