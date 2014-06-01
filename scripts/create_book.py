@@ -40,7 +40,8 @@ class BuildTarget(object):
     def copy_files(self):
         """Make the static media files available."""
         for f in ["empty_stave.png", "logo.svg", "fi.png", "gb.png"]:
-            shutil.copy(os.path.join("content", f), self.pngdir)
+            shutil.copy(os.path.join(
+                os.path.dirname(__file__), "..", "content", f), self.pngdir)
 
 class PureDjangoTarget(BuildTarget):
     """Create media and corresponding Django db fixtures"""
@@ -322,9 +323,12 @@ naturalizeMusic =
 }
 """
 
-    def __init__(self, target=PureDjangoTarget(), lecture=None,
-                 fname='content/course_directory.yaml',
+    def __init__(self, target=PureDjangoTarget(), lecture=None, fname=None,
                  host_type="macports", only_new=False):
+        if not fname:
+            fname = os.path.join(
+                os.path.dirname(__file__),
+                "..", "content", "course_directory.yaml")
         fh = open(fname, 'r')
         self.index = [i for i in yaml.load_all(fh)]
         fh.close()
@@ -578,37 +582,41 @@ naturalizeMusic =
         self.target.write(self.index)
 
 if __name__ == "__main__":
-    from optparse import OptionParser
+    import argparse
 
-    usage = "%prog [options]"
-    version ="%prog v0.1"
-    description = "Creates content for music training."
+    parser = argparse.ArgumentParser(
+        description="Creates content for music training.",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+
 
     target_choices = ["puredjango", "simple_html"]
     host_types = ["macports", "linux"]
 
-    parser = OptionParser(usage=usage, version=version, description=description)
-    parser.add_option("-t", "--target", help="Generate content for which format. Options: "+ repr(target_choices) +", default \"%default\".", choices=target_choices, default=target_choices[0])
-    parser.add_option("-l", "--lecture", help="Generate content only for LECTURE", metavar="LECTURE", default=None)
-    parser.add_option("-n", "--only_new", action="store_true", help="Generate files only for missing stuff.")
-    parser.add_option(
-      "-H", "--host_type", choices=host_types, default=host_types[0],
-      help="Host type for setting the paths to binaries. Options: " +
-    repr(host_types) + ", default =\"%default\".")
+    parser.add_argument("-t", "--target",
+                        help="Generate content for which format. "\
+                          "Options: " + repr(target_choices) +".",
+                        choices=target_choices,
+                        default=target_choices[0])
+    parser.add_argument("-l", "--lecture",
+                         help="Generate content only for LECTURE",
+                         metavar="LECTURE", default=None)
+    parser.add_argument("-n", "--only_new", action="store_true",
+                        help="Generate files only for missing stuff.")
+    parser.add_argument("-H", "--host_type", choices=host_types,
+                        default=host_types[0],
+                        help="Host type for setting the paths to binaries. "\
+                          "Options: " + repr(host_types) + ".")
 
 
-    (options, args) = parser.parse_args()
-    if len(args)!=0:
-        parser.error('Weird number of arguments, exit.')
-        sys.exit(-1)
+    args = parser.parse_args()
 
-    if options.target == "puredjango":
+    if args.target == "puredjango":
         t = PureDjangoTarget()
-    elif options.target == "simple_html":
+    elif args.target == "simple_html":
         t = SimpleHtmlTarget()
 
-    content = Content(t, lecture=options.lecture,
-                      only_new=options.only_new, host_type=options.host_type)
+    content = Content(t, lecture=args.lecture,
+                      only_new=args.only_new, host_type=args.host_type)
     print(content.content2string())
     content.compile()
 

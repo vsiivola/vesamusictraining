@@ -21,8 +21,7 @@ South is a db migration tool. Initialize with
 and apply changes with
   python manage.py schemamigration exercise --auto
 
-Note: At least python > 3.3 has pyvenv-3.x built in,
-use that instead of virtualenv if you don't want
-to install the python dependencies globally. In Ubuntu
-14.04 this is somewhat broken currently, you need to use
-it with the --without-pip flag.
+Note: You can install the dependecies virtually, for python > 3.3 us
+pyvenv-3.x (except for ubuntu 14.04, it is broken), otherwise
+you can go with somthing like
+  virtualenv --python=python3.4 venv
