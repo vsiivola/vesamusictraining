@@ -26,7 +26,7 @@ function ResultScreen(mainWindow) {
         var mdiv = $("div#main");
         mdiv.html('<div class="jumbotron"><h1>Congratulations</h1><p>You got ' +
                   result_context.mainWindow.correct_clicks +
-                  " / " + result_context.mainWindow.num_exercises + "correct</p></div>");
+                  " / " + result_context.mainWindow.num_exercises + " correct</p></div>");
 
         $.get(result_context.mainWindow.course_name + '/complete/', {
             'num_correct': JSON.stringify(result_context.mainWindow.correct_clicks)
