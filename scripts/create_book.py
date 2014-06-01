@@ -12,7 +12,7 @@ import subprocess
 import sys
 import yaml
 
-from SvgTransform import SvgTransform
+from svgtransform import SvgTransform
 
 class BuildTarget(object):
     """Defines a basic function class for creating the media
@@ -132,7 +132,7 @@ class PureDjangoTarget(BuildTarget):
                                 "lecture" : lidx,
                                 "question_mp3" : clean_fname(e["mp3"]),
                                 "question_ogg" : clean_fname(e["ogg"]),
-                                "question_image": clean_fname(e["image_png"]),
+                                "question_image": clean_fname(e["image_svg"]),
                                 "text": e["text"][lang] \
                                   if "text" in e and e["text"] else ""
                                 }})
@@ -143,7 +143,7 @@ class PureDjangoTarget(BuildTarget):
                           "exercise" : eidx,
                           "correct" : a["correct"]}
 
-                        fields["image"] = clean_fname(a["image_png"])
+                        fields["image"] = clean_fname(a["image_svg"])
                         fields["ogg"] = clean_fname(a["ogg"])
                         fields["mp3"] = clean_fname(a["mp3"])
                         fields["text"] = a["text"][lang] \
@@ -212,7 +212,7 @@ class SimpleHtmlTarget(BuildTarget):
                 if e["question_type"] == "audio":
                     s += audio_str(e["ogg"], e["mp3"])
                 else:
-                    s += image_str(e["image_png"])
+                    s += image_str(e["image_svg"])
                 s += "</td></tr>\n"
                 alternatives = []
                 for a in [e] + e["confusers"]:
@@ -220,12 +220,12 @@ class SimpleHtmlTarget(BuildTarget):
                       if "text" in a and a["text"] else None
                     if e["answer_type"] == "image":
                         alternatives.append(
-                            (image_str(a["image_png"]),
+                            (image_str(a["image_svg"]),
                              audio_str(a["ogg"], a["mp3"]), text))
                     elif e["answer_type"] == "audio":
                         alternatives.append(
                             (audio_str(a["ogg"], a["mp3"]),
-                             image_str(a["image_png"]), text))
+                             image_str(a["image_svg"]), text))
                 s += "<tr>\n"
 
                 # FIXME: randomize order
@@ -324,7 +324,8 @@ naturalizeMusic =
 """
 
     def __init__(self, target=PureDjangoTarget(), lecture=None, fname=None,
-                 host_type="macports", only_new=False):
+                 host_type="macports", only_new=False,
+                 lilypond_path="/opt/lilypond/bin"):
         if not fname:
             fname = os.path.join(
                 os.path.dirname(__file__),
@@ -344,9 +345,13 @@ naturalizeMusic =
         if host_type == "macports":
             self.binpath = "/opt/local/bin"
             self.timidity_path = "/opt/local/bin"
+            self.lilypond_path = self.binpath
         elif host_type == "linux":
             self.binpath = "/usr/bin"
             self.timidity_path = self.binpath
+            self.lilypond_path = self.binpath
+        if lilypond_path:
+            self.lilypond_path = lilypond_path
         self.target = target
         self.only_new = only_new
 
@@ -427,7 +432,7 @@ naturalizeMusic =
     def expand_alternative_questions(self):
         def replace_media(orig, new):
             orig["notes"] = new["notes"]
-            orig["image_png"] = new["image_png"]
+            orig["image_svg"] = new["image_svg"]
             orig["ogg"] = new["ogg"]
             orig["mp3"] = new["mp3"]
             orig["text"] = new["text"] if "text" in new else None
@@ -501,7 +506,7 @@ naturalizeMusic =
                 conv["ogg"] = os.path.join(
                     self.target.mp3dir, "%s-%d.ogg" % (title_us, i))
 
-                if not (self.only_new and os.path.isfile(conv["image_png"])
+                if not (self.only_new and os.path.isfile(conv["image_svg"])
                         and os.path.isfile(conv["mp3"]) and
                         os.path.isfile(conv["mp3"])):
                     lyfh = open(lytmp, "w")
@@ -543,9 +548,9 @@ naturalizeMusic =
 
                     fnull = open(os.devnull, 'w')
 
-                    if True: # Generate png images
+                    if False: # Generate png images
                         cmd = "%s/lilypond --png -dpixmap-format=pngalpha %s" %\
-                          (self.binpath, os.path.basename(lytmp))
+                          (self.lilypond_path, os.path.basename(lytmp))
                         sys.stderr.write(cmd+"\n")
                         subprocess.call(cmd.split(), cwd=self.target.workdir,
                                         stdout=fnull, stderr=fnull)
@@ -553,10 +558,10 @@ naturalizeMusic =
                             self.binpath, pngtmp, conv["image_png"])
                         subprocess.call(cmd.split(), stdout=fnull)
 
-                    if False: # Generate svg images
+                    if True: # Generate svg images
                         cmd = "%s/lilypond -dbackend=svg %s" % (
-                            self.binpath, os.path.basename(lytmp))
-                        sys.stderr.write(cmd)
+                            self.lilypond_path, os.path.basename(lytmp))
+                        sys.stderr.write(cmd+"\n")
                         subprocess.call(cmd.split(), cwd=self.target.workdir,
                                         stdout=fnull, stderr=fnull)
                         st = SvgTransform.init_from_file("work/tmp.svg")
