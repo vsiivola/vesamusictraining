@@ -25,3 +25,7 @@ Note: You can install the dependecies virtually, for python > 3.3 us
 pyvenv-3.x (except for ubuntu 14.04, it is broken), otherwise
 you can go with somthing like
   virtualenv --python=python3.4 venv
+
+Note2: If you want svg images, yous should use a rather
+recent version of lilypond, where the bugs have been
+fixed.
