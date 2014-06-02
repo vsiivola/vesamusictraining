@@ -41,7 +41,6 @@ class SvgTransform:
 
     @classmethod
     def init_from_file(cls, fname):
-        sys.stderr.write("Read from '%s'\n" % os.path.abspath(fname))
         xmldoc = xml.dom.minidom.parse(fname)
         c = cls(xmldoc)
         c.minx, c.miny, c.maxx, c.maxy = cls.get_bounds(fname)

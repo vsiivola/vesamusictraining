@@ -17,15 +17,18 @@ from svgtransform import SvgTransform
 class BuildTarget(object):
     """Defines a basic function class for creating the media
     and database files. Should be inherited from."""
-    def __init__(self, yaml_fname="generated_course.yaml", pngdir="png",
-                 mp3dir="mp3", workdir="work"):
-        self.pngdir = pngdir
-        self.mp3dir = mp3dir
-        self.workdir = workdir
+    def __init__(self, yaml_fname="generated_course.yaml", imagedir=None,
+                 mp3dir=None, workdir=None):
+        self.imagedir = imagedir if imagedir \
+          else os.path.join(os.path.dirname(__file__), "..", "png")
+        self.mp3dir = mp3dir if mp3dir\
+          else os.path.join(os.path.dirname(__file__), "..", "mp3")
+        self.workdir = workdir if workdir\
+          else os.path.join(os.path.dirname(__file__), "..", "work")
         self.yaml_fname = yaml_fname
 
         try:
-            os.mkdir(self.pngdir)
+            os.mkdir(self.imagedir)
         except OSError:
             pass
         try:
@@ -41,7 +44,7 @@ class BuildTarget(object):
         """Make the static media files available."""
         for f in ["empty_stave.png", "logo.svg", "fi.png", "gb.png"]:
             shutil.copy(os.path.join(
-                os.path.dirname(__file__), "..", "content", f), self.pngdir)
+                os.path.dirname(__file__), "..", "content", f), self.imagedir)
 
 class PureDjangoTarget(BuildTarget):
     """Create media and corresponding Django db fixtures"""
@@ -132,7 +135,7 @@ class PureDjangoTarget(BuildTarget):
                                 "lecture" : lidx,
                                 "question_mp3" : clean_fname(e["mp3"]),
                                 "question_ogg" : clean_fname(e["ogg"]),
-                                "question_image": clean_fname(e["image_svg"]),
+                                "question_image": clean_fname(e["image"]),
                                 "text": e["text"][lang] \
                                   if "text" in e and e["text"] else ""
                                 }})
@@ -143,7 +146,7 @@ class PureDjangoTarget(BuildTarget):
                           "exercise" : eidx,
                           "correct" : a["correct"]}
 
-                        fields["image"] = clean_fname(a["image_svg"])
+                        fields["image"] = clean_fname(a["image"])
                         fields["ogg"] = clean_fname(a["ogg"])
                         fields["mp3"] = clean_fname(a["mp3"])
                         fields["text"] = a["text"][lang] \
@@ -212,7 +215,7 @@ class SimpleHtmlTarget(BuildTarget):
                 if e["question_type"] == "audio":
                     s += audio_str(e["ogg"], e["mp3"])
                 else:
-                    s += image_str(e["image_svg"])
+                    s += image_str(e["image"])
                 s += "</td></tr>\n"
                 alternatives = []
                 for a in [e] + e["confusers"]:
@@ -220,12 +223,12 @@ class SimpleHtmlTarget(BuildTarget):
                       if "text" in a and a["text"] else None
                     if e["answer_type"] == "image":
                         alternatives.append(
-                            (image_str(a["image_svg"]),
+                            (image_str(a["image"]),
                              audio_str(a["ogg"], a["mp3"]), text))
                     elif e["answer_type"] == "audio":
                         alternatives.append(
                             (audio_str(a["ogg"], a["mp3"]),
-                             image_str(a["image_svg"]), text))
+                             image_str(a["image"]), text))
                 s += "<tr>\n"
 
                 # FIXME: randomize order
@@ -325,7 +328,8 @@ naturalizeMusic =
 
     def __init__(self, target=PureDjangoTarget(), lecture=None, fname=None,
                  host_type="macports", only_new=False,
-                 lilypond_path="/opt/lilypond/bin"):
+                 lilypond_path=None
+                 ):
         if not fname:
             fname = os.path.join(
                 os.path.dirname(__file__),
@@ -432,7 +436,7 @@ naturalizeMusic =
     def expand_alternative_questions(self):
         def replace_media(orig, new):
             orig["notes"] = new["notes"]
-            orig["image_svg"] = new["image_svg"]
+            orig["image"] = new["image"]
             orig["ogg"] = new["ogg"]
             orig["mp3"] = new["mp3"]
             orig["text"] = new["text"] if "text" in new else None
@@ -481,7 +485,7 @@ naturalizeMusic =
                         p["name"][lang] += " %d" % (i+1)
                     d["Exercises"].append(p)
 
-    def compile(self):
+    def compile(self, image_format):
         self.generate_extra_rounds()
         for d in self.index:
             to_png = []
@@ -497,16 +501,16 @@ naturalizeMusic =
             for i, conv in enumerate(to_png):
                 #print repr(d["languages"]["en"]["Title"])
                 title_us = re.sub(r"\s", "_", d["languages"]["en"]["Title"])
-                conv["image_png"] = os.path.join(
-                    self.target.pngdir, "%s-%d.png" % (title_us, i))
-                conv["image_svg"] = os.path.join(
-                    self.target.pngdir, "%s-%d.svg" % (title_us, i))
+                conv["image"] = os.path.join(
+                    self.target.imagedir, "%s-%d.%s" % (title_us, i,
+                                                        image_format))
+                print(conv["image"])
                 conv["mp3"] = os.path.join(
                     self.target.mp3dir, "%s-%d.mp3" % (title_us, i))
                 conv["ogg"] = os.path.join(
                     self.target.mp3dir, "%s-%d.ogg" % (title_us, i))
 
-                if not (self.only_new and os.path.isfile(conv["image_svg"])
+                if not (self.only_new and os.path.isfile(conv["image"])
                         and os.path.isfile(conv["mp3"]) and
                         os.path.isfile(conv["mp3"])):
                     lyfh = open(lytmp, "w")
@@ -521,7 +525,7 @@ naturalizeMusic =
                     if "style" in conv:
                         s = conv["style"]
                         if s == "chord":
-                            body += r"\key c \major << { \\chordmode { " +\
+                            body += r"\key c \major << { \chordmode { " +\
                                conv["notes"] + " } } "
                             #body += "\\chordmode { " + conv["notes"] + " } >> "
                         if s == "interval" or s == "scale":
@@ -529,7 +533,7 @@ naturalizeMusic =
                                conv["notes"] + " } "
 
                         if s == "chord" or s == "interval" or s == "scale":
-                            body += r"\\addlyrics { " + conv["annotation"] +\
+                            body += r"\addlyrics { " + conv["annotation"] +\
                               " } >>"
 
                         if s == "drums":
@@ -548,26 +552,31 @@ naturalizeMusic =
 
                     fnull = open(os.devnull, 'w')
 
-                    if False: # Generate png images
+                    if image_format == "png": # Generate png images
                         cmd = "%s/lilypond --png -dpixmap-format=pngalpha %s" %\
                           (self.lilypond_path, os.path.basename(lytmp))
-                        sys.stderr.write(cmd+"\n")
-                        subprocess.call(cmd.split(), cwd=self.target.workdir,
-                                        stdout=fnull, stderr=fnull)
+                        if subprocess.call(cmd.split(), cwd=self.target.workdir,
+                                           stdout=fnull, stderr=fnull):
+                            raise RuntimeError("Failed '%s'" % cmd)
                         cmd = "%s/convert %s -trim %s" % (
-                            self.binpath, pngtmp, conv["image_png"])
-                        subprocess.call(cmd.split(), stdout=fnull)
-
-                    if True: # Generate svg images
+                            self.binpath, pngtmp, conv["image"])
+                        if subprocess.call(
+                                cmd.split(),
+                                stdout=fnull, stderr=fnull):
+                            raise RuntimeError("Failed '%s'" % cmd)
+                    elif image_format == "svg": # Generate svg images
                         cmd = "%s/lilypond -dbackend=svg %s" % (
                             self.lilypond_path, os.path.basename(lytmp))
-                        sys.stderr.write(cmd+"\n")
-                        subprocess.call(cmd.split(), cwd=self.target.workdir,
-                                        stdout=fnull, stderr=fnull)
+                        #sys.stderr.write(cmd+"\n")
+                        if subprocess.call(cmd.split(), cwd=self.target.workdir,
+                                           stdout=fnull, stderr=fnull):
+                            raise RuntimeError("Failed '%s'" % cmd)
                         st = SvgTransform.init_from_file("work/tmp.svg")
                         st.crop()
-                        sys.stderr.write(conv["image_svg"]+"\n")
-                        st.write(conv["image_svg"])
+                        sys.stderr.write(conv["image"]+"\n")
+                        st.write(conv["image"])
+                    else:
+                        assert False
 
                     soxbase = "%s/sox -t raw -r 44100 -b 24 -e signed-integer "\
                       "-c 1 -" % self.binpath + " %s"
@@ -575,11 +584,14 @@ naturalizeMusic =
                       "--volume-compensation" % (self.timidity_path, miditmp)
 
                     cmd = "%s| %s" % (timidity_base, soxbase % conv["mp3"])
-                    sys.stderr.write(cmd+"\n")
-                    subprocess.call(cmd, shell=True, stdout=fnull)
-
+                    #sys.stderr.write(cmd+"\n")
+                    if subprocess.call(
+                            cmd, shell=True, stdout=fnull, stderr=fnull):
+                        raise RuntimeError("Failed '%s'" % cmd)
                     cmd = "%s | %s" % (timidity_base, soxbase% conv["ogg"])
-                    subprocess.call(cmd, shell=True, stdout=fnull)
+                    if subprocess.call(
+                            cmd, shell=True, stdout=fnull, stderr=fnull):
+                        raise RuntimeError("Failed '%s'" % cmd)
                     fnull.close()
 
         self.target.copy_files()
@@ -596,6 +608,7 @@ if __name__ == "__main__":
 
     target_choices = ["puredjango", "simple_html"]
     host_types = ["macports", "linux"]
+    image_formats = ["png", "svg"]
 
     parser.add_argument("-t", "--target",
                         help="Generate content for which format. "\
@@ -611,7 +624,13 @@ if __name__ == "__main__":
                         default=host_types[0],
                         help="Host type for setting the paths to binaries. "\
                           "Options: " + repr(host_types) + ".")
-
+    parser.add_argument("-i", "--image_format", choices=image_formats,
+                        default=image_formats[0],
+                        help="Image output format. "\
+                          "Options: " + repr(host_types) + ".")
+    parser.add_argument("-L", "--lilypond_path",
+                        help="Lilypond executable path",
+                        default=None)
 
     args = parser.parse_args()
 
@@ -620,8 +639,9 @@ if __name__ == "__main__":
     elif args.target == "simple_html":
         t = SimpleHtmlTarget()
 
-    content = Content(t, lecture=args.lecture,
-                      only_new=args.only_new, host_type=args.host_type)
-    print(content.content2string())
-    content.compile()
+    content = Content(
+        t, lecture=args.lecture, only_new=args.only_new,
+        host_type=args.host_type, lilypond_path=args.lilypond_path)
+    #print(content.content2string())
+    content.compile(image_format=args.image_format)
 
