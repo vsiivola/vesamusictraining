@@ -30,7 +30,7 @@ function Choice(type, image, ogg, mp3, text) {
         }
 
         empty_stave_td = $(
-            '<div class="text-center"><img src="/static/generated_assets/images/empty_stave.png" ' +
+            '<div class="text-center"><img src="/static/generated_assets/images/empty_stave.svg" ' +
                 'class="empty_image image_question" /></div>');
         span_qmark = $('<span class="qmark altaudio">?</span>');
         empty_stave_td.append(span_qmark);

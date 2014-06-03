@@ -19,8 +19,8 @@ logger = logging.getLogger(__name__)
 class BuildTarget(object):
     """Defines a basic function class for creating the media
     and database files. Should be inherited from."""
-    def __init__(self, yaml_fname="generated_course.yaml", image_dir=None,
-                 sound_dir=None, workdir=None):
+    def __init__(self, yaml_fname="generated_course.yaml", image_format="svg",
+                 image_dir=None, sound_dir=None, workdir=None):
         self.image_dir = image_dir if image_dir \
           else os.path.join(os.path.dirname(__file__), "..", "png")
         self.sound_dir = sound_dir if sound_dir\
@@ -28,6 +28,7 @@ class BuildTarget(object):
         self.workdir = workdir if workdir\
           else os.path.join(os.path.dirname(__file__), "..", "work")
         self.yaml_fname = yaml_fname
+        self.image_format = image_format
 
         if not os.path.isdir(self.image_dir):
             os.makedirs(image_dir)
@@ -44,7 +45,7 @@ class BuildTarget(object):
 
     def copy_files(self):
         """Make the static media files available."""
-        for f in ["empty_stave.png", "logo.svg", "fi.png", "gb.png"]:
+        for f in ["empty_stave.png", "empty_stave.svg", "logo.svg", "fi.png", "gb.png"]:
             shutil.copy(os.path.join(
                 os.path.dirname(__file__), "..", "content", f), self.image_dir)
 
@@ -510,10 +511,10 @@ naturalizeMusic =
                 staffstring, conv["instrument"], body))
 
     def create_staff_image(
-            self, conv, image_format, input_fname, tmpfname):
+            self, conv, input_fname, tmpfname):
         """Create the image and corresponding midi file from lilypond source."""
         with open(os.devnull, 'w') as fnull:
-            if image_format == "png": # Generate png images
+            if self.image_format == "png": # Generate png images
                 cmd = "%s/lilypond --png -dpixmap-format=pngalpha %s" % (
                     self.lilypond_path, os.path.basename(input_fname))
                 if subprocess.call(cmd.split(), cwd=self.target.workdir,
@@ -527,7 +528,7 @@ naturalizeMusic =
                     raise RuntimeError("Failed '%s'" % cmd)
                 return
 
-            if image_format == "svg": # Generate svg images
+            if self.image_format == "svg": # Generate svg images
                 cmd = "%s/lilypond -dbackend=svg %s" % (
                     self.lilypond_path, os.path.basename(input_fname))
                 if subprocess.call(cmd.split(), cwd=self.target.workdir,
@@ -554,7 +555,7 @@ naturalizeMusic =
                         cmd, shell=True, stdout=fnull, stderr=fnull):
                     raise RuntimeError("Failed '%s'" % cmd)
 
-    def compile(self, image_format):
+    def compile(self, self.image_format):
         """Create all media."""
         self.generate_extra_rounds()
         for d in self.index:
@@ -566,7 +567,7 @@ naturalizeMusic =
             lytmp = os.path.join(self.target.workdir, "tmp.ly")
             imagetmp = os.path.join(
                 self.target.workdir,
-                "tmp.png" if image_format == "png" else "tmp.svg")
+                "tmp.png" if self.image_format == "png" else "tmp.svg")
             miditmp = os.path.join(self.target.workdir, "tmp.midi")
 
 
@@ -575,7 +576,7 @@ naturalizeMusic =
                 title_us = re.sub(r"\s", "_", d["languages"]["en"]["Title"])
                 conv["image"] = os.path.join(
                     self.target.image_dir, "%s-%d.%s" % (title_us, i,
-                                                        image_format))
+                                                        self.image_format))
                 conv["mp3"] = os.path.join(
                     self.target.sound_dir, "%s-%d.mp3" % (title_us, i))
                 conv["ogg"] = os.path.join(
@@ -585,7 +586,7 @@ naturalizeMusic =
                         and os.path.isfile(conv["mp3"]) and
                         os.path.isfile(conv["mp3"])):
                     self.create_lilypond_file(conv, lytmp)
-                    self.create_staff_image(conv, image_format, lytmp, imagetmp)
+                    self.create_staff_image(conv, self.image_format, lytmp, imagetmp)
                     self.create_sounds(conv, miditmp)
 
         self.target.copy_files()
@@ -647,6 +648,7 @@ if __name__ == "__main__":
 
     content = Content(
         t, lecture=args.lecture, only_new=args.only_new,
-        host_type=args.host_type, lilypond_path=args.lilypond_path)
-    content.compile(image_format=args.image_format)
+        host_type=args.host_type, lilypond_path=args.lilypond_path,
+        image_format=args.image_format)
+    content.compile()
 
