@@ -636,7 +636,7 @@ Exercises:
      annotation: _ "M6" _
 - name:
     en: Minor second, Major second, Minor Third
-    fi: Pieni ja suuri sekuntu, pieni terssi
+    fi: Pieni ja suuri sekunti, pieni terssi
   generate: all
   style: interval
   notes: \relative f' { c cis <c cis>2 }
@@ -665,8 +665,8 @@ languages:
 Rounds: [normal, transpose random]
 Exercises:
 - name:
-    en: Basic A
-    fi: Perus A
+    en: Basic chord progressions
+    fi: Perussointukulkuja
   generate: all
   style: chord
   notes: c2  c r4 f f r g2 g
@@ -691,8 +691,8 @@ Exercises:
    - notes: \relative f' { c e g c d, f a d e, g b e f, a c f }
      annotation: I _ _ _ ii _ _ _ iii _ _ _ IV _ _ _ _
 - name:
-    en: Basic B
-    fi: Perus B
+    en: More basic chord progressions
+    fi: Lisää perussointukulkuja
   generate: all
   style: chord
   notes: a,2:m  a:m e:7 e:7 d:m d:m
@@ -808,7 +808,7 @@ Exercises:
      annotation: '"Iadd9" _ _'
 - name:
     en: Minor major ninth, Major 11th, Half-diminished seventh
-    fi: molliduurinooni, duurundesimi, puolivähennetty septimi
+    fi: molliduurinooni, duuriundesimi, puolivähennetty septimi
   generate: all
   style: chord
   notes: c4:3-.5.7+.9 c4:3-.5.7+.9 c2:3-.5.7+.9
