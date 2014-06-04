@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 class BuildTarget(object):
     """Defines a basic function class for creating the media
     and database files. Should be inherited from."""
-    def __init__(self, yaml_fname="generated_course.yaml", image_format="svg",
+    def __init__(self, yaml_fname="generated_course.yaml",
                  image_dir=None, sound_dir=None, workdir=None):
         self.image_dir = image_dir if image_dir \
           else os.path.join(os.path.dirname(__file__), "..", "png")
@@ -28,12 +28,11 @@ class BuildTarget(object):
         self.workdir = workdir if workdir\
           else os.path.join(os.path.dirname(__file__), "..", "work")
         self.yaml_fname = yaml_fname
-        self.image_format = image_format
 
         if not os.path.isdir(self.image_dir):
-            os.makedirs(image_dir)
+            os.makedirs(self.image_dir)
         if not os.path.isdir(self.sound_dir):
-            os.makedirs(sound_dir)
+            os.makedirs(self.sound_dir)
         if not os.path.isdir(self.workdir):
             os.makedirs(self.workdir)
 
@@ -320,7 +319,9 @@ naturalizeMusic =
 
     def __init__(
             self, target=PureDjangoTarget(), lecture=None, fname=None,
+            image_format="svg",
             host_type="macports", only_new=False, lilypond_path=None):
+        self.image_format = image_format
         if not fname:
             fname = os.path.join(
                 os.path.dirname(__file__),
@@ -494,8 +495,9 @@ naturalizeMusic =
                    conv["notes"] + " } "
 
             if s == "chord" or s == "interval" or s == "scale":
-                body += r"\addlyrics { " + conv["annotation"] +\
-                  " } >>"
+                if "annotation" in conv:
+                    body += r"\addlyrics { " + conv["annotation"] + " }"
+                body += " >>"
 
             if s == "drums":
                 body += r"{ \drummode { " + conv["notes"] + "} }"
@@ -531,6 +533,7 @@ naturalizeMusic =
             if self.image_format == "svg": # Generate svg images
                 cmd = "%s/lilypond -dbackend=svg %s" % (
                     self.lilypond_path, os.path.basename(input_fname))
+
                 if subprocess.call(cmd.split(), cwd=self.target.workdir,
                                    stdout=fnull, stderr=fnull):
                     raise RuntimeError("Failed '%s'" % cmd)
@@ -555,7 +558,7 @@ naturalizeMusic =
                         cmd, shell=True, stdout=fnull, stderr=fnull):
                     raise RuntimeError("Failed '%s'" % cmd)
 
-    def compile(self, self.image_format):
+    def compile(self):
         """Create all media."""
         self.generate_extra_rounds()
         for d in self.index:
@@ -586,7 +589,7 @@ naturalizeMusic =
                         and os.path.isfile(conv["mp3"]) and
                         os.path.isfile(conv["mp3"])):
                     self.create_lilypond_file(conv, lytmp)
-                    self.create_staff_image(conv, self.image_format, lytmp, imagetmp)
+                    self.create_staff_image(conv, lytmp, imagetmp)
                     self.create_sounds(conv, miditmp)
 
         self.target.copy_files()
