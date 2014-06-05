@@ -1,0 +1,7 @@
+Notes:
+
+To generate message files, run
+  django-admin.py makemessages -l fi
+
+To compile the message files, run
+  django-admin.py compilemessages

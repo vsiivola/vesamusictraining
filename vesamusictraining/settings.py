@@ -69,7 +69,8 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+#LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fi'
 
 TIME_ZONE = 'UTC'
 
@@ -89,3 +90,7 @@ TEMPLATE_DIRS = os.path.join(BASE_DIR, "vesamusictraining", "static", "html")
 STATIC_DIR = os.path.join(BASE_DIR, "vesamusictraining", "static")
 
 ACCOUNT_ACTIVATION_DAYS = 7
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR,'locale'),
+)

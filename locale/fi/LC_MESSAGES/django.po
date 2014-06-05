@@ -1,0 +1,68 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-06-05 03:46+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: vesamusictraining/static/html/base.html:12
+msgid "Music training"
+msgstr "Musiikinharjoittelu"
+
+#: vesamusictraining/static/html/base.html:48
+msgid "Vesa's Music Trainer"
+msgstr "Vesa musiikkiharjoittaja"
+
+#: vesamusictraining/static/html/base.html:52
+#: vesamusictraining/static/html/index.html:10
+msgid "Home"
+msgstr "Koti"
+
+#: vesamusictraining/static/html/base.html:55
+msgid "Sign out"
+msgstr "Kirjaudu ulos"
+
+#: vesamusictraining/static/html/base.html:57
+msgid "Sign in"
+msgstr "Kirjaudu sisään"
+
+#: vesamusictraining/static/html/base.html:61
+msgid "News"
+msgstr "Uutiset"
+
+#: vesamusictraining/static/html/base.html:64
+msgid "Contact"
+msgstr "Ota yhteyttä"
+
+#: vesamusictraining/static/html/index.html:17
+msgid "Welcome"
+msgstr "Astu sisään"
+
+#: vesamusictraining/static/html/index.html:18
+msgid ""
+"This is a simple app for improving skills to hear different musical "
+"constructs and to read the corresponding musical notation."
+msgstr ""
+"Tämän sivuston avulla opit kuulemaan kuulemaan erilaisia musiikillisia "
+"rakenteita ja tunnistamaan niitä vastaavat nuotit."
+
+#: vesamusictraining/static/html/index.html:21
+msgid "Please sign in"
+msgstr "Kirjaudu sisään"
+
+#: vesamusictraining/static/html/index.html:23
+msgid "Sign up"
+msgstr "Rekisteröidy"
