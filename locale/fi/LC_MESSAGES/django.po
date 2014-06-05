@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-05 03:46+0300\n"
+"POT-Creation-Date: 2014-06-05 19:56+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,18 +24,20 @@ msgstr "Musiikinharjoittelu"
 
 #: vesamusictraining/static/html/base.html:48
 msgid "Vesa's Music Trainer"
-msgstr "Vesa musiikkiharjoittaja"
+msgstr "Vesan musiikkiharjoittaja"
 
 #: vesamusictraining/static/html/base.html:52
-#: vesamusictraining/static/html/index.html:10
+#: vesamusictraining/static/html/index.html:6
 msgid "Home"
 msgstr "Koti"
 
 #: vesamusictraining/static/html/base.html:55
+#: vesamusictraining/static/html/registration/logout.html:5
 msgid "Sign out"
 msgstr "Kirjaudu ulos"
 
 #: vesamusictraining/static/html/base.html:57
+#: vesamusictraining/static/html/registration/login.html:25
 msgid "Sign in"
 msgstr "Kirjaudu sisään"
 
@@ -47,11 +49,11 @@ msgstr "Uutiset"
 msgid "Contact"
 msgstr "Ota yhteyttä"
 
-#: vesamusictraining/static/html/index.html:17
+#: vesamusictraining/static/html/index.html:13
 msgid "Welcome"
 msgstr "Astu sisään"
 
-#: vesamusictraining/static/html/index.html:18
+#: vesamusictraining/static/html/index.html:14
 msgid ""
 "This is a simple app for improving skills to hear different musical "
 "constructs and to read the corresponding musical notation."
@@ -59,10 +61,35 @@ msgstr ""
 "Tämän sivuston avulla opit kuulemaan kuulemaan erilaisia musiikillisia "
 "rakenteita ja tunnistamaan niitä vastaavat nuotit."
 
-#: vesamusictraining/static/html/index.html:21
+#: vesamusictraining/static/html/index.html:17
+#: vesamusictraining/static/html/registration/login.html:15
 msgid "Please sign in"
 msgstr "Kirjaudu sisään"
 
-#: vesamusictraining/static/html/index.html:23
+#: vesamusictraining/static/html/index.html:19
 msgid "Sign up"
 msgstr "Rekisteröidy"
+
+#: vesamusictraining/static/html/registration/login.html:17
+msgid "Sorry, that's not a valid username or password."
+msgstr "Väärä tunnus tai salasana."
+
+#: vesamusictraining/static/html/registration/login.html:20
+msgid "Username"
+msgstr "Käyttäjätunnus"
+
+#: vesamusictraining/static/html/registration/login.html:21
+msgid "Password"
+msgstr "Salasana"
+
+#: vesamusictraining/static/html/registration/logout.html:14
+msgid "You have succesfully signed out."
+msgstr "Olet kirjatunut ulos."
+
+#: vesamusictraining/static/html/registration/registration_form.html:16
+msgid "User registration"
+msgstr "Rekisteröityminen"
+
+#: vesamusictraining/static/html/registration/registration_form.html:20
+msgid "Create account"
+msgstr "Luo tunnus"

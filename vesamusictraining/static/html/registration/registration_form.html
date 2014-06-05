@@ -1,28 +1,22 @@
 {% extends "base.html" %}
+{% load i18n %}
+{% comment %}
+**registration/registration_form.html**
+Used to show the form users will fill out to register. By default, has
+the following context:
 
-{% block extra_head %}
-<script type="text/javascript">
-//<![CDATA[
-$(document).ready(function(){
-  tt = new Translator("regformpage", lang);
-  tt.translate_page();
-  tt.translate_form();
-});
-//]]></script>
-{% endblock %}
-
-{% block content_title %}
-<span class="localizestring">Register</span>
-{% endblock %}
+``form``
+    The registration form. This will be an instance of some subclass
+    of ``django.forms.Form``; consult `Django's forms documentation
+    <http://docs.djangoproject.com/en/dev/topics/forms/>`_ for
+    information on how to display this in a template.
+{% endcomment %}
 
 {% block content %}
-<h2><span class="localizestring">Register</span></h2>
-<form action="/accounts/register/" method="POST">{% csrf_token %}
-  <table>
-    {{ form.as_table }}
-  </table>
-  <p>
-    <input type="submit" value="Submit" />
-  </p>
+<h1>{% trans "User registration" %}</h1>
+<form action="" method="post">
+{{ form }}
+{% csrf_token %}
+<input type="submit" name="some_name" value="{% trans "Create account" %}">
 </form>
 {% endblock %}

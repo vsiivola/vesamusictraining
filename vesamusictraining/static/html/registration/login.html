@@ -1,13 +1,8 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block extra_head %}
 <link href="/static/stylesheets/signin.css" rel="stylesheet">
-<script type="text/javascript">
-//<![CDATA[
-$(document).ready(function(){
-  translate_page("loginpage", lang);
-});
-//]]></script>
 {% endblock %}
 
 {% block content_title %}
@@ -17,17 +12,17 @@ $(document).ready(function(){
 {% block content %}
 
 <form action='.' method='post' class="form-signin" role="form">{% csrf_token %}
-  <h2 class="form-signin-heading">Please sign in</h2>
+  <h2 class="form-signin-heading">{% trans "Please sign in" %}</h2>
 {% if form.errors %}
-  <p class="error"><span class="localizestring">Sorry, that's not a valid username or password</span>.</p>
+  <p class="error">{% trans "Sorry, that's not a valid username or password." %}</p>
 {% endif %}
 
-  <input type="username" class="form-control" placeholder="username" id="username" name="username" required autofocus>
-  <input type="password" class="form-control" placeholder="Password" id="password" name="password" required>
+  <input type="username" class="form-control" placeholder={% trans "Username" %} id="username" name="username" required autofocus>
+  <input type="password" class="form-control" placeholder={% trans "Password" %} id="password" name="password" required>
   <!-- label class="checkbox">
        <input type="checkbox" value="remember-me"> Remember me
   </label -->
-   <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+   <button class="btn btn-lg btn-primary btn-block" type="submit">{% trans "Sign in" %}</button>
    <input type="hidden" name="next" value="/" />
 </form>
 

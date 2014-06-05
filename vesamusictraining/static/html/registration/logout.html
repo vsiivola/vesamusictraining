@@ -1,18 +1,15 @@
 {% extends "base.html" %}
-
-{% block extra_head %}
-<script type="text/javascript">
-//<![CDATA[
-$(document).ready(function(){
-  translate_page("logoutpage", lang);
-});
-//]]></script>
-{% endblock %}
+{% load i18n %}
 
 {% block content_title %}
-<span class="localizestring">Sign out</span>
+{% trans "Sign out" %}
+{% endblock %}
+
+{% block extra_head %}
+<link href="/static/stylesheets/signin.css" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
-<span class="localizestring">You have succesfully signed out</span>.
+
+<br><p>{% trans "You have succesfully signed out." %}</p>
 {% endblock %}

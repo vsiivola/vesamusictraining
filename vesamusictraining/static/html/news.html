@@ -1,11 +1,11 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block extra_head %}
-  <script type="text/javascript" src="/static/js/news.js"></script>
+<script type="text/javascript" src="/static/js/news.js"></script>
 <script type="text/javascript">
 //<![CDATA[
 $(document).ready(function(){
-  translate_page("newspage", lang);
   insert_langchooser();
   showNews($("span.news"));
 });
@@ -13,7 +13,7 @@ $(document).ready(function(){
 {% endblock %}
 
 {% block content_title %}
-<span class="localizestring">News</span>
+{% trans "News" %></span>
 {% endblock %}
 
 {% block content %}
