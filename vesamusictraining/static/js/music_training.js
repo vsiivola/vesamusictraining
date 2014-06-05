@@ -24,10 +24,10 @@ function MainController() {
         }
         //$("div#debug").html(this.course_name + " " + this.exercise_index + " " + this.num_exercises + " " + this.exercise_index < this.num_exercises)
         m_screen.get_server_info(this.course_name, this.exercise_index);
-        if (!lchooser_shown) {
-            lchooser_shown = true;
-            insert_langchooser();
-        }
+        //if (!lchooser_shown) {
+        //    lchooser_shown = true;
+        //    insert_langchooser();
+        //}
     };
 }
 

@@ -1,8 +1,7 @@
 /*jslint browser: true */
-/*globals Translator, lang, $*/
+/*globals gettext, lang, $*/
 
-var rt = new Translator("resultpage", lang),
-    result_context;
+var result_context;
 
 
 function ResultScreen(mainWindow) {
@@ -22,11 +21,13 @@ function ResultScreen(mainWindow) {
     };
 
     this.get_server_info2 = function (foo, bar) { // not really getting any info nowsen
-        $("#maintitle").html(rt.tp("Music Training | Results"));
+        $("#maintitle").html(gettext("Music Training | Results"));
         var mdiv = $("div#main");
-        mdiv.html('<div class="jumbotron"><h1>Congratulations</h1><p>You got ' +
+        mdiv.html('<div class="jumbotron"><h1>' + gettext("Congratulations") +
+                  '</h1><p>' + gettext("You got") + '  ' +
                   result_context.mainWindow.correct_clicks +
-                  " / " + result_context.mainWindow.num_exercises + " correct</p></div>");
+                  " / " + result_context.mainWindow.num_exercises +
+                  " " + gettext("correct") + "</p></div>");
 
         $.get(result_context.mainWindow.course_name + '/complete/', {
             'num_correct': JSON.stringify(result_context.mainWindow.correct_clicks)
@@ -34,7 +35,7 @@ function ResultScreen(mainWindow) {
               function () {
                 var obj = document.createElement("input");
                 obj.type = "button";
-                obj.value = rt.tp("Continue");
+                obj.value = gettext("Continue");
                 obj.className = "ui-button-text";
                 obj.onclick = function () {
                     result_context.mainWindow.course_name = null;

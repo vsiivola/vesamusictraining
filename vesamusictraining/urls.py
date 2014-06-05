@@ -1,5 +1,13 @@
 from django.conf.urls import patterns, include, url
 
+# For internationalization
+from django.views.i18n import javascript_catalog
+
+js_info_dict = {
+    'packages': ('vesamusictraining.home.views.home',),
+    'packages': ('vesamusictraining.exercise.views',),
+}
+
 # For user handling
 #from django.contrib.auth.views import login, logout
 
@@ -24,4 +32,5 @@ urlpatterns = patterns('',
     url(r'^exercise/', include('vesamusictraining.exercise.urls')),
     url(r'^news/', include('vesamusictraining.news.urls')),
     url(r'^users/', "vesamusictraining.user.views.home"),
+    url(r'^jsi18n/$', javascript_catalog, js_info_dict),
 )

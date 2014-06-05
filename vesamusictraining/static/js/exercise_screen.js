@@ -1,8 +1,6 @@
 /*jslint browser: true*/
 /*globals Translator, lang, $*/
 
-var et = new Translator("exercisepage", lang);
-
 function Choice(type, image, ogg, mp3, text) {
     "use strict";
     this.type = type;
@@ -42,7 +40,7 @@ function Choice(type, image, ogg, mp3, text) {
 
         this.dom = $('<div class="text-center col-xs-4 col-lecture">');
         this.dom.append(empty_stave_td);
-        this.dom.append( $('<div><button class="btn btn-lg btn-primary btn-block">' + et.tp("Play") + '</button></div>'));
+        this.dom.append( $('<div><button class="btn btn-lg btn-primary btn-block">' + gettext("Play") + '</button></div>'));
 
     };
 
@@ -200,7 +198,7 @@ function ExerciseScreen(mainWindow) {
     this.real_render = function (response) {
         this.mainWindow.num_exercises = response.num_exercises;
         $("#maintitle").html(
-            et.tp("Music Training") + " | " +
+            gettext("Music Training") + " | " +
                 this.mainWindow.course_name
         );
         var tstring = (

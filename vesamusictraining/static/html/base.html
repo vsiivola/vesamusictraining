@@ -26,7 +26,8 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-  <script type="text/javascript" src="/static/js/simple_translator.js"></script>
+  <script type="text/javascript" src="{% url 'django.views.i18n.javascript_catalog' %}"></script>
+
   {% block extra_head %}{% endblock %}
 
   </head>

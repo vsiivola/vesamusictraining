@@ -1,0 +1,88 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-06-05 20:44+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: vesamusictraining/static/js/chooser_screen.js:17
+msgid "Music Training | Choose your exercise"
+msgstr "Musiikinharjoittelu | Valitse harjoitus"
+
+#: vesamusictraining/static/js/chooser_screen.js:42
+msgid "Hints"
+msgstr "Ohjeita"
+
+#: vesamusictraining/static/js/chooser_screen.js:46
+msgid "More information"
+msgstr "Lisätietoja"
+
+#: vesamusictraining/static/js/chooser_screen.js:52
+msgid "Exercise information"
+msgstr "Tietoja harjoituksesta"
+
+#: vesamusictraining/static/js/chooser_screen.js:54
+#: vesamusictraining/static/js/chooser_screen.js:58
+msgid "version"
+msgstr "versio"
+
+#: vesamusictraining/static/js/chooser_screen.js:55
+msgid "exercises"
+msgstr "harjoitusta"
+
+#: vesamusictraining/static/js/chooser_screen.js:57
+msgid "completed"
+msgstr "tehty"
+
+#: vesamusictraining/static/js/chooser_screen.js:59
+msgid "score"
+msgstr "pisteet"
+
+#: vesamusictraining/static/js/chooser_screen.js:60
+msgid "on"
+msgstr ""
+
+#: vesamusictraining/static/js/chooser_screen.js:86
+msgid "Enter"
+msgstr "Aloita"
+
+#: vesamusictraining/static/js/exercise_screen.js:43
+msgid "Play"
+msgstr "Soita"
+
+#: vesamusictraining/static/js/exercise_screen.js:201
+msgid "Music Training"
+msgstr "Musiikinharjoittelu"
+
+#: vesamusictraining/static/js/result_screen.js:24
+msgid "Music Training | Results"
+msgstr "Musiikinharjoittelu | Tulokset"
+
+#: vesamusictraining/static/js/result_screen.js:26
+msgid "Congratulations"
+msgstr ""
+
+#: vesamusictraining/static/js/result_screen.js:27
+msgid "You got"
+msgstr "Sait"
+
+#: vesamusictraining/static/js/result_screen.js:30
+msgid "correct"
+msgstr "oikein"
+
+#: vesamusictraining/static/js/result_screen.js:38
+msgid "Continue"
+msgstr "Jatka"

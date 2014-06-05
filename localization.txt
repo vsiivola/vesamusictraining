@@ -1,7 +1,10 @@
 Notes:
 
-To generate message files, run
+To generate message files for templates, run
   django-admin.py makemessages -l fi
+
+To generate message files for javascript, run
+django-admin.py makemessages -d djangojs -l fi
 
 To compile the message files, run
   django-admin.py compilemessages
