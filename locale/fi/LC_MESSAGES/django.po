@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-05 20:17+0300\n"
+"POT-Creation-Date: 2014-06-05 22:32+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,30 +22,31 @@ msgstr ""
 msgid "Music training"
 msgstr "Musiikinharjoittelu"
 
-#: vesamusictraining/static/html/base.html:50
+#: vesamusictraining/static/html/base.html:55
 msgid "Vesa's Music Trainer"
 msgstr "Vesan musiikkiharjoittaja"
 
-#: vesamusictraining/static/html/base.html:54
+#: vesamusictraining/static/html/base.html:59
 #: vesamusictraining/static/html/index.html:6
 msgid "Home"
 msgstr "Koti"
 
-#: vesamusictraining/static/html/base.html:57
+#: vesamusictraining/static/html/base.html:62
 #: vesamusictraining/static/html/registration/logout.html:5
 msgid "Sign out"
 msgstr "Kirjaudu ulos"
 
-#: vesamusictraining/static/html/base.html:59
+#: vesamusictraining/static/html/base.html:64
 #: vesamusictraining/static/html/registration/login.html:25
 msgid "Sign in"
 msgstr "Kirjaudu sisään"
 
-#: vesamusictraining/static/html/base.html:63
+#: vesamusictraining/static/html/base.html:68
+#: vesamusictraining/static/html/news.html:17
 msgid "News"
 msgstr "Uutiset"
 
-#: vesamusictraining/static/html/base.html:66
+#: vesamusictraining/static/html/base.html:71
 msgid "Contact"
 msgstr "Ota yhteyttä"
 
@@ -66,7 +67,7 @@ msgstr ""
 msgid "Please sign in"
 msgstr "Kirjaudu sisään"
 
-#: vesamusictraining/static/html/index.html:19
+#: vesamusictraining/static/html/index.html:18
 msgid "Sign up"
 msgstr "Rekisteröidy"
 

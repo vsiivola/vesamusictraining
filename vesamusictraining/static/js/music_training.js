@@ -1,7 +1,10 @@
 /*globals ChooserScreen, ExerciseScreen, ResultScreen, insert_langchooser*/
 
-function MainController() {
+var lang;
+
+function MainController(lc) {
     "use strict";
+    lang = lc;
 
     this.course_name = null;
     var chooser_screen = new ChooserScreen(this),

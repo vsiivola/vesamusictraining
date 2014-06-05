@@ -32,5 +32,6 @@ urlpatterns = patterns('',
     url(r'^exercise/', include('vesamusictraining.exercise.urls')),
     url(r'^news/', include('vesamusictraining.news.urls')),
     url(r'^users/', "vesamusictraining.user.views.home"),
+    url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^jsi18n/$', javascript_catalog, js_info_dict),
 )

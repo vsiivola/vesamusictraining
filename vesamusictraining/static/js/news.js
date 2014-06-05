@@ -1,10 +1,8 @@
-/*globals Translator, lang, $*/
+/*globals Translator,  $*/
 
-var nt = new Translator("newspage", lang);
-
-function showNews(newsroot) {
+function showNews(newsroot, lang) {
     "use strict";
-    var newshead = $('<div class="container"><h1>' + nt.tp("News") + "</h1></div>");
+    var newshead = $('<div class="container"><h1>' + gettext("News") + "</h1></div>");
 
     newsroot.append(newshead);
 

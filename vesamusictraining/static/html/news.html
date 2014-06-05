@@ -1,19 +1,20 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
 
 {% block extra_head %}
 <script type="text/javascript" src="/static/js/news.js"></script>
 <script type="text/javascript">
 //<![CDATA[
 $(document).ready(function(){
-  insert_langchooser();
-  showNews($("span.news"));
+  showNews($("span.news"), "{{LANGUAGE_CODE}}");
 });
 //]]></script>
+
 {% endblock %}
 
 {% block content_title %}
-{% trans "News" %></span>
+{% trans "News" %}
 {% endblock %}
 
 {% block content %}

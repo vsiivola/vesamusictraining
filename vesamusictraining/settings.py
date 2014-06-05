@@ -49,6 +49,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 )
 
 ROOT_URLCONF = 'vesamusictraining.urls'
@@ -69,8 +70,8 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
 
-#LANGUAGE_CODE = 'en-us'
-LANGUAGE_CODE = 'fi'
+LANGUAGE_CODE = 'en-us'
+#LANGUAGE_CODE = 'fi'
 
 TIME_ZONE = 'UTC'
 
@@ -88,6 +89,11 @@ STATIC_URL = '/static/'
 
 TEMPLATE_DIRS = os.path.join(BASE_DIR, "vesamusictraining", "static", "html")
 STATIC_DIR = os.path.join(BASE_DIR, "vesamusictraining", "static")
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.i18n',
+    )
 
 ACCOUNT_ACTIVATION_DAYS = 7
 

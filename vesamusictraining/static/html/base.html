@@ -27,7 +27,13 @@
     <![endif]-->
 
   <script type="text/javascript" src="{% url 'django.views.i18n.javascript_catalog' %}"></script>
-
+<script type="text/javascript">
+$(document).ready(function() {
+$("a.lang").click(function(e) {
+   e.preventDefault();
+   $("form.langchooser").submit();
+});});
+</script>
   {% block extra_head %}{% endblock %}
 
   </head>
@@ -64,6 +70,24 @@
             <li>
               <a href="https://spreadsheets.google.com/spreadsheet/viewform?hl=en&key=0AoJvB3OLWygjdEFXODBQTWM3NWNFLUZidzZqLWM0cVE">{% trans "Contact" %}</a>
             </li>
+            <li>
+              {% get_current_language as LANGUAGE_CODE %}
+              {% ifequal LANGUAGE_CODE "en" %}
+                <form action="{% url 'set_language' %}" method="post" class="langchooser">
+                  {% csrf_token %}
+                  <input type="hidden" name="next" value="{{request.path}}" />
+                  <input type="hidden" name="language" value="fi" />
+                  <a href="#" class="lang"><img src="/static/generated_assets/images/fi.png" /></a>
+                </form>
+              {% else %}
+                <form action="{% url 'set_language' %}" method="post" class="langchooser">
+                  {% csrf_token %}
+                  <input type="hidden" name="next" value="{{request.path}}" />
+                  <input type="hidden" name="language" value="en-us" />
+                  <a href="#" class="lang"><img src="/static/generated_assets/images/gb.png" /></a>
+              </form>
+              {% endifequal %}
+            </li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -75,8 +99,6 @@
     {% endblock %}
     </div>
 
-    <div id="debug"></div>
-  </body>
 </html>
 
 
