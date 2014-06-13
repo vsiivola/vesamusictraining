@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block extra_head %}
+<script type="text/javascript" src="http://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>
+<script type="text/javascript" src="/static/js/exercise_screen.js"></script>
+<script type="text/javascript">
+//<![CDATA[
+$(document).ready(function(){
+  new ExerciseController(
+    "{{ lecture.title }}"
+    ).run();
+});
+//]]></script>
+{% endblock %}
+
+{% block content_title %}
+{{ lecture.title }}
+{% endblock %}
+
+{% load i18n %}
+
+{% block content %}
+<div style="margin:0 5%;" id="main" />
+{% endblock %}

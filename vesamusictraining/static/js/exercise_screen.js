@@ -96,11 +96,11 @@ function Choice(type, image, ogg, mp3, text) {
         $("img", this.dom).css("background-color", color);
         if (correct) {
             if (myex.num_clicks === 1) {
-                myex.mainWindow.correct_clicks += 1;
+                myex.correct_clicks += 1;
             }
-            myex.mainWindow.exercise_index += 1;
+            myex.exercise_index += 1;
             myex.clear_statics(function () {
-                myex.mainWindow.show.apply(myex.mainWindow);
+                myex.run();
             });
         }
     };
@@ -121,12 +121,12 @@ function Choice(type, image, ogg, mp3, text) {
             $(".empty_stave, .altaudio", event_context).off("click");
             ethis.num_clicks += 1;
             //$("div#debug").append("cidx " + athis.idstring + ", img" + athis.image);
-            $.get('/exercise/' + ethis.mainWindow.course_name + '/verify/',
+            $.get('/exercise/' + ethis.lecture_name + '/verify/',
                 {
-                    "exercise_index" : ethis.mainWindow.exercise_index,
+                    "exercise_index" : ethis.exercise_index,
                     "chosen" : event_context.type === "audio_response" ?
                             event_context.ogg : event_context.image,
-                    "num_exercises" : ethis.mainWindow.num_exercises
+                    "num_exercises" : ethis.num_exercises
                 },
                 function (response) {
                     var respi = JSON.parse(response);
@@ -141,12 +141,26 @@ function Choice(type, image, ogg, mp3, text) {
     };
 }
 
-function ExerciseScreen(mainWindow) {
+function ExerciseController(lecture) {
     "use strict";
-    this.mainWindow = mainWindow;
+    this.lecture_name = lecture;
+    this.exercise_index = 0;
+    this.num_exercises = 1;
+    this.correct_clicks = 0;
 
-    this.render_full = function (response) {
-        $("div#main").html("");
+
+    this.run = function () {
+        var escreen_context = this;
+        $.getJSON(
+            '/exercise/' + escreen_context.lecture_name + '/lecture/',
+            {"exercise_index": escreen_context.exercise_index},
+            function (response) {
+                escreen_context.render(response);
+            }
+        );
+    };
+
+    this.render = function (response) {
         var escreen_context = this,
             i,
             cur_choice;
@@ -196,50 +210,36 @@ function ExerciseScreen(mainWindow) {
     };
 
     this.real_render = function (response) {
-        this.mainWindow.num_exercises = response.num_exercises;
-        $("#maintitle").html(
-            gettext("Music Training") + " | " +
-                this.mainWindow.course_name
-        );
-        var tstring = (
-            '<h2>' +
+        var escreen_context = this,
+            tstring = (
+                '<h2>' +
                 response.name +
-                " (" + (this.mainWindow.exercise_index + 1) +
-                "/" + (this.mainWindow.num_exercises)
+                " (" + (this.exercise_index + 1) +
+                "/" + (this.num_exercises)
                 + ')</h2><div class="text-center" id="test_images"><div id="question"/><div class="clearfix"/><div class="alttable row text-center" id="alttr"/></div>'),
-            render_context,
             i,
             cur_choice;
 
+        this.num_exercises = response.num_exercises;
+        $("#maintitle").html(
+            gettext("Music Training") + " | " +
+                this.lecture_name
+        );
         $("div#main").html(tstring);
         $("div#question").append(this.question.dom);
         this.question.initial_overlays(); // FIXME, ui glitches
 
-        render_context = this;
         $("div#main").slideDown(function () {
-            render_context.question.play_audio();
+            escreen_context.question.play_audio();
             for (i = 0; i < response.num_alt; i += 1) {
-                cur_choice = render_context.choices[i];
+                cur_choice = escreen_context.choices[i];
                 $("div#alttr").append(cur_choice.dom);
                 cur_choice.initial_overlays();
-                cur_choice.bind_events(render_context);
+                cur_choice.bind_events(escreen_context);
             }
         });
     };
 
-    this.get_server_info = function (course_name, exercise_index) {
-        var that = this; //preserve context for callback
-        //$("div#debug").append(" getting exnum " + exercise_index)
-        $.get(
-            '/exercise/' + course_name + '/lecture/',
-            {"exercise_index": exercise_index},
-            function (response) {that.res.apply(that, arguments); }
-        );
-    };
-
-    this.res = function (response) {
-        this.render_full(JSON.parse(response));
-    };
 
     this.clear_statics = function (callback) {
         //$("span").removeClass("ui-icon ui-icon-circle-triangle-e ui-icon-circle-check ui-icon-circle-close checkremove");
@@ -247,4 +247,5 @@ function ExerciseScreen(mainWindow) {
         $("span.qmark").css("opacity", "0.0");
         callback();
     };
+
 }

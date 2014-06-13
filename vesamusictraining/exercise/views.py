@@ -5,7 +5,7 @@ import random, datetime
 from django.shortcuts import render_to_response, render
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
 
 import json
 
@@ -14,10 +14,11 @@ from vesamusictraining.exercise.models import Lecture, Exercise, UserLecture, Lo
 #from django.db.models import Avg, Max, Min, Count
 
 @login_required
-def show_lectures(request):
+def choose_lecture(request):
+    """Render the chooser page."""
     complete_info = dict([
         (ue.lecture_name, ue)\
-          for ue in  UserLecture.objects.filter(user=request.user)])
+          for ue in UserLecture.objects.filter(user=request.user)])
 
     lectures = Lecture.objects.filter(language=request.LANGUAGE_CODE)
     for l in lectures:
@@ -34,10 +35,16 @@ def show_lectures(request):
             l.completed = False
 
     return render(
-        request, "lectures.html",
+        request, "choose_lecture.html",
         {"lectures": lectures}
         )
 
+@login_required
+def show_lecture(request, lecture_name):
+    l = Lecture.objects.get(title=lecture_name)
+
+    return render(request, "show_lecture.html",
+                  {"lecture": l})
 
 @login_required
 def exercise(request):
