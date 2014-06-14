@@ -1,9 +1,16 @@
 """News view"""
+from django.http import HttpResponse
 from django.shortcuts import render
 import json
-from django.http import HttpResponse
 
 from vesamusictraining.news.models import NewsItem
+
+def show_news(request):
+    """Render the news page"""
+    news = NewsItem.objects.filter(language=request.LANGUAGE_CODE).order_by('-date')
+    return render(
+        request, "news.html",
+        {"news": news})
 
 def list_news(request, lang):
     """List news in JSON"""
@@ -21,10 +28,3 @@ def list_news(request, lang):
 
     return HttpResponse(content=json.dumps(all_news))
 
-
-
-def show_news(request):
-    news = NewsItem.objects.filter(language=request.LANGUAGE_CODE).order_by('-date')
-    return render(
-        request, "news.html",
-        {"news": news})

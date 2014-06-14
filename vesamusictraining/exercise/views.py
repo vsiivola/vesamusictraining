@@ -1,17 +1,12 @@
+import datetime
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
+import json
+import random
 import sys # debug
 
-import random, datetime
-
-from django.shortcuts import render_to_response, render
-from django.contrib.auth.decorators import login_required
-from django.template import RequestContext
-from django.http import HttpResponse
-
-import json
-
-from vesamusictraining.exercise.models import Lecture, Exercise, UserLecture, Log
-
-#from django.db.models import Avg, Max, Min, Count
+from vesamusictraining.exercise.models import Lecture, UserLecture, Log
 
 @login_required
 def choose_lecture(request):
@@ -59,6 +54,7 @@ def show_results(request, lecture_name):
 
 @login_required
 def get_question(request, lecture_name):
+    """Return JSON question info."""
     if request.method == 'GET':
         l = Lecture.objects.get(title=lecture_name)
         first_exercise_idx = l.exercise_set.order_by("pk")[0].pk
@@ -113,6 +109,7 @@ def get_question(request, lecture_name):
 
 @login_required
 def verify(request, lecture_name):
+    """Check, if the answer was correct"""
     if request.method == 'GET':
         l = Lecture.objects.get(title=lecture_name)
         ei = int(request.GET["exercise_index"]) + \
@@ -122,7 +119,7 @@ def verify(request, lecture_name):
             if e.question_type == "audio":
                 alt = e.choice_set.get(image=request.GET["chosen"])
             else:
-                alt = e.choice_set.get(ogg = request.GET["chosen"])
+                alt = e.choice_set.get(ogg=request.GET["chosen"])
         except KeyError:
             alt = None
 
@@ -143,6 +140,7 @@ def verify(request, lecture_name):
 
 @login_required
 def complete_lecture(request, lecture_name):
+    """Write lecture completion info to db."""
     ue = UserLecture.objects.get(user=request.user, lecture_name=lecture_name)
     ue.score = request.GET["num_correct"]
     ue.completed_date = datetime.datetime.now()
