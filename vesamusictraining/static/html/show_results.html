@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content_title %}
+{% trans "Music Training" %} | {% trans "Results for" %} {{ lecture.title }}
+{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+  <h1>{% trans "Congratulations" %}</h1>
+  <p>{% trans "You got" %} {{ userlecture.score }} / {{ userlecture.num_questions }}.</p>
+
+  <a class="btn btn-lg btn-primary" href="/exercise/">{% trans "Continue" %} &raquo;</a>
+</div>
+{% endblock %}

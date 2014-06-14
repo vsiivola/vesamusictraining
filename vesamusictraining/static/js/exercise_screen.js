@@ -121,7 +121,7 @@ function Choice(type, image, ogg, mp3, text) {
             $(".empty_stave, .altaudio", event_context).off("click");
             ethis.num_clicks += 1;
             //$("div#debug").append("cidx " + athis.idstring + ", img" + athis.image);
-            $.get('/exercise/' + ethis.lecture_name + '/verify/',
+            $.get('/exercise/verify/' + ethis.lecture_name + '/',
                 {
                     "exercise_index" : ethis.exercise_index,
                     "chosen" : event_context.type === "audio_response" ?
@@ -141,23 +141,39 @@ function Choice(type, image, ogg, mp3, text) {
     };
 }
 
-function ExerciseController(lecture) {
+function ExerciseController(lecture, num_exercises) {
     "use strict";
     this.lecture_name = lecture;
     this.exercise_index = 0;
-    this.num_exercises = 1;
+    this.num_exercises = num_exercises;
     this.correct_clicks = 0;
-
 
     this.run = function () {
         var escreen_context = this;
-        $.getJSON(
-            '/exercise/' + escreen_context.lecture_name + '/lecture/',
-            {"exercise_index": escreen_context.exercise_index},
-            function (response) {
-                escreen_context.render(response);
-            }
-        );
+        //$("div#debug").append("<br>" + this.exercise_index +"/" + this.num_exercises + "<br>");
+        if (this.exercise_index < this.num_exercises) {
+            $.getJSON(
+                '/exercise/get_question/' + escreen_context.lecture_name + '/',
+                {"exercise_index": escreen_context.exercise_index},
+                function (response) {
+                    escreen_context.render(response);
+                }
+            );
+        } else {
+            $.get(
+                '/exercise/complete_lecture/' + escreen_context.lecture_name + '/',
+                {'num_correct': escreen_context.correct_clicks},
+                function (response) {
+                    $("div#main").slideUp("slow", function () {
+                        window.location.replace(
+                            "/exercise/show_results/" +
+                                escreen_context.lecture_name + "/"
+                        );
+                    });
+
+                }
+            );
+        }
     };
 
     this.render = function (response) {
@@ -220,7 +236,6 @@ function ExerciseController(lecture) {
             i,
             cur_choice;
 
-        this.num_exercises = response.num_exercises;
         $("#maintitle").html(
             gettext("Music Training") + " | " +
                 this.lecture_name

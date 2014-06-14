@@ -41,56 +41,24 @@ def choose_lecture(request):
 
 @login_required
 def show_lecture(request, lecture_name):
+    """Render one lecture."""
     l = Lecture.objects.get(title=lecture_name)
 
     return render(request, "show_lecture.html",
-                  {"lecture": l})
+                  {"lecture_name": l.title,
+                   "num_exercises": l.exercise_set.count()
+                   })
 
 @login_required
-def exercise(request):
-    return render_to_response(
-        "exercise.html", context_instance=RequestContext(request))
+def show_results(request, lecture_name):
+    """Show results on completion."""
+    ue = UserLecture.objects.get(user=request.user, lecture_name=lecture_name)
+
+    return render(request, "show_results.html",
+                  {"userlecture": ue})
 
 @login_required
-def list_lectures(request):
-    complete_info = dict([
-        (ue.lecture_name, ue)\
-          for ue in  UserLecture.objects.filter(user=request.user)])
-    full_info = []
-
-    for l in Lecture.objects.all():
-        res = {
-          "title" : l.title,
-          "version" : l.version,
-          "num_exercises" : l.exercise_set.count()
-          }
-
-        if l.language:
-            res["language"] = l.language
-
-        if l.instructions:
-            res["instructions"] = l.instructions
-
-        if l.outside_info_name:
-            res["outside_info_name"] = l.outside_info_name
-            res["outside_info_link"] = l.outside_info_link
-
-        if l.title in complete_info:
-            ue = complete_info[l.title]
-            res["complete"] = ue.completed
-            if ue.completed:
-                res["complete_date"] = ue.completed_date.ctime()
-                res["score"] = "%s/%s" % (str(ue.score), str(ue.num_questions))
-                res["version"] = ue.lecture_version
-            full_info.append(res)
-
-    return HttpResponse(
-        content=json.dumps({"lectures": full_info})) #,
-        #mimetype = 'application/json') # This breaks everything ?
-
-
-@login_required
-def lecture(request, lecture_name):
+def get_question(request, lecture_name):
     if request.method == 'GET':
         l = Lecture.objects.get(title=lecture_name)
         first_exercise_idx = l.exercise_set.order_by("pk")[0].pk
@@ -116,13 +84,11 @@ def lecture(request, lecture_name):
             ue.completed = False
             ue.lecture_version = l.version
             ue.num_questions = l.exercise_set.count()
-
             ue.save()
 
         res_message = {
           "name" : e.title.capitalize(),
           "question_type" : e.question_type,
-          "num_exercises" : l.exercise_set.count()
         }
 
         res_message["text"] = e.text
@@ -176,7 +142,7 @@ def verify(request, lecture_name):
 
 
 @login_required
-def register_completion(request, lecture_name):
+def complete_lecture(request, lecture_name):
     ue = UserLecture.objects.get(user=request.user, lecture_name=lecture_name)
     ue.score = request.GET["num_correct"]
     ue.completed_date = datetime.datetime.now()
