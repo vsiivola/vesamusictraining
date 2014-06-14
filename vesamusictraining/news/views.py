@@ -1,3 +1,4 @@
+"""News view"""
 from django.shortcuts import render
 import json
 from django.http import HttpResponse
@@ -5,6 +6,7 @@ from django.http import HttpResponse
 from vesamusictraining.news.models import NewsItem
 
 def list_news(request, lang):
+    """List news in JSON"""
     all_news = []
     for l in NewsItem.objects.filter(language=lang).order_by('-date'):
         res = {
@@ -17,12 +19,12 @@ def list_news(request, lang):
             }
         all_news.append(res)
 
-    return HttpResponse(content = json.dumps(all_news))
+    return HttpResponse(content=json.dumps(all_news))
 
-# These are just for the page redirect
-from django.shortcuts import render_to_response
-from django.template import RequestContext
 
-def home(request):
-  return render_to_response("news.html",
-                            context_instance=RequestContext(request))
+
+def show_news(request):
+    news = NewsItem.objects.filter(language=request.LANGUAGE_CODE).order_by('-date')
+    return render(
+        request, "news.html",
+        {"news": news})

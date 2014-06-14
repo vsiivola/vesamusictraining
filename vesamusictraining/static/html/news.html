@@ -1,22 +1,21 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load l10n %}
 {% get_current_language as LANGUAGE_CODE %}
-
-{% block extra_head %}
-<script type="text/javascript" src="/static/js/news.js"></script>
-<script type="text/javascript">
-//<![CDATA[
-$(document).ready(function(){
-  showNews($("span.news"), "{{LANGUAGE_CODE}}");
-});
-//]]></script>
-
-{% endblock %}
 
 {% block content_title %}
 {% trans "News" %}
 {% endblock %}
 
 {% block content %}
-<span class="news" />
+<div class="container"><h1>{% trans "News" %}</h1>
+  {% for newsitem in news %}
+  <br>
+  <h4>
+    {{ newsitem.title }}
+  </h4>
+  <em>{{ newsitem.date }}</em>
+  <p>{{ newsitem.content }}</p>
+  {% endfor %}
+</div>
 {% endblock %}
