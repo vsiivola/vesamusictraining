@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-05 22:32+0300\n"
+"POT-Creation-Date: 2014-06-14 14:16+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,75 +17,52 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: vesamusictraining/static/js/chooser_screen.js:17
-msgid "Music Training | Choose your exercise"
-msgstr "Musiikinharjoittelu | Valitse harjoitus"
-
-#: vesamusictraining/static/js/chooser_screen.js:42
-msgid "Hints"
-msgstr "Ohjeita"
-
-#: vesamusictraining/static/js/chooser_screen.js:46
-msgid "More information"
-msgstr "Lisätietoja"
-
-#: vesamusictraining/static/js/chooser_screen.js:52
-msgid "Exercise information"
-msgstr "Tietoja harjoituksesta"
-
-#: vesamusictraining/static/js/chooser_screen.js:54
-#: vesamusictraining/static/js/chooser_screen.js:58
-msgid "version"
-msgstr "versio"
-
-#: vesamusictraining/static/js/chooser_screen.js:55
-msgid "exercises"
-msgstr "harjoitusta"
-
-#: vesamusictraining/static/js/chooser_screen.js:57
-msgid "completed"
-msgstr "tehty"
-
-#: vesamusictraining/static/js/chooser_screen.js:59
-msgid "score"
-msgstr "pisteet"
-
-#: vesamusictraining/static/js/chooser_screen.js:60
-msgid "on"
-msgstr ""
-
-#: vesamusictraining/static/js/chooser_screen.js:86
-msgid "Enter"
-msgstr "Aloita"
-
-#: vesamusictraining/static/js/exercise_screen.js:43
+#: static/js/exercise_screen.js:43
 msgid "Play"
 msgstr "Soita"
 
-#: vesamusictraining/static/js/exercise_screen.js:201
+#: static/js/exercise_screen.js:240
 msgid "Music Training"
 msgstr "Musiikinharjoittelu"
 
-#: vesamusictraining/static/js/news.js:5
-msgid "News"
-msgstr "Uutiset"
+#~ msgid "News"
+#~ msgstr "Uutiset"
 
-#: vesamusictraining/static/js/result_screen.js:24
-msgid "Music Training | Results"
-msgstr "Musiikinharjoittelu | Tulokset"
+#~ msgid "Music Training | Choose your exercise"
+#~ msgstr "Musiikinharjoittelu | Valitse harjoitus"
 
-#: vesamusictraining/static/js/result_screen.js:26
-msgid "Congratulations"
-msgstr ""
+#~ msgid "Hints"
+#~ msgstr "Ohjeita"
 
-#: vesamusictraining/static/js/result_screen.js:27
-msgid "You got"
-msgstr "Sait"
+#~ msgid "More information"
+#~ msgstr "Lisätietoja"
 
-#: vesamusictraining/static/js/result_screen.js:30
-msgid "correct"
-msgstr "oikein"
+#~ msgid "Exercise information"
+#~ msgstr "Tietoja harjoituksesta"
 
-#: vesamusictraining/static/js/result_screen.js:38
-msgid "Continue"
-msgstr "Jatka"
+#~ msgid "version"
+#~ msgstr "versio"
+
+#~ msgid "exercises"
+#~ msgstr "harjoitusta"
+
+#~ msgid "completed"
+#~ msgstr "tehty"
+
+#~ msgid "score"
+#~ msgstr "pisteet"
+
+#~ msgid "Enter"
+#~ msgstr "Aloita"
+
+#~ msgid "Music Training | Results"
+#~ msgstr "Musiikinharjoittelu | Tulokset"
+
+#~ msgid "You got"
+#~ msgstr "Sait"
+
+#~ msgid "correct"
+#~ msgstr "oikein"
+
+#~ msgid "Continue"
+#~ msgstr "Jatka"

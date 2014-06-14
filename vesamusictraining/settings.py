@@ -98,5 +98,5 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 ACCOUNT_ACTIVATION_DAYS = 7
 
 LOCALE_PATHS = (
-    os.path.join(BASE_DIR,'vesamusictraining', 'locale'),
+    os.path.join(BASE_DIR, 'vesamusictraining', 'locale'),
 )
