@@ -1,9 +1,5 @@
 <!DOCTYPE html>
 <html lang="fi">
-  <!-- TODO
-       * set html lang tag dynamically
-       * add logo
-       -->
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,6 +13,7 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
     <link type="text/css" rel="stylesheet" href="/static/stylesheets/custom.css" ></link>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -27,13 +24,13 @@
     <![endif]-->
 
   <script type="text/javascript" src="{% url 'django.views.i18n.javascript_catalog' %}"></script>
-<script type="text/javascript">
+  <script type="text/javascript">
 $(document).ready(function() {
 $("a.lang").click(function(e) {
    e.preventDefault();
    $("form.langchooser").submit();
 });});
-</script>
+  </script>
   {% block extra_head %}{% endblock %}
 
   </head>

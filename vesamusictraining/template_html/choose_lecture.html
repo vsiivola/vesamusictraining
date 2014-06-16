@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content_title %}
+{% trans "Music Training" %} | {% trans "Choose your exercise" %}
+{% endblock %}
+
+{% block content %}
+<br>
+<div id="courses" class="row">
+{% for lecture in lectures %}
+  <div class="col-md-4 col-sm-6 {% if lecture.completed %}inactive-lecture{% endif %}">
+    <div class="panel panel-default panel-lecture">
+      <div class="panel-heading"><!-- a href="#" class="pull-right">View all</a -->
+        <h3 class="lecture-title"><a href="/exercise/show_lecture/{{ lecture.title }}">{{ lecture.title  }}</a></h3>
+      </div>
+      <div class="panel-body">
+        {% if lecture.instructions %}
+        <h4>{% trans "Hints" %}</h4><p>{{ lecture.instructions }}</p>
+        {% endif %}
+        {% if lecture.outside_info_name %}
+        <h4>{% trans "More information" %}</h4>
+        <a class="outside" href="{{ lecture.outside_info_link }}">
+          {{ lecture.outside_info_name }}
+        </a>
+        {% endif %}
+        <h4>{% trans "Exercise information" %}</h4>
+        <ul class="lecture_info">
+          <li>{% trans "version" %} {{ lecture.version }}</li>
+          <li>{{ lecture.num_exercises }} {% trans "exercises" %}</li>
+          {% if lecture.completed %}
+          <li>{% trans "completed" %}
+            <ul>
+              <li>{% trans "version" %} {{ lecture.completed_version }}</li>
+              <li>{% trans "score" %} {{ lecture.correct }}/{{ lecture.total_responses }}</li>
+              <li>{% trans "on" %} {{lecture.complete_date}}</li>
+            </ul>
+          </li>
+          {% endif %}
+        </ul>
+        <a class="btn btn-lg btn-primary pull-right" href="/exercise/show_lecture/{{ lecture.title }}">{% trans "Enter" %} &raquo;</a>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+</div>
+{% endblock %}

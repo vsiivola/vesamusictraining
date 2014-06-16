@@ -87,7 +87,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-TEMPLATE_DIRS = os.path.join(BASE_DIR, "vesamusictraining", "static", "html")
+TEMPLATE_DIRS = os.path.join(BASE_DIR, "vesamusictraining", "template_html")
 STATIC_DIR = os.path.join(BASE_DIR, "vesamusictraining", "static")
 
 TEMPLATE_CONTEXT_PROCESSORS = (

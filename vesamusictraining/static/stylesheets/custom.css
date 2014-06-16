@@ -1,6 +1,7 @@
 /* No overlap for bootstrap divs
  * http://stackoverflow.com/questions/11124777/twitter-bootstrap-navbar-fixed-top-overlapping-site
  */
+
 body {
     padding-top: 40px;
     /*background-color: #999999;*/
@@ -17,36 +18,13 @@ div.container-fluid {
 h2.lecture-title {
     color: #2262f2
 }
-div.col-lecture {
-  margin: 40px 0px;
-
-}
-.row {
-    zoom: 1;
-    margin-left: -20px;
-}
 
 /* Exercise screen */
 span.qmark {
  opacity: 0;
- /*font-size: 20vh;*/
- /*left: -15%;*/
- /*top: 50%;*/
  font-size: 50px;
  left: -90px;
  top: 0px;
  font-weight: bold;
  position: relative;
 }
-
-img.image_question {
-/*    width: 25%;
-    overflow: hidden;*/
-
-}
-
-img.image_answer {
-/*    width: 95%;
-    overflow: hidden;*/
-}
-
