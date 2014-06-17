@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-14 14:18+0300\n"
+"POT-Creation-Date: 2014-06-17 20:16+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,84 +18,85 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: static/html/base.html:12
+#: template_html/base.html:8 template_html/base_simplified.html:8
 msgid "Music training"
 msgstr "Musiikinharjoittelu"
 
-#: static/html/base.html:55
+#: template_html/base.html:52 template_html/base_simplified.html:44
 msgid "Vesa's Music Trainer"
 msgstr "Vesan musiikkiharjoittaja"
 
-#: static/html/base.html:59 static/html/index.html:6
+#: template_html/base.html:56 template_html/index.html:6
 msgid "Home"
 msgstr "Koti"
 
-#: static/html/base.html:62 static/html/registration/logout.html:5
+#: template_html/base.html:59 template_html/registration/logout.html:5
 msgid "Sign out"
 msgstr "Kirjaudu ulos"
 
-#: static/html/base.html:64 static/html/registration/login.html:25
+#: template_html/base.html:61 template_html/registration/login.html:9
+#: template_html/registration/login.html:25
 msgid "Sign in"
 msgstr "Kirjaudu sisään"
 
-#: static/html/base.html:68 static/html/news.html:7
-#: static/html/news.html.py:11
+#: template_html/base.html:65 template_html/news.html:7
+#: template_html/news.html.py:11
 msgid "News"
 msgstr "Uutiset"
 
-#: static/html/base.html:71
+#: template_html/base.html:68
 msgid "Contact"
 msgstr "Ota yhteyttä"
 
-#: static/html/choose_lecture.html:5 static/html/show_results.html:5
+#: template_html/choose_lecture.html:5 template_html/show_results.html:5
 msgid "Music Training"
 msgstr "Musiikinharjoittelu"
 
-#: static/html/choose_lecture.html:5
+#: template_html/choose_lecture.html:5
 msgid "Choose your exercise"
 msgstr "Valitse harjoitus"
 
-#: static/html/choose_lecture.html:14
+#: template_html/choose_lecture.html:19
 msgid "Hints"
 msgstr "Ohjeet"
 
-#: static/html/choose_lecture.html:17
+#: template_html/choose_lecture.html:22
 msgid "More information"
 msgstr "Lisätietoja"
 
-#: static/html/choose_lecture.html:22
+#: template_html/choose_lecture.html:27
 msgid "Exercise information"
 msgstr "Tietoja harjoituksesta"
 
-#: static/html/choose_lecture.html:24 static/html/choose_lecture.html.py:29
+#: template_html/choose_lecture.html:29 template_html/choose_lecture.html:34
 msgid "version"
 msgstr "versio"
 
-#: static/html/choose_lecture.html:25
+#: template_html/choose_lecture.html:30
 msgid "exercises"
 msgstr "harjoitusta"
 
-#: static/html/choose_lecture.html:27
+#: template_html/choose_lecture.html:32
 msgid "completed"
 msgstr "tehty"
 
-#: static/html/choose_lecture.html:30
+#: template_html/choose_lecture.html:35
 msgid "score"
 msgstr "pisteet"
 
-#: static/html/choose_lecture.html:31
+#: template_html/choose_lecture.html:36
 msgid "on"
 msgstr ""
 
-#: static/html/choose_lecture.html:36
+#: template_html/choose_lecture.html:41
 msgid "Enter"
 msgstr "Aloita"
 
-#: static/html/index.html:13
+#: template_html/index.html:13
 msgid "Welcome"
 msgstr "Astu sisään"
 
-#: static/html/index.html:14
+#: template_html/index.html:14
 msgid ""
 "This is a simple app for improving skills to hear different musical "
 "constructs and to read the corresponding musical notation."
@@ -103,50 +104,63 @@ msgstr ""
 "Tämän sivuston avulla opit kuulemaan kuulemaan erilaisia musiikillisia "
 "rakenteita ja tunnistamaan niitä vastaavat nuotit."
 
-#: static/html/index.html:17 static/html/registration/login.html:15
+#: template_html/index.html:17 template_html/registration/login.html:15
 msgid "Please sign in"
 msgstr "Kirjaudu sisään"
 
-#: static/html/index.html:18
+#: template_html/index.html:18
 msgid "Sign up"
 msgstr "Rekisteröidy"
 
-#: static/html/show_results.html:5
+#: template_html/show_results.html:5
 msgid "Results for"
 msgstr "Tulokset harjoituksessa"
 
-#: static/html/show_results.html:10
+#: template_html/show_results.html:10
 msgid "Congratulations"
 msgstr "Onnittelut"
 
-#: static/html/show_results.html:11
+#: template_html/show_results.html:11
 msgid "You got"
 msgstr "Sait"
 
-#: static/html/show_results.html:13
+#: template_html/show_results.html:13
 msgid "Continue"
 msgstr "Jatka"
 
-#: static/html/registration/login.html:17
+#: template_html/registration/login.html:17
 msgid "Sorry, that's not a valid username or password."
 msgstr "Väärä tunnus tai salasana."
 
-#: static/html/registration/login.html:20
+#: template_html/registration/login.html:20
+#: template_html/registration/registration_form.html:19
 msgid "Username"
 msgstr "Käyttäjätunnus"
 
-#: static/html/registration/login.html:21
+#: template_html/registration/login.html:21
+#: template_html/registration/registration_form.html:21
+#: template_html/registration/registration_form.html:22
 msgid "Password"
 msgstr "Salasana"
 
-#: static/html/registration/logout.html:14
+#: template_html/registration/logout.html:14
 msgid "You have succesfully signed out."
 msgstr "Olet kirjatunut ulos."
 
-#: static/html/registration/registration_form.html:16
-msgid "User registration"
+#: template_html/registration/registration_form.html:9
+#: template_html/registration/registration_form.html:14
+msgid "Registration"
 msgstr "Rekisteröityminen"
 
-#: static/html/registration/registration_form.html:20
+#: template_html/registration/registration_form.html:17
+#, fuzzy
+msgid "Sorry, registration failed."
+msgstr "Rekisteröityminen"
+
+#: template_html/registration/registration_form.html:20
+msgid "E-mail"
+msgstr "Sähköpostiosoite"
+
+#: template_html/registration/registration_form.html:23
 msgid "Create account"
 msgstr "Luo tunnus"
