@@ -1,22 +1,25 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% comment %}
-**registration/registration_form.html**
-Used to show the form users will fill out to register. By default, has
-the following context:
 
-``form``
-    The registration form. This will be an instance of some subclass
-    of ``django.forms.Form``; consult `Django's forms documentation
-    <http://docs.djangoproject.com/en/dev/topics/forms/>`_ for
-    information on how to display this in a template.
-{% endcomment %}
+{% block extra_head %}
+<link href="/static/stylesheets/signin.css" rel="stylesheet">
+{% endblock %}
+
+{% block content_title %}
+{% trans "Registration" %}
+{% endblock %}
 
 {% block content %}
-<h1>{% trans "User registration" %}</h1>
-<form action="" method="post">
-{{ form }}
-{% csrf_token %}
-<input type="submit" name="some_name" value="{% trans "Create account" %}">
+<form action="" method="post" class="form-signin" role="form">
+  <h2 class="form-signin-heading">{% trans "Registration" %}</h2>
+  {% csrf_token %}
+  {% if form.errors %}
+  <p class="error">{% trans "Sorry, registration failed." %}</p>
+  {% endif %}
+  <input type="username" class="form-control" placeholder={% trans "Username" %} id="id_username" name="username" required autofocus><br />
+  <input type="email" class="form-control" placeholder={% trans "E-mail" %} id="id_email" name="email" required><br />
+  <input type="password" class="form-control" placeholder={% trans "Password" %} id="id_password1" name="password1" required><br />
+  <input type="password" class="form-control" placeholder={% trans "Password" %} id="id_password2" name="password2" required><br />
+  <input type="submit" name="submit" class="btn btn-lg btn-primary" value="{% trans "Create account" %}">
 </form>
 {% endblock %}

@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content_title %}
-<span class="localizestring">Sign in</span>
+{% trans "Sign in" %}
 {% endblock %}
 
 {% block content %}
@@ -17,7 +17,7 @@
   <p class="error">{% trans "Sorry, that's not a valid username or password." %}</p>
 {% endif %}
 
-  <input type="username" class="form-control" placeholder={% trans "Username" %} id="username" name="username" required autofocus>
+  <input type="username" class="form-control" placeholder={% trans "Username" %} id="username" name="username" required autofocus><br />
   <input type="password" class="form-control" placeholder={% trans "Password" %} id="password" name="password" required>
   <!-- label class="checkbox">
        <input type="checkbox" value="remember-me"> Remember me
