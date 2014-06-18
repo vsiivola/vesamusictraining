@@ -16,7 +16,9 @@ You can activate the environment with
 ##Install python dependencies
 
 The app needs the following python modules: django, pyyaml, south, dj-database-url, dj-static, django-registration, django-toolbelt, gunicorn, psycopg2, pystache, static. You can install them for example with pip
-```pip3 install django pyyaml south dj-database-url dj-static django-registration django-toolbelt gunicorn psycopg2 pystache static```
+```
+pip3 install django pyyaml south dj-database-url dj-static django-registration django-toolbelt gunicorn psycopg2 pystache static
+```
 
 ##Initialize the database
 
@@ -36,7 +38,7 @@ and apply changes with
 
 ## Compile the localization files
 
-In `vesamusictraining/`, to generate message files for templates, run
+In directory vesamusictraining/, to generate message files for templates, run
 ```django-admin.py makemessages -l fi```
 To generate message files for javascript, run
 ```django-admin.py makemessages -d djangojs -l fi```
@@ -48,8 +50,7 @@ You can run the local web app by starting a web server. Running gunicorn directl
 ```gunicorn vesamusictraining.wsgi```
 starts the service at [http://localhost:8000/](http://localhost:8000/)
 
-Running
-    foreman start
+Running ```foreman start```
 starts the service at [http://localhost:5000/](http://localhost:5000/)
 
 ## Miscellaneus notes
