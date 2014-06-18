@@ -5,10 +5,10 @@ Heroku is a web app platform. This file contains some notes on hwo to deploy the
 ##Set up for Heroku
 
 Create a branch that will contain the app to be deployed.
-    git checkout -b heroku-media
+```git checkout -b heroku-media```
 
 Create a requirements file
-    pip3 freeze > requirements
+```pip3 freeze > requirements```
 
 Generate the content as explained in th file 01-create_exerises.gmd. Use `git add` to add the media files to the repo. Also add the compiled localization resources. `git commit` the files.
 
@@ -36,18 +36,19 @@ LOCALE_PATHS = (
 ```
 
 Configure the heroku project as a git remote called heroku. Now you can push the git branch with all the media files in it.
-    git push heroku heroku-media:master
+```git push heroku heroku-media:master```
 
 Initialize the db
-    heroku run python manage.py syncdb
+```heroku run python manage.py syncdb```
 
 Start the dyno
-    heroku ps:scale web=1
+```heroku ps:scale web=1```
 
 ##Miscellaneus notes
 
 To recreate the db (loses all info, also users)
-
-    heroku config | grep POSTGRESQL
-    heroku pg:reset HEROKU_POSTGRESQL_IVORY # Change the name to your db ID
-    heroku run python manage.py syncdb
+```
+heroku config | grep POSTGRESQL
+heroku pg:reset HEROKU_POSTGRESQL_IVORY # Change the name to your db ID
+heroku run python manage.py syncdb
+```
