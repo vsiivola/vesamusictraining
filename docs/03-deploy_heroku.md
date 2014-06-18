@@ -1,6 +1,7 @@
 #Deploying the web app on a heroku dyno
 
-Heroku is a web app platform. This file contains some notes on hwo to deploy the app on heroku.
+Heroku is a web app platform. This file contains some notes on hwo to
+deploy the app on heroku.
 
 ##Set up for Heroku
 
@@ -10,9 +11,13 @@ Create a branch that will contain the app to be deployed.
 Create a requirements file
 ```pip3 freeze > requirements```
 
-Generate the content as explained in th file 01-create_exerises.gmd. Use `git add` to add the media files to the repo. Also add the compiled localization resources. `git commit` the files.
+Generate the content as explained in th file
+01-create_exerises.gmd. Use `git add` to add the media files to the
+repo. Also add the compiled localization resources. `git commit` the
+files.
 
-Fix the settings file. Change SECRET_KEY to something secret, debug to False. Fix the following settings as well
+Fix the settings file. Change SECRET_KEY to something secret, debug to
+False. Fix the following settings as well
 ```python
 import dj_database_url
 DATABASES['default'] =  dj_database_url.config()
@@ -35,7 +40,8 @@ LOCALE_PATHS = (
 )
 ```
 
-Configure the heroku project as a git remote called heroku. Now you can push the git branch with all the media files in it.
+Configure the heroku project as a git remote called heroku. Now you
+can push the git branch with all the media files in it.
 ```git push heroku heroku-media:master```
 
 Initialize the db
