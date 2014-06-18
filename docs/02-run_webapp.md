@@ -38,12 +38,15 @@ and apply changes with
 
 ## Compile the localization files
 
-In directory vesamusictraining/, to generate message files for templates, run
+In directory vesamusictraining/, to compile the message files, run
+```django-admin.py compilemessages```
+
+ generate message files for templates, run
 ```django-admin.py makemessages -l fi```
 To generate message files for javascript, run
 ```django-admin.py makemessages -d djangojs -l fi```
 To compile the message files, run
-```django-admin.py compilemessages```
+
 
 ## Run a local web server
 You can run the local web app by starting a web server. Running gunicorn directly
@@ -53,12 +56,4 @@ starts the service at [http://localhost:8000/](http://localhost:8000/)
 Running ```foreman start```
 starts the service at [http://localhost:5000/](http://localhost:5000/)
 
-## Miscellaneus notes
 
-### Running a local mail server for testing
-
-You probably do not need to do this, unless you work on
-improving the registration part of the app. You can run
-a simple local mail server to pass on the mails generated
-but the registration app with
-```python -m smtpd -n -c DebuggingServer localhost:1025```
