@@ -46,11 +46,11 @@ To compile the message files, run
 ## Run a local web server
 You can run the local web app by starting a web server. Running gunicorn directly
 ```gunicorn vesamusictraining.wsgi```
-starts the service at http://localhost:8000
+starts the service at http://localhost:8000/
 
 Running
     foreman start
-starts the service at http://localhost:5000
+starts the service at http://localhost:5000/
 
 ## Miscellaneus notes
 
