@@ -1,0 +1,115 @@
+Version: 0.2
+Level: 1
+languages:
+  en:
+    Title: Scales
+    Outside_information:
+      name: Wikipedia article on scales
+      link: http://en.wikipedia.org/wiki/List_of_musical_scales_and_modes
+  fi:
+    Title: Asteikot
+    Outside_information:
+      name: Asteikot wikipediassa
+      link: http://fi.wikipedia.org/wiki/S%C3%A4velasteikko
+Rounds: [normal, transpose random]
+Exercises:
+- name:
+    en: Diatonics - Ionian, Dorian, Phrygian
+    fi: Diatoniset asteikot (Jooninen, Doorinen, Fryyginen)
+  generate: all
+  style: scale
+  notes: \relative f' { c d es f g a bes c }
+  text:
+    en: Dorian
+    fi: Doorinen
+  question_type: random
+  hidden_tempo: 100
+  confusers:
+   - notes: \relative f' { c des es f g as bes c }
+     text:
+       en: Phrygian
+       fi: Fryyginen
+   - notes: \relative f' { c d e f g a b c }
+     text:
+       en: Ionian
+       fi: Jooninen
+- name:
+    en: Diatonics (Lydian and Aeolian mode), Blues
+    fi: Diatoniset (Lyydinen ja Aiolinen), blues
+  generate: all
+  style: scale
+  notes: \relative f' { c d es f g as bes c }
+  text:
+    en: Aeolian
+    fi: Aiolinen
+  question_type: random
+  hidden_tempo: 100
+  confusers:
+   - notes: \relative f' { c es f fis g bes c es }
+     text:
+       en: Blues
+       fi: Blues
+   - notes: \relative f' { c d e fis g a b c }
+     text:
+       en: Lydian
+       fi: Lyydinen
+- name:
+    en: Diatonic Locrian mode, Major Bebop, Chromatic
+    fi: Lokrinen, Duuri-bebop ja kromaattinen
+  generate: all
+  style: scale
+  notes: \relative f' { c des es f ges as bes c des es f ges as1}
+  text:
+    en: Locrian
+    fi: Lokrinen
+  question_type: random
+  hidden_tempo: 100
+  confusers:
+   - notes: \relative f' { c d e f g gis a b c d e f g1}
+     text:
+       en: Major Bebop
+       fi: Duuri-bebop
+   - notes: \relative f' { c cis d dis e f fis g gis a ais b c1 }
+     text:
+       en: Chromatic
+       fi: Kromaattinen
+- name:
+    en: Diatonic Mixolydian mode, Major and Minor pentatonic
+    fi: Miksolyydinen, duuri- ja mollipentatoninen
+  generate: all
+  style: scale
+  notes: \relative f' { c d e f g a bes c}
+  text:
+    en: Mixolydian
+    fi: Miksolyydinen
+  answer_type: random
+  hidden_tempo: 100
+  confusers:
+   - notes: \relative f' { c d e g a c d e}
+     text:
+       en: Major Pentatonic
+       fi: Duuripentatoninen
+   - notes: \relative f' { c e f g b c e f}
+     text:
+       en: Minor Pentatonic
+       fi: Mollipentatoninen
+- name:
+    en: Melodic Minor, Diatonic (Aeolian), Blues
+    fi: Melodinen molli, Aiolinen, Blues
+  generate: all
+  style: scale
+  notes: \relative f' { c d es f g a b c c bes as g f es d c}
+  text:
+    en: Melodic Minor
+    fi: Melodinen molli
+  question_type: random
+  hidden_tempo: 100
+  confusers:
+   - notes: \relative f' { c d es f g as bes c c bes as g f es d c}
+     text:
+       en: Aeolian
+       fi: Aiolinen
+   - notes: \relative f' { c es f fis g bes c es es c bes g fis f es c}
+     text:
+       en: Blues
+       fi: Blues

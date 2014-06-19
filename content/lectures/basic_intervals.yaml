@@ -1,0 +1,92 @@
+Version: 0.3
+Level: 1
+languages:
+  en:
+    Title: Basic Intervals
+    Outside_information:
+      name: Wikipedia article on intervals
+      link: http://en.wikipedia.org/wiki/Musical_intervals
+  fi:
+    Title: Perusintervallit
+    Outside_information:
+      name: Intervallit Wikipediassa
+      link: http://fi.wikipedia.org/wiki/Intervalli
+Rounds: [normal, transpose random]
+Exercises:
+- name:
+    en: Major third, Perfect fifth or Octave
+    fi: Suuri terssi, kvintti, oktaavi
+  style: interval
+  notes: \relative f' { c g' <c, g'>2 }
+  annotation: _ "P5" _
+  hidden_tempo: 100
+  confusers:
+   - notes: \relative c' {c c' <c, c'>2}
+     annotation: _ "P8" _
+   - notes: \relative c' { c e <c e>2}
+     annotation: _ "M3" _
+- name:
+    en: Minor third, Major third or Minor Seventh
+    fi: Pieni ja suuri terssi, pieni septimi
+  generate: all
+  style: interval
+  notes: \relative f' { c es <c es>2 }
+  annotation: _ "m3" _
+  hidden_tempo: 100
+  confusers:
+   - notes: \relative f' {c e <c e>2}
+     annotation: _ "M3" _
+   - notes: \relative f' { c bes' <c, bes'>2}
+     annotation: _ "m7" _
+- name:
+    en: Unison, Major second, Minor Third
+    fi: Unisoono, suuri sekunti, pieni terssi
+  generate: all
+  style: interval
+  notes: \relative f' {c c <c c>2}
+  annotation: _ "P1" _
+  hidden_tempo: 100
+  confusers:
+   - notes: \relative f' { c es <c es>2 }
+     annotation: _ "m3" _
+   - notes: \relative f' { c d <c d>2}
+     annotation: _ "M2" _
+- name:
+    en: Minor third, Perfect Fourth, Minor Seventh
+    fi: Pieni terssi, kvartti, pieni septimi
+  generate: all
+  style: interval
+  notes:  \relative f' { c bes' <c, bes'>2}
+  annotation: _ "m7" _
+  hidden_tempo: 100
+  confusers:
+   - notes: \relative f' { c es <c es>2}
+     annotation: _ "m3" _
+   - notes: \relative f' {c f <c f>2}
+     annotation: _ "P4" _
+- name:
+    en: Fourth, Minor Seventh, Major Seventh
+    fi: Kvartti, pieni ja suuri septimi
+  generate: all
+  style: interval
+  notes: \relative f' { c bes' <c, bes'>2}
+  annotation: _ "m7" _
+  hidden_tempo: 100
+  confusers:
+   - notes: \relative f' {c f <c f>2}
+     annotation: _ "P4" _
+   - notes: \relative f' { c b' <c, b'>2}
+     annotation: _ "M7" _
+- name:
+    en: Fifth, Major Sixth, Minor Seventh
+    fi: Kvintti, suuri seksti, pieni septimi
+  generate: all
+  style: interval
+  notes:  \relative f' {c g' <c, g'>2}
+  annotation: _ "P5" _
+  hidden_tempo: 100
+  confusers:
+   - notes: \relative f' { c a' <c, a'>2}
+     annotation: _ "M6" _
+   - notes: \relative f' { c bes' <c, bes'>2}
+     annotation: _ "m7" _

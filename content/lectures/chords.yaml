@@ -1,0 +1,85 @@
+Version: 0.2
+Level: 1
+languages:
+  en:
+    Title: Chords
+    Outside_information:
+      name: Wikipedia article on chords
+      link: http://en.wikipedia.org/wiki/Chord_%28music%29
+  fi:
+    Title: Soinnut
+    Outside_information:
+      name: Soinnut wikipediassa
+      link: http://fi.wikipedia.org/wiki/Sointu
+Rounds: [normal, transpose random]
+Exercises:
+- name:
+    en: Major and minor triads, dominant seventh
+    fi: Duuri- ja mollikolmisoinnut, pienseptimi
+  generate: all
+  style: chord
+  notes: c4:m c:m c2:m
+  annotation: _ i _
+  question_type: random
+  hidden_tempo: 100
+  confusers:
+   - notes: c4 c4 c2
+     annotation: _ I _
+   - notes: c4:7 c4:7 c2:7
+     annotation: _ "I7" _
+- name:
+    en: Augmented triad, sixth, dominant seventh
+    fi: Ylinouseva kolmisointu, lisäseksti, pienseptimi
+  generate: all
+  style: chord
+  notes: c4:aug c:aug c2:aug
+  annotation: _ Iaug _
+  question_type: random
+  hidden_tempo: 100
+  confusers:
+   - notes: c4:6 c4:6 c2:6
+     annotation: _ "I6" _
+   - notes: c4:7 c4:7 c2:7
+     annotation: _ "I7" _
+- name:
+    en: Major triad, suspended triads
+    fi: Duurikolmisointu, pidätetyt kolmisoinnut
+  generate: all
+  style: chord
+  notes: c4 c c2
+  annotation: _ I _
+  question_type: random
+  hidden_tempo: 100
+  confusers:
+   - notes: c4:sus2 c4:sus2 c2:sus2
+     annotation: _ "Isus2" _
+   - notes: c4:sus4 c4:sus4 c2:sus4
+     annotation: _ "Isus4" _
+- name:
+    en: Minor seventh, major seventh, dominant seventh
+    fi: Pienseptimi, suuri septimi, vähennetty septimi
+  generate: all
+  style: chord
+  notes: c4:7 c:7 c2:7
+  annotation: _ "I7" _
+  question_type: random
+  hidden_tempo: 100
+  confusers:
+   - notes: c4:m7 c4:m7 c2:m7
+     annotation: _ "i7" _
+   - notes: c4:maj7 c4:maj7 c2:maj7
+     annotation: _ "Imaj7" _
+- name:
+    en: Diminished triad, augmented triad, diminished seventh
+    fi: Vähennetty kolmisointu, ylinouseva kolmisointu, pienseptimi
+  generate: all
+  style: chord
+  notes: c4:dim c:dim c2:dim
+  annotation: _ "Idim" _
+  question_type: random
+  hidden_tempo: 100
+  confusers:
+   - notes: c4:aug c4:aug c2:aug
+     annotation: _ "Iaug" _
+   - notes: c4:aug7 c4:aug7 c2:aug7
+     annotation: _ "Iaug7" _

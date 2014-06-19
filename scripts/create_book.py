@@ -44,9 +44,11 @@ class BuildTarget(object):
 
     def copy_files(self):
         """Make the static media files available."""
-        for f in ["empty_stave.png", "empty_stave.svg", "logo.svg", "fi.png", "gb.png"]:
+        for f in ["empty_stave.png", "empty_stave.svg",
+                  "logo.svg", "fi.png", "gb.png"]:
             shutil.copy(os.path.join(
-                os.path.dirname(__file__), "..", "content", f), self.image_dir)
+                os.path.dirname(__file__), "..", "content", "images", f),
+                self.image_dir)
 
 class PureDjangoTarget(BuildTarget):
     """Create media and corresponding Django db fixtures"""
@@ -318,17 +320,20 @@ naturalizeMusic =
 """
 
     def __init__(
-            self, target=PureDjangoTarget(), lecture=None, fname=None,
+            self, target=PureDjangoTarget(), lecture=None, fname_list=None,
             image_format="svg",
             host_type="macports", only_new=False, lilypond_path=None):
         self.image_format = image_format
-        if not fname:
-            fname = os.path.join(
+        if not fname_list:
+            dname = os.path.join(
                 os.path.dirname(__file__),
-                "..", "content", "course_directory.yaml")
-        fh = open(fname, 'r')
-        self.index = [i for i in yaml.load_all(fh)]
-        fh.close()
+                "..", "content", "lectures")
+            fname_list = [f for f in os.listdir(dname) if f.endswith(".yaml")]
+        self.index = []
+        for fname in fname_list:
+            with open(os.path.join(dname, fname), 'r') as fh:
+                self.index.append(yaml.load(fh))
+
         if lecture:
             self.index = [i for i in self.index
                             if i["languages"]["en"]["Title"] == lecture]
@@ -575,7 +580,7 @@ naturalizeMusic =
 
 
             for i, conv in enumerate(to_png):
-                logger.info("%s #%d", d["languages"]["en"]["Title"], i)
+                logger.info("%s #%d", d["languages"]["en"]["Title"], i+1)
                 title_us = re.sub(r"\s", "_", d["languages"]["en"]["Title"])
                 conv["image"] = os.path.join(
                     self.target.image_dir, "%s-%d.%s" % (title_us, i,

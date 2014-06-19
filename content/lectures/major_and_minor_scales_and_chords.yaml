@@ -1,0 +1,82 @@
+Version: 0.1
+Level: 1
+languages:
+  en:
+    Title: Major and Minor Scales and Chords
+    Outside_information:
+      name: Wikipedia article on major and minor
+      link: http://en.wikipedia.org/wiki/Major_and_minor
+    Instructions: Capital chord 'I' is major (happy) and lowercase 'i' is minor (sad). The I5 chord is neither.
+  fi:
+    Title: Duuri ja molli
+    Outside_information:
+      name: Duuri Wikipediassa
+      link: http://fi.wikipedia.org/wiki/Duuri
+    Instructions: |
+             Duuriasteikko kuulostaa iloinen ja molliasteikko surulliselta. Pentatoninen on
+             duuri josta on otettu säveliä pois. Isolla kirjaimella kirjoitettu sointu "I"
+             on duuri, pienellä "i" on molli. I5 on sointu, joka ei ole duuri eikä molli.
+Rounds: [normal, transpose random]
+Exercises:
+- name:
+    en: Major, minor and pentatonic scales
+    fi: Duuri-, molli- ja pentatoninen asteikko
+  generate: all
+  notes: \relative f' { c8 d8 e8 f8 g8 a8 b8 c8 }
+  annotation: '"Major"'
+  text:
+    en: Major
+    fi: Duuri
+  question_type: random
+  hidden_tempo: 150
+  confusers:
+   - notes: \relative f' { c8 d8 es8 f8 g8 a8 b8 c8 }
+     text:
+       en: Minor (melodic)
+       fi: Molli (melodinen)
+   - notes: \relative f' { c8 d8 e8 g8 a8 c8 }
+     text:
+       en: Pentatonic
+       fi: Pentatoninen
+- name:
+    en: Major, minor and fifth chords
+    fi: Duuri-, mollisoinnut, kvintti
+  generate: all
+  style: chord
+  notes: c1
+  annotation: I
+  text:
+    en: Major
+    fi: Duuri
+  question_type: random
+  hidden_tempo: 150
+  confusers:
+   - notes: c1:m
+     annotation: i
+     text:
+       en: Minor
+       fi: Molli
+   - notes: c1:1.5
+     annotation: '"I5"'
+     text:
+       en: Neutral
+       fi: Neutraali
+- name:
+    en : Major, minor and pentatonic descending scales
+    fi : Laskevat duuri-, molli- ja pentatoniset asteikot
+  generate: all
+  notes: \relative f'' { c8 b8 a8 g8 f8 e8 d8 c8 }
+  text:
+    en: Major
+    fi: Duuri
+  question_type: random
+  hidden_tempo: 150
+  confusers:
+   - notes: \relative f'' { c8 a8 g8 e8 d8 c8 }
+     text:
+       en: Pentatonic
+       fi: Pentatoninen
+   - notes: \relative f'' { c8 bes8 aes8 g8 f8 es8 d8 c8 }
+     text:
+       en: Minor (Melodic)
+       fi: Molli (melodinen)

@@ -1,0 +1,67 @@
+Version: 0.1
+Level: 2
+languages:
+  en:
+    Title: Chord Progressions
+    Outside_information:
+      name: Wikipedia article on chord progressions
+      link: http://en.wikipedia.org/wiki/Chord_progression
+  fi:
+    Title: Sointukulut
+    Outside_information:
+      name: Sointukulut Wikipediassa
+      link: http://fi.wikipedia.org/wiki/Sointukulku
+Rounds: [normal, transpose random]
+Exercises:
+- name:
+    en: Basic chord progressions
+    fi: Perussointukulkuja
+  generate: all
+  style: chord
+  notes: c2  c r4 f f r g2 g
+  annotation: I _ IV _ V _ _
+  hidden_tempo: 180
+  confusers:
+   - notes: c2 c r4 a:m a:m r g2 g
+     annotation: I _ vi _ V _ _
+   - notes: a2:m a:m r4 f f r g2 g
+     annotation: im _ VI _ VIIb _ _
+- name:
+    en: Chords from notes
+    fi: Soinnut sävelistä
+  generate: all
+  style: interval
+  notes: \relative f' { c e g c a, c e a f, a c f g b d g}
+  annotation: I _ _ _ vi _ _ _ IV _ _ _ V _ _ _ _
+  hidden_tempo: 180
+  confusers:
+   - notes: \relative f' { c e g c bes, d f bes f, a c f g b d g }
+     annotation: I _ _ _ VIIb _ _ _ IV _ _ _ V _ _ _ _
+   - notes: \relative f' { c e g c d, f a d e, g b e f, a c f }
+     annotation: I _ _ _ ii _ _ _ iii _ _ _ IV _ _ _ _
+- name:
+    en: More basic chord progressions
+    fi: Lisää perussointukulkuja
+  generate: all
+  style: chord
+  notes: a,2:m  a:m e:7 e:7 d:m d:m
+  annotation: i _ "V7" _ iv _
+  hidden_tempo: 180
+  confusers:
+   - notes: a,2:m  a:m f:7 f:7 e:7 e:7
+     annotation: i _ "VI7" _ "V7" _
+   - notes: c2 c'2 f:7 f:7 e:7 e:7
+     annotation: I _ "IV7" _ "VIIb7" _ "III7" _
+- name:
+    en: Chords from notes again
+    fi: Soinnut sävelistä uudestaan
+  generate: all
+  style: interval
+  notes: \relative f' { d' a f d g d b g c' g e c}
+  annotation: ii _ _ _ V _ _ _ I _ _ _ _
+  hidden_tempo: 180
+  confusers:
+   - notes: \relative f' { d' a f d a' e c a c' g e c}
+     annotation: ii _ _ _ vi _ _ _ I _ _ _ _
+   - notes: \relative f' { e' b g e d' a f d c' g e c}
+     annotation: iii _ _ _ ii _ _ _ I _ _ _

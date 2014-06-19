@@ -1,0 +1,87 @@
+Version: 0.1
+Title: More Intervals
+Level: 2
+languages:
+  en:
+    Title: More Intervals
+    Outside_information:
+      name: Wikipedia article on intervals
+      link: http://en.wikipedia.org/wiki/Musical_intervals
+  fi:
+    Title: Lisää intervalleja
+    Outside_information:
+      name: Intervallit Wikipediassa
+      link: http://fi.wikipedia.org/wiki/Intervalli
+Rounds: [normal, transpose random, transpose random]
+Exercises:
+- name:
+    en: Major third, Perfect fifth or Minor sixth
+    fi: Suuri terssi, kvintti, pieni seksti
+  generate: 2 first
+  style: interval
+  notes: \relative f' { c e <c e>2 }
+  annotation: _ "M2" _
+  question_type: random
+  hidden_tempo: 100
+  confusers:
+   - notes: \relative c' { c gis' <c, gis'>2}
+     annotation: _ "m6" _
+   - notes: \relative c' {c g' <c, g'>2}
+     annotation: _ "P5" _
+- name:
+    en: Major sixth, Minor seventh, Major seventh
+    fi: Suuri seksti, pieni septimi, suuri septimi
+  generate: 2 first
+  style: interval
+  notes: \relative c' { c a' <c, a'>2 }
+  annotation: _ "M6" _
+  question_type: random
+  hidden_tempo: 100
+  confusers:
+   - notes: \relative c' { c bes' <c, bes'>2}
+     annotation: _ "m7" _
+   - notes: \relative c' {c b' <c, b'>2}
+     annotation: _ "M7" _
+- name:
+    en: Minor second, Diminished fifth, Minor sixth
+    fi: Pieni sekunti, vähennetty kvintti, pieni seksti
+  generate: all
+  style: interval
+  notes: \relative f' { c cis <c cis>2 }
+  annotation: _ "m2" _
+  question_type: random
+  hidden_tempo: 100
+  confusers:
+   - notes: \relative c' { c fis' <c, fis'>2}
+     annotation: _ "d5" _
+   - notes: \relative c' {c gis' <c, gis'>2}
+     annotation: _ "m6" _
+- name:
+    en: Perfect fourth, Minor sixth, Major sixth
+    fi: Kvartti, pieni ja suuri seksti
+  generate: all
+  style: interval
+  notes: \relative f' { c f <c f>2 }
+  annotation: _ "P4" _
+  question_type: random
+  hidden_tempo: 100
+  confusers:
+   - notes: \relative c' { c gis' <c, gis'>2}
+     annotation: _ "m6" _
+   - notes: \relative c' {c a' <c, a'>2}
+     annotation: _ "M6" _
+- name:
+    en: Minor second, Major second, Minor Third
+    fi: Pieni ja suuri sekunti, pieni terssi
+  generate: all
+  style: interval
+  notes: \relative f' { c cis <c cis>2 }
+  annotation: _ "m2" _
+  question_type: random
+  hidden_tempo: 100
+  confusers:
+   - notes: \relative f' { c d <c d>2}
+     annotation: _ "M2" _
+   - notes: \relative f' {c es <c es>2}
+     annotation: _ "m3" _
+

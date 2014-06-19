@@ -1,0 +1,54 @@
+# ---
+# Title: Chord Inversions
+# Version: 0.0
+# Level: 2
+# Outside_information:
+# - name: Wikipedia article on chord progressions
+#   link: http://en.wikipedia.org/wiki/Chord_progression
+# Exercises:
+# - name: Placeholder
+#   generate: 2 first
+#   notes: \relative f' { c e <c e>2 }
+#   question_type: audio
+#   answer_type: image
+#   hidden_tempo: 100
+#   confusers:
+#    - notes: \relative c' { c gis' <c, gis'>2}
+#    - notes: \relative c' {c g' <c, g'>2}
+# ---
+# Title: Debug
+# Version: 0.1
+# Level: 0
+# languages:
+#   en:
+#     Title: Debug
+#   fi:
+#     Title: Debuggaus
+# Rounds: [normal, transpose random]
+# Exercises:
+# - name:
+#     en: Placeholder
+#     fi: Joku
+#   generate: 2 first
+#   style: chord
+#   notes: c4:m c:m c2:m
+#   annotation: _ Im _
+#   question_type: random
+#   hidden_tempo: 100
+#   confusers:
+#    - notes: c4 c4 c2
+#      annotation: _ I _
+#    - notes: c4:sus4 c4:sus4 c2:sus4
+#      annotation: _ "Isus4" _
+# - name:
+#     en: Major third, Perfect fifth or Octave
+#     fi: Suuri terssi, kvintti, oktaavi
+#   style: interval
+#   notes: \relative f' { c g' <c, g'>2 }
+#   annotation: _ "P5" _
+#   hidden_tempo: 100
+#   confusers:
+#    - notes: \relative c' {c c' <c, c'>2}
+#      annotation: _ "P8" _
+#    - notes: \relative c' { c e <c e>2}
+#      annotation: _ "M3" _
