@@ -45,7 +45,7 @@ class BuildTarget(object):
     def copy_files(self):
         """Make the static media files available."""
         for f in ["empty_stave.png", "empty_stave.svg",
-                  "logo.svg", "fi.png", "gb.png"]:
+                  "logo.svg", "logo-white.svg", "fi.png", "gb.png"]:
             shutil.copy(os.path.join(
                 os.path.dirname(__file__), "..", "content", "images", f),
                 self.image_dir)
