@@ -52,9 +52,17 @@ Start the dyno
 
 ##Miscellaneus notes
 
-To recreate the db (loses all info, also users)
+###Recreate the db (loses all info, also users)
 ```
 heroku config | grep POSTGRESQL
 heroku pg:reset HEROKU_POSTGRESQL_IVORY # Change the name to your db ID
 heroku run python manage.py syncdb
 ```
+
+###Manual sql connection
+```
+heroku pg:psql
+```
+Show table `\dt`, `\d+ exercise_lecture;`, `ALTER TABLE exercise_lecture ADD level real;`
+
+

@@ -36,7 +36,8 @@ By default, this will create a local sqlite database in a file.
 
 South is a db migration tool. See
 http://www.mikeball.us/blog/using-south-on-heroku/
-Some random notes:
+
+Still haven't gotten this to work nicely with heroku. Some random notes:
 
 ```
 python3 manage.py convert_to_south exercise
