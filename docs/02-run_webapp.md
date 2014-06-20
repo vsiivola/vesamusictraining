@@ -34,8 +34,9 @@ By default, this will create a local sqlite database in a file.
 
 ###South
 
-South is a db migration tool. Some random notes follow, proper
-instructions need to be written.
+South is a db migration tool. See
+http://www.mikeball.us/blog/using-south-on-heroku/
+Some random notes:
 
 Initialize with
 ```python manage.py schemamigration exercise --initial```
