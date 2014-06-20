@@ -13,7 +13,9 @@ def choose_lecture(request):
     """Render the chooser page."""
     complete_info = dict([
         (ue.lecture_name, ue)\
-          for ue in UserLecture.objects.filter(user=request.user)])
+          for ue in UserLecture.objects.filter(
+            user=request.user)#.order_by("level")
+          ])
 
     lectures = Lecture.objects.filter(language=request.LANGUAGE_CODE)
     for l in lectures:

@@ -7,7 +7,8 @@ from vesamusictraining.news.models import NewsItem
 
 def show_news(request):
     """Render the news page"""
-    news = NewsItem.objects.filter(language=request.LANGUAGE_CODE).order_by('-date')
+    news = NewsItem.objects.filter(
+        language=request.LANGUAGE_CODE).order_by('-date')
     return render(
         request, "news.html",
         {"news": news})

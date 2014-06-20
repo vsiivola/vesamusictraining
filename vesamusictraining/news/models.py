@@ -6,4 +6,4 @@ class NewsItem(models.Model):
     date = models.DateTimeField()
     content = models.CharField(max_length=8000)
     language = models.CharField(max_length=10)
-    
+
