@@ -6,6 +6,8 @@ class Lecture(models.Model):
     title = models.CharField(max_length=200)
     language = models.CharField(max_length=10)
     version = models.CharField(max_length=10)
+    # The fractional counts are used for ordering within one int level
+    level = models.DecimalField(max_digits=3, decimal_places=2, null=True)
     outside_info_name = models.CharField(max_length=200)
     outside_info_link = models.CharField(max_length=200)
     instructions = models.CharField(max_length=8000)

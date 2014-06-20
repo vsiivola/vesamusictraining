@@ -13,11 +13,10 @@ def choose_lecture(request):
     """Render the chooser page."""
     complete_info = dict([
         (ue.lecture_name, ue)\
-          for ue in UserLecture.objects.filter(
-            user=request.user)#.order_by("level")
-          ])
+          for ue in UserLecture.objects.filter(user=request.user)])
 
-    lectures = Lecture.objects.filter(language=request.LANGUAGE_CODE)
+    lectures = Lecture.objects.filter(
+        language=request.LANGUAGE_CODE).order_by("level")
     for l in lectures:
         l.num_exercises = l.exercise_set.count()
         if l.title in complete_info:

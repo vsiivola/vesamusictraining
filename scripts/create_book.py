@@ -45,7 +45,7 @@ class BuildTarget(object):
     def copy_files(self):
         """Make the static media files available."""
         for f in ["empty_stave.png", "empty_stave.svg",
-                  "logo.svg", "logo-white.svg", "logo-gray,svg",
+                  "logo.svg", "logo-white.svg", "logo-gray.svg",
                   "fi.png", "gb.png"]:
             shutil.copy(os.path.join(
                 os.path.dirname(__file__), "..", "content", "images", f),
@@ -95,7 +95,8 @@ class PureDjangoTarget(BuildTarget):
                 fields_dict = {
                     "title" : ldoc["Title"],
                     "version" : doc["Version"],
-                    "language": lang
+                    "language": lang,
+                    "level": doc["Level"]
                 }
                 if "Outside_information" in ldoc:
                     oi = ldoc["Outside_information"]

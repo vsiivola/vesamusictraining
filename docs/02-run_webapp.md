@@ -38,10 +38,11 @@ South is a db migration tool. See
 http://www.mikeball.us/blog/using-south-on-heroku/
 Some random notes:
 
-Initialize with
-```python manage.py schemamigration exercise --initial```
-and apply changes with
-```python manage.py schemamigration exercise --auto```
+```
+python3 manage.py convert_to_south exercise
+python3 manage.py schemamigration exercise --auto
+python3 manage.py migrate exercise
+```
 
 ## Compile the localization files
 
