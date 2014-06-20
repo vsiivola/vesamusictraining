@@ -3,14 +3,18 @@
 
 {% block extra_head %}
 <link href="/static/stylesheets/signin.css" rel="stylesheet">
+<script type="text/javascript" src="/static/js/langchooser.js"></script>
 {% endblock %}
 
 {% block content_title %}
 {% trans "Sign in" %}
 {% endblock %}
 
-{% block content %}
+{% block navbar %}
+{% include 'navbar.html' %}
+{% endblock %}
 
+{% block content %}
 <form action='.' method='post' class="form-signin" role="form">{% csrf_token %}
   <h2 class="form-signin-heading">{% trans "Please sign in" %}</h2>
 {% if form.errors %}

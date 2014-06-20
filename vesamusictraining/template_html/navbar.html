@@ -1,0 +1,49 @@
+{% load i18n %}
+{% load l10n %}
+{% get_current_language as LANGUAGE_CODE %}
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">
+        <img alt="logo" src="/static/generated_assets/images/logo-gray.svg" width="25px"/>
+        {% trans "Vesa's Music Trainer" %}</a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/">{% trans "Home" %}</a></li>
+        <li>
+          {% if user.is_authenticated %}
+          <a href="/accounts/logout">{% trans "Sign out" %}</a>
+          {% else %}
+          <a href="/accounts/login">{% trans "Sign in" %}</a>
+          {% endif %}
+        </li>
+        <li>
+          <a href="/news">{% trans "News" %}</a>
+        </li>
+        <li>
+          <a href="https://spreadsheets.google.com/spreadsheet/viewform?hl=en&key=0AoJvB3OLWygjdEFXODBQTWM3NWNFLUZidzZqLWM0cVE">{% trans "Contact" %}</a>
+        </li>
+        <li>
+          {% get_current_language as LANGUAGE_CODE %}
+          {% ifequal LANGUAGE_CODE "en" %}
+          <form action="{% url 'set_language' %}" method="post" class="langchooser">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{request.path}}" />
+            <input type="hidden" name="language" value="fi" />
+            <a href="#" class="lang navbar-brand"><img src="/static/generated_assets/images/fi.png" /></a>
+          </form>
+          {% else %}
+          <form action="{% url 'set_language' %}" method="post" class="langchooser">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{request.path}}" />
+            <input type="hidden" name="language" value="en-us" />
+            <a href="#" class="lang navbar-brand"><img src="/static/generated_assets/images/gb.png" /></a>
+          </form>
+          {% endifequal %}
+        </li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>

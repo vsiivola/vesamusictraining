@@ -5,6 +5,14 @@
 {% trans "Music Training" %} | {% trans "Choose your exercise" %}
 {% endblock %}
 
+{% block extra_head %}
+<script type="text/javascript" src="/static/js/langchooser.js"></script>
+{% endblock %}
+
+{% block navbar %}
+{% include 'navbar.html' %}
+{% endblock %}
+
 {% block content %}
 <br>
 <div id="courses" class="row">

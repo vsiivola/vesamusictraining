@@ -7,13 +7,19 @@
 {% trans "News" %}
 {% endblock %}
 
+{% block extra_head %}
+<script type="text/javascript" src="/static/js/langchooser.js"></script>
+{% endblock %}
+
+{% block navbar %}
+{% include 'navbar.html' %}
+{% endblock %}
+
 {% block content %}
 <div class="container"><h1>{% trans "News" %}</h1>
   {% for newsitem in news %}
   <br>
-  <h4>
-    {{ newsitem.title }}
-  </h4>
+  <h4>{{ newsitem.title }}</h4>
   <em>{{ newsitem.date }}</em>
   <p>{{ newsitem.content }}</p>
   {% endfor %}

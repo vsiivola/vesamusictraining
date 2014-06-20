@@ -1,11 +1,21 @@
 {% extends "base.html" %}
+{% load i18n %}
+{% load l10n %}
 
-{% block content_title %}
-Register
+{% block extra_head %}
+<script type="text/javascript" src="/static/js/langchooser.js"></script>
 {% endblock %}
 
-{% block title %}Registration disabled {% endblock %}
+{% block navbar %}
+{% include 'navbar.html' %}
+{% endblock %}
+
+{% block content_title %}
+{% trans "Register" %}
+{% endblock %}
+
+{% block title %}{% trans "Registration disabled" {% endblock %}
 
 {% block content %}
-We are sorry, but we are not accepting new users right now
+{% trans "We are sorry, but we are not accepting new users right now" %}
 {% endblock %}

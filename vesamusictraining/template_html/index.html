@@ -1,14 +1,19 @@
 {% extends "base.html" %}
-
 {% load i18n %}
 
 {% block content_title %}
 {% trans "Home" %}
 {% endblock %}
 
+{% block extra_head %}
+<script type="text/javascript" src="/static/js/langchooser.js"></script>
+{% endblock %}
+
+{% block navbar %}
+{% include 'navbar.html' %}
+{% endblock %}
 
 {% block content %}
-<!-- Main jumbotron for a primary marketing message or call to action -->
 <div class="jumbotron">
   <h1>{% trans "Welcome" %}</h1>
   <p>{% trans "This is a simple app for improving skills to hear different musical constructs and to read the corresponding musical notation." %}</p>
@@ -19,6 +24,4 @@
     </p>
   </div>
 </div>
-
-<!-- span class="news" / -->
 {% endblock %}

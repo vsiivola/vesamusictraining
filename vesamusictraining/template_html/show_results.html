@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% load i18n %}
 
+{% block navbar %}
+{% include 'navbar_simple.html' %}
+{% endblock %}
+
 {% block content_title %}
 {% trans "Music Training" %} | {% trans "Results for" %} {{ lecture.title }}
 {% endblock %}
