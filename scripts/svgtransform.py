@@ -6,17 +6,17 @@ import sys
 import xml.dom.minidom
 
 class SvgTransform:
-    def __init__(self, xml=None):
+    def __init__(self, xml=None, inkscape_path="/usr/bin"):
         self.xml = xml
         self.fname = None
         self.minx = None
         self.miny = None
         self.maxx = None
         self.maxy = None
+        self.inkscape_bin = os.path.join(inkscape_path, "inkscape")
 
-    @classmethod
-    def get_bounds(cls, fname):
-        cmd = ["/usr/bin/inkscape", "--without-gui", "--query-all", fname]
+    def get_bounds(self, fname):
+        cmd = [self.inkscape_bin, "--without-gui", "--query-all", fname]
         #print (' '.join(cmd))
         proc = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         minx = 1000
@@ -40,10 +40,10 @@ class SvgTransform:
         return minx/6.5, miny/6.5, maxx/5.9, maxy/5.9
 
     @classmethod
-    def init_from_file(cls, fname):
+    def init_from_file(cls, fname, inkscape_path="/opt/bin"):
         xmldoc = xml.dom.minidom.parse(fname)
-        c = cls(xmldoc)
-        c.minx, c.miny, c.maxx, c.maxy = cls.get_bounds(fname)
+        c = cls(xmldoc, inkscape_path)
+        c.minx, c.miny, c.maxx, c.maxy = c.get_bounds(fname)
         return c
 
     def crop(self):

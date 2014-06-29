@@ -347,12 +347,14 @@ naturalizeMusic =
         self.content_dir = os.path.dirname(fname)
         if host_type == "macports":
             self.binpath = "/opt/local/bin"
-            self.timidity_path = "/opt/local/bin"
+            self.timidity_path = self.binpath
             self.lilypond_path = self.binpath
+            self.inkscape_path = self.binpath
         elif host_type == "linux":
             self.binpath = "/usr/bin"
             self.timidity_path = self.binpath
             self.lilypond_path = self.binpath
+            self.inkscape_path = self.binpath
         if lilypond_path:
             self.lilypond_path = lilypond_path
         self.target = target
@@ -544,7 +546,7 @@ naturalizeMusic =
                 if subprocess.call(cmd.split(), cwd=self.target.workdir,
                                    stdout=fnull, stderr=fnull):
                     raise RuntimeError("Failed '%s'" % cmd)
-                st = SvgTransform.init_from_file(tmpfname)
+                st = SvgTransform.init_from_file(tmpfname, self.inkscape_path)
                 st.crop()
                 st.write(conv["image"])
                 return
@@ -561,6 +563,7 @@ naturalizeMusic =
         with open(os.devnull, 'w') as fnull:
             for audio_format in ["mp3", "ogg"]:
                 cmd = "%s| %s" % (timidity_base, soxbase % conv[audio_format])
+                # FIXME: Proper routing of error messages
                 if subprocess.call(
                         cmd, shell=True, stdout=fnull, stderr=fnull):
                     raise RuntimeError("Failed '%s'" % cmd)
