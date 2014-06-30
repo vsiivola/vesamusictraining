@@ -556,18 +556,28 @@ naturalizeMusic =
 
     def create_sounds(self, conv, input_fname):
         """Create sounds from the midi file."""
-        soxbase = "%s/sox -t raw -r 44100 -b 24 -e signed-integer "\
-            "-c 1 -" % self.binpath + " %s"
-        timidity_base = "%s/timidity %s -Or2slM -o - -s 44100 "\
-            "--volume-compensation" % (self.timidity_path, input_fname)
+        soxbase = ["%s/sox" % self.binpath, "-t", "raw", "-r", "44100",
+                   "-b", "24", "-e", "signed-integer", "-c", "1", "-"]
+        timidity_base = ["%s/timidity" % self.timidity_path, input_fname,
+                         "-Or2slM", "-o", "-", "-s", "44100 ",
+                         "--volume-compensation"]
 
         with open(os.devnull, 'w') as fnull:
             for audio_format in ["mp3", "ogg"]:
-                cmd = "%s| %s" % (timidity_base, soxbase % conv[audio_format])
-                # FIXME: Proper routing of error messages
-                if subprocess.call(
-                        cmd, shell=True, stdout=fnull, stderr=fnull):
-                    raise RuntimeError("Failed '%s'" % cmd)
+                timidityp = subprocess.Popen(timidity_base,
+                                             stdout=subprocess.PIPE, stderr=fnull)
+                soxp = subprocess.Popen(soxbase + [conv[audio_format]],
+                                        stdin=timidityp.stdout)
+                sout, serr = soxp.communicate()
+                tout, terr = timidityp.communicate()
+                #print("OUT %s ERR %s, rcs %s %s" % (
+                #    sout, serr, timidityp.returncode, soxp.returncode))
+                if timidityp.returncode:
+                    raise RuntimeError("Failed timidity '%s'" %
+                                       " ".join(timidity_base))
+                if soxp.returncode:
+                    raise RuntimeError("Failed sox '%s'" %
+                                       " ".join(soxbase + [conv[audio_format]]))
 
     def compile(self, max_processes=8):
         """Create all media."""
