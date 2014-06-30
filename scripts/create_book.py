@@ -4,6 +4,7 @@ Music Trainer."""
 
 import copy
 import itertools
+import multiprocessing
 import logging
 import os
 import random
@@ -568,43 +569,64 @@ naturalizeMusic =
                         cmd, shell=True, stdout=fnull, stderr=fnull):
                     raise RuntimeError("Failed '%s'" % cmd)
 
-    def compile(self):
+    def compile(self, max_processes=8):
         """Create all media."""
         self.generate_extra_rounds()
+
+        media_list = []
         for d in self.index:
             to_png = []
             for e in d["Exercises"]:
                 self.augment_missing_info(e)
                 to_png.extend([e] + e["confusers"])
 
-            lytmp = os.path.join(self.target.workdir, "tmp.ly")
-            imagetmp = os.path.join(
-                self.target.workdir,
-                "tmp.png" if self.image_format == "png" else "tmp.svg")
-            miditmp = os.path.join(self.target.workdir, "tmp.midi")
-
-
             for i, conv in enumerate(to_png):
-                logger.info("%s #%d", d["languages"]["en"]["Title"], i+1)
+                title = d["languages"]["en"]["Title"]
+                logstring = "%s #%d" % (title, i+1)
                 title_us = re.sub(r"\s", "_", d["languages"]["en"]["Title"])
+                fname_base = "%s-%d" % (title_us, i)
+
                 conv["image"] = os.path.join(
-                    self.target.image_dir, "%s-%d.%s" % (title_us, i,
-                                                        self.image_format))
+                    self.target.image_dir, fname_base+ "." + self.image_format)
                 conv["mp3"] = os.path.join(
-                    self.target.sound_dir, "%s-%d.mp3" % (title_us, i))
+                    self.target.sound_dir, fname_base + ".mp3")
                 conv["ogg"] = os.path.join(
-                    self.target.sound_dir, "%s-%d.ogg" % (title_us, i))
+                    self.target.sound_dir, fname_base + ".ogg")
+
+                lytmp = os.path.join(
+                    self.target.workdir, fname_base + ".ly")
+                imagetmp = os.path.join(
+                    self.target.workdir, fname_base + "." + self.image_format)
+                miditmp = os.path.join(
+                    self.target.workdir, fname_base + ".midi")
 
                 if not (self.only_new and os.path.isfile(conv["image"])
                         and os.path.isfile(conv["mp3"]) and
                         os.path.isfile(conv["mp3"])):
-                    self.create_lilypond_file(conv, lytmp)
-                    self.create_staff_image(conv, lytmp, imagetmp)
-                    self.create_sounds(conv, miditmp)
+                    media_list.append([self, logstring, conv,
+                                       lytmp, imagetmp, miditmp])
+
+        pool = multiprocessing.Pool(processes=max_processes)
+        pool.map(poolwrap_create_media, media_list)
 
         self.target.copy_files()
         self.expand_alternative_questions()
         self.target.write(self.index)
+
+    def create_media(self, logstring, conv, lytmp, imagetmp, miditmp):
+        """Crate the actual media files"""
+        logger.info(logstring)
+        self.create_lilypond_file(conv, lytmp)
+        self.create_staff_image(conv, lytmp, imagetmp)
+        self.create_sounds(conv, miditmp)
+
+def poolwrap_create_media(argtuple):
+    """A wrapper for media creation since multiprocessing.Pool
+    cannot handle in-class functions."""
+    cinstance, conv, logstring, lytmp, imgtmp, miditmp = argtuple
+    cinstance.create_media(conv, logstring, lytmp, imgtmp, miditmp)
+    return True
+
 
 if __name__ == "__main__":
     import argparse
