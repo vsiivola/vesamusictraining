@@ -564,14 +564,12 @@ naturalizeMusic =
 
         with open(os.devnull, 'w') as fnull:
             for audio_format in ["mp3", "ogg"]:
-                timidityp = subprocess.Popen(timidity_base,
-                                             stdout=subprocess.PIPE, stderr=fnull)
+                timidityp = subprocess.Popen(
+                    timidity_base, stdout=subprocess.PIPE, stderr=fnull)
                 soxp = subprocess.Popen(soxbase + [conv[audio_format]],
                                         stdin=timidityp.stdout)
-                sout, serr = soxp.communicate()
-                tout, terr = timidityp.communicate()
-                #print("OUT %s ERR %s, rcs %s %s" % (
-                #    sout, serr, timidityp.returncode, soxp.returncode))
+                soxp.communicate()
+                timidityp.communicate()
                 if timidityp.returncode:
                     raise RuntimeError("Failed timidity '%s'" %
                                        " ".join(timidity_base))
