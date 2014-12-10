@@ -45,11 +45,12 @@ class BuildTarget(object):
 
     def copy_files(self):
         """Make the static media files available."""
-        for f in ["empty_stave.png", "empty_stave.svg",
-                  "logo.svg", "logo-white.svg", "logo-gray.svg",
-                  "fi.png", "gb.png"]:
-            shutil.copy(os.path.join(
-                os.path.dirname(__file__), "..", "content", "images", f),
+        for fname in ["empty_stave.png", "empty_stave.svg",
+                      "logo.svg", "logo-white.svg", "logo-gray.svg",
+                      "fi.png", "gb.png"]:
+            shutil.copy(
+                os.path.join(
+                    os.path.dirname(__file__), "..", "content", "images", fname),
                 self.image_dir)
 
 class PureDjangoTarget(BuildTarget):
@@ -69,9 +70,10 @@ class PureDjangoTarget(BuildTarget):
                 os.path.dirname(__file__), "..", "vesamusictraining",
                 "exercise", "fixtures", "initial_data.yaml")
 
-        super(PureDjangoTarget, self).__init__(fixture_target,
-                os.path.join(self.media_target_dir, "images"),
-                os.path.join(self.media_target_dir, "sounds"))
+        super(PureDjangoTarget, self).__init__(
+            fixture_target,
+            os.path.join(self.media_target_dir, "images"),
+            os.path.join(self.media_target_dir, "sounds"))
 
     def write(self, index):
         """Write the fixtures"""
@@ -82,6 +84,7 @@ class PureDjangoTarget(BuildTarget):
     def fixturize(self, index, lang="fi"):
         """Convert the human readable course definitions to Django fixtures"""
         def clean_fname(fname):
+            """Modify the filenames for the web server"""
             # FIXME: hardcoded path
             return re.sub(
                 self.media_target_dir, "/static/generated_assets", fname)
@@ -110,9 +113,8 @@ class PureDjangoTarget(BuildTarget):
 
 
                 fy.append({"model": "exercise.Lecture",
-                            "pk": lidx,
-                            "fields": fields_dict
-                           })
+                           "pk": lidx,
+                           "fields": fields_dict})
 
                 for e in doc["Exercises"]:
                     e["correct"] = True
@@ -148,8 +150,7 @@ class PureDjangoTarget(BuildTarget):
                                 "ogg": clean_fname(a["ogg"]),
                                 "mp3": clean_fname(a["mp3"]),
                                 "text": a["text"][lang] if \
-                                  "text" in a and a["text"] else ""
-                                  }})
+                                "text" in a and a["text"] else ""}})
                         cidx += 1
                     eidx += 1
                 lidx += 1
@@ -232,9 +233,9 @@ class SimpleHtmlTarget(BuildTarget):
                 s += "</tr>\n"
                 if any([atmp[2] for atmp in alternatives]):
                     s += "<tr>\n"
-                    s += '<td align="center">' + (
-                          '</td>\n<td align="center">'.join(
-                              [atmp[2] for atmp in alternatives])+"</td>")
+                    s += '<td align="center">' + \
+                         '</td>\n<td align="center">'.join(
+                             [atmp[2] for atmp in alternatives])+"</td>"
                     s += "</tr>\n"
 
 
@@ -339,7 +340,7 @@ naturalizeMusic =
 
         if lecture:
             self.index = [i for i in self.index
-                            if i["languages"]["en"]["Title"] == lecture]
+                          if i["languages"]["en"]["Title"] == lecture]
 
         for d in self.index:
             if not "Exercises" in d:
@@ -673,25 +674,25 @@ if __name__ == "__main__":
                         default=1, metavar='<int>',
                         help="verbose level (default %(default)s)")
 
-    args = parser.parse_args()
+    ARGS = parser.parse_args()
 
-    if args.verbose >= 2:
-        loglevel = logging.DEBUG
-    elif args.verbose >= 1:
-        loglevel = logging.INFO
+    if ARGS.verbose >= 2:
+        LOGLEVEL = logging.DEBUG
+    elif ARGS.verbose >= 1:
+        LOGLEVEL = logging.INFO
     else:
-        loglevel = logging.WARNING
+        LOGLEVEL = logging.WARNING
     logging.basicConfig(format='%(module)s: %(message)s',
-                        level=loglevel)
+                        level=LOGLEVEL)
 
-    if args.target == "puredjango":
-        t = PureDjangoTarget()
-    elif args.target == "simple_html":
-        t = SimpleHtmlTarget()
+    if ARGS.target == "puredjango":
+        TARGET = PureDjangoTarget()
+    elif ARGS.target == "simple_html":
+        TARGET = SimpleHtmlTarget()
 
-    content = Content(
-        t, lecture=args.lecture, only_new=args.only_new,
-        host_type=args.host_type, lilypond_path=args.lilypond_path,
-        image_format=args.image_format)
-    content.compile()
+    CONTENT = Content(
+        TARGET, lecture=ARGS.lecture, only_new=ARGS.only_new,
+        host_type=ARGS.host_type, lilypond_path=ARGS.lilypond_path,
+        image_format=ARGS.image_format)
+    CONTENT.compile()
 
