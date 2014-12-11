@@ -14,21 +14,17 @@ class BuildTarget(object):
     """Defines a basic function class for creating the media
     and database files. Should be inherited from."""
     def __init__(self, yaml_fname="generated_course.yaml",
-                 image_dir=None, sound_dir=None, workdir=None):
+                 image_dir=None, sound_dir=None):
         self.image_dir = image_dir if image_dir \
-          else os.path.join(os.path.dirname(__file__), "..", "png")
+          else os.path.join(os.path.dirname(__file__), "..", "work", "png")
         self.sound_dir = sound_dir if sound_dir\
-          else os.path.join(os.path.dirname(__file__), "..", "mp3")
-        self.workdir = workdir if workdir\
-          else os.path.join(os.path.dirname(__file__), "..", "work")
+          else os.path.join(os.path.dirname(__file__), "..", "work", "mp3")
         self.yaml_fname = yaml_fname
 
         if not os.path.isdir(self.image_dir):
             os.makedirs(self.image_dir)
         if not os.path.isdir(self.sound_dir):
             os.makedirs(self.sound_dir)
-        if not os.path.isdir(self.workdir):
-            os.makedirs(self.workdir)
 
         if self.yaml_fname:
             yaml_dir = os.path.dirname(self.yaml_fname)

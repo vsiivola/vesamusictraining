@@ -19,14 +19,14 @@ from resource_android import AndroidResourceTarget
 
 logger = logging.getLogger(__name__)
 
-random_instruments = [
+RANDOM_INSTRUMENTS = [
     "acoustic grand", "acoustic guitar (nylon)",
     "electric grand", "acoustic guitar (steel)", "harpsichord"]
 #, "xylophone"]
 
-transpose_major = ["d", "e", "f", "g,", "a,", "bis,"]
+TRANSPOSE_MAJOR = ["d", "e", "f", "g,", "a,", "bis,"]
 
-naturalize_transpose_ly = """
+NATURALIZE_TRANSPOSE_LY = """
 #(define (naturalize-pitch p)
   (let ((o (ly:pitch-octave p))
         (a (* 4 (ly:pitch-alteration p)))
@@ -81,7 +81,7 @@ lilypond_template = r"""
   oddFooterMarkup = ##f
   evenFooterMarkup = ""
 }
-""" + naturalize_transpose_ly + r"""
+""" + NATURALIZE_TRANSPOSE_LY + r"""
 \score {
   \new %s {
     \set Staff.midiInstrument = "%s"
@@ -94,10 +94,14 @@ lilypond_template = r"""
 
 class Content(object):
     """Parse the content definitions and create the associated files"""
-    def __init__(
-            self, target=PureDjangoTarget(), lecture=None, fname_list=None,
-            image_format="svg",
-            host_type="macports", only_new=False, lilypond_path=None):
+    def __init__(self, target=PureDjangoTarget(), lecture=None, fname_list=None,
+                 image_format="svg", host_type="macports", only_new=False,
+                 lilypond_path=None, tmpdir=None):
+        self.tmpdir = tmpdir if tmpdir\
+          else os.path.join(os.path.dirname(__file__), "..", "work", "tmp")
+        if not os.path.isdir(self.tmpdir):
+            os.makedirs(self.tmpdir)
+
         self.image_format = image_format
         fname = None
         if not fname_list:
@@ -176,7 +180,7 @@ class Content(object):
                         if transpose == "random":
                             tstring = \
                                 r"\naturalizeMusic \transpose c %s { " % (
-                                    random.choice(transpose_major))
+                                    random.choice(TRANSPOSE_MAJOR))
                         else:
                             assert False
                     exer["notes"] = tstring + exer["notes"] + " }"
@@ -211,7 +215,7 @@ class Content(object):
             exer["generate_check"] = "random"
 
         if not "instrument" in exer or exer["instrument"] == "random":
-            exer["instrument"] = random.choice(random_instruments)
+            exer["instrument"] = random.choice(RANDOM_INSTRUMENTS)
 
         for conf in exer["confusers"]:
             if not "instrument" in conf:
@@ -318,7 +322,7 @@ class Content(object):
             if self.image_format == "png": # Generate png images
                 cmd = "%s/lilypond --png -dpixmap-format=pngalpha %s" % (
                     self.lilypond_path, os.path.basename(input_fname))
-                if subprocess.call(cmd.split(), cwd=self.target.workdir,
+                if subprocess.call(cmd.split(), cwd=self.tmpdir,
                                    stdout=fnull, stderr=fnull):
                     raise RuntimeError("Failed '%s'" % cmd)
                 cmd = "%s/convert %s -trim %s" % (
@@ -333,7 +337,7 @@ class Content(object):
                 cmd = "%s/lilypond -dbackend=svg %s" % (
                     self.lilypond_path, os.path.basename(input_fname))
 
-                if subprocess.call(cmd.split(), cwd=self.target.workdir,
+                if subprocess.call(cmd.split(), cwd=self.tmpdir,
                                    stdout=fnull, stderr=fnull):
                     raise RuntimeError("Failed '%s'" % cmd)
                 strans = SvgTransform.init_from_file(tmpfname, self.inkscape_path)
@@ -391,11 +395,11 @@ class Content(object):
                     self.target.sound_dir, fname_base + ".ogg")
 
                 lytmp = os.path.join(
-                    self.target.workdir, fname_base + ".ly")
+                    self.tmpdir, fname_base + ".ly")
                 imagetmp = os.path.join(
-                    self.target.workdir, fname_base + "." + self.image_format)
+                    self.tmpdir, fname_base + "." + self.image_format)
                 miditmp = os.path.join(
-                    self.target.workdir, fname_base + ".midi")
+                    self.tmpdir, fname_base + ".midi")
 
                 if not (self.only_new and os.path.isfile(conv["image"])
                         and os.path.isfile(conv["mp3"]) and
