@@ -4,11 +4,11 @@ modified and stored for the given target. This base class defines
 the interfaces, actual implementation is in the child classes.
 """
 
-import logging
+#import logging
 import os
 import shutil
 
-logger = logging.getLogger(__name__)
+#LOGGER = logging.getLogger(__name__)
 
 class BuildTarget(object):
     """Defines a basic function class for creating the media

@@ -17,7 +17,7 @@ from resource_simplehtml import SimpleHtmlTarget
 from resource_django import PureDjangoTarget
 from resource_android import AndroidResourceTarget
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 RANDOM_INSTRUMENTS = [
     "acoustic grand", "acoustic guitar (nylon)",
@@ -71,7 +71,7 @@ naturalizeMusic =
   (naturalize m))
 """
 
-lilypond_template = r"""
+LILYPOND_TEMPLATE = r"""
 \version "2.12.3"
 \paper {
   indent = 0\mm
@@ -120,7 +120,7 @@ class Content(object):
                           if i["languages"]["en"]["Title"] == lecture]
 
             if not len(self.index):
-                logger.critical(
+                LOGGER.critical(
                     "Lecture '%s' not found, choose one of %s", lecture,
                     sorted(available_lectures))
                 sys.exit(-1)
@@ -154,7 +154,7 @@ class Content(object):
                            "fi.png", "gb.png"]]
 
 
-    def generate_extra_rounds(self):
+    def _generate_extra_rounds(self):
         """Generate the transposed extra exercises if requested"""
         for doc in self.index:
             if "Rounds" in doc:
@@ -206,7 +206,7 @@ class Content(object):
         return contstr
 
     @staticmethod
-    def augment_missing_info(exer):
+    def _augment_missing_info(exer):
         """Fill in default values for the exercise, if missing"""
         if not "question_type" in exer or exer["question_type"] == "random":
             # Give audio question a 66% prob
@@ -227,7 +227,7 @@ class Content(object):
             if "style" in exer:
                 conf["style"] = exer["style"]
 
-    def expand_alternative_questions(self):
+    def _expand_alternative_questions(self):
         """Generate different permutations of a question if requested"""
         def replace_media(orig, new):
             """Replace media info in orig with the info in new"""
@@ -280,7 +280,8 @@ class Content(object):
                         perm["name"][lang] += " %d" % (i+1)
                     doc["Exercises"].append(perm)
 
-    def create_lilypond_file(self, conv, fname):
+    @staticmethod
+    def create_lilypond_file(conv, fname):
         """Create the source lilypond notation"""
         body = ""
         if "tempo" in conv:
@@ -313,7 +314,7 @@ class Content(object):
             body += conv["notes"]
             staffstring = "Staff"
         with open(fname, "w") as lyfh:
-            lyfh.write(lilypond_template % (
+            lyfh.write(LILYPOND_TEMPLATE % (
                 staffstring, conv["instrument"], body))
 
     def create_staff_image(self, conv, input_fname, tmpfname):
@@ -372,13 +373,13 @@ class Content(object):
 
     def compile(self, max_processes=8):
         """Create all media."""
-        self.generate_extra_rounds()
+        self._generate_extra_rounds()
 
         media_list = []
         for doc in self.index:
             to_png = []
             for exer in doc["Exercises"]:
-                self.augment_missing_info(exer)
+                self._augment_missing_info(exer)
                 to_png.extend([exer] + exer["confusers"])
 
             for i, conv in enumerate(to_png):
@@ -411,12 +412,12 @@ class Content(object):
         pool.map(poolwrap_create_media, media_list)
 
         self.target.include_fixed_images(self.fixed_images)
-        self.expand_alternative_questions()
+        self._expand_alternative_questions()
         self.target.write(self.index)
 
     def create_media(self, logstring, conv, lytmp, imagetmp, miditmp):
         """Create the actual media files"""
-        logger.info(logstring)
+        LOGGER.info(logstring)
         self.create_lilypond_file(conv, lytmp)
         self.create_staff_image(conv, lytmp, imagetmp)
         self.create_sounds(conv, miditmp)

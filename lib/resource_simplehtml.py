@@ -2,24 +2,25 @@
 """Creates the media files and database fixtures for Vesa's
 Music Trainer."""
 
-import logging
+#import logging
 import os
 import re
 
 from resource_base import BuildTarget
 
-logger = logging.getLogger(__name__)
+#LOGGER = logging.getLogger(__name__)
+
+html_template = """<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0
+Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+</head>
+<body>
+%s
+</body>"""
 
 class SimpleHtmlTarget(BuildTarget):
     """Create simple raw html pages for debugging."""
-    html_template = """<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0
-    Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-    <html lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-    </head>
-    <body>
-    %s
-    </body>"""
 
     def __init__(self, htmlfile=None, mediadir=None):
         basedir = os.path.join(os.path.dirname(__file__), "..", "simple_html")

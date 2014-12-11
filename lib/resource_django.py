@@ -2,7 +2,7 @@
 """Creates the media files and database fixtures for Vesa's
 Music Trainer."""
 
-import logging
+#import logging
 import os
 import random
 import re
@@ -10,7 +10,7 @@ import yaml
 
 from resource_base import BuildTarget
 
-logger = logging.getLogger(__name__)
+#LOGGER = logging.getLogger(__name__)
 
 class PureDjangoTarget(BuildTarget):
     """Create media and corresponding Django db fixtures"""
@@ -38,9 +38,9 @@ class PureDjangoTarget(BuildTarget):
         """Write the fixtures"""
         if self.yaml_fname:
             with open(self.yaml_fname, "w") as ofh:
-                ofh.write(yaml.dump(self.fixturize(index)))
+                ofh.write(yaml.dump(self._fixturize(index)))
 
-    def fixturize(self, index, lang="fi"):
+    def _fixturize(self, index, lang="fi"):
         """Convert the human readable course definitions to Django fixtures"""
         def clean_fname(fname):
             """Modify the filenames for the web server"""
