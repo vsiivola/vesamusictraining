@@ -11,6 +11,7 @@ import random
 import re
 import shutil
 import subprocess
+import sys
 import yaml
 
 from svgtransform import SvgTransform
@@ -42,16 +43,15 @@ class BuildTarget(object):
             if not os.path.isdir(yaml_dir):
                 os.makedirs(yaml_dir)
 
-
-    def copy_files(self):
+    def include_fixed_images(self, fixed_images):
         """Make the static media files available."""
-        for fname in ["empty_stave.png", "empty_stave.svg",
-                      "logo.svg", "logo-white.svg", "logo-gray.svg",
-                      "fi.png", "gb.png"]:
-            shutil.copy(
-                os.path.join(
-                    os.path.dirname(__file__), "..", "content", "images", fname),
-                self.image_dir)
+        for fname in fixed_images:
+            shutil.copy(fname, self.image_dir)
+
+    def write(self, _):
+        """Stub for writing out any DBs or fictures. Must be implemented
+        by the child."""
+        pass
 
 class PureDjangoTarget(BuildTarget):
     """Create media and corresponding Django db fixtures"""
@@ -77,9 +77,9 @@ class PureDjangoTarget(BuildTarget):
 
     def write(self, index):
         """Write the fixtures"""
-        ofh = open(self.yaml_fname, "w")
-        ofh.write(yaml.dump(self.fixturize(index)))
-        ofh.close()
+        if self.yaml_fname:
+            with open(self.yaml_fname, "w") as ofh:
+                ofh.write(yaml.dump(self.fixturize(index)))
 
     def fixturize(self, index, lang="fi"):
         """Convert the human readable course definitions to Django fixtures"""
@@ -248,6 +248,41 @@ class SimpleHtmlTarget(BuildTarget):
         fh = open(self.htmlfile, "w")
         fh.write(self.html_template %s)
 
+class AndroidResourceTarget(BuildTarget):
+    """Create resources for the android app"""
+    def __init__(self, asset_dir=None):
+        if not asset_dir:
+            asset_dir = os.path.join(
+                os.path.dirname(__file__),
+                "..", "android_assets", "res")
+        super(AndroidResourceTarget, self).__init__(
+            None, os.path.join(asset_dir, "images"), os.path.join(asset_dir, "sounds"))
+
+        resolutions = [("mdpi", 48), ("hdpi", 72), ("xhdpi", 96), ("xxhdpi", 144),
+                       ("xxxhdpi", 192)]
+
+        self.image_destinations = [(os.path.join(asset_dir, "drawable-" + dpiname), dpi)
+                                   for dpiname, dpi in resolutions]
+
+        for dname, _ in self.image_destinations:
+            if not os.path.isdir(dname):
+                os.makedirs(dname)
+
+    def include_fixed_images(self, fnames):
+        """Create scaled versions of the fixed assets."""
+        for fname in fnames:
+            if not fname.endswith(".svg"):
+                logger.debug("Skipping fixed image %s", fname)
+                continue
+            for dname, dpi in self.image_destinations:
+                new_fname = os.path.join(
+                    dname, os.path.splitext(os.path.basename(fname))[0] + ".png")
+                cmd = ["inkscape", "-z", "-f="+fname,
+                       "--export-png="+new_fname, "-h=%d"%dpi]
+                logger.info(" ".join(cmd))
+                subprocess.call(cmd)
+        sys.exit(-1)
+
 
 class Content(object):
     """Parse the content definitions and create the associated files"""
@@ -361,6 +396,14 @@ naturalizeMusic =
             self.lilypond_path = lilypond_path
         self.target = target
         self.only_new = only_new
+
+        self.fixed_images = \
+            [os.path.abspath(os.path.join(os.path.dirname(__file__), "..",
+                                          "content", "images", fname))
+             for fname in ["empty_stave.png", "empty_stave.svg",
+                           "logo.svg", "logo-white.svg", "logo-gray.svg",
+                           "fi.png", "gb.png"]]
+
 
     def generate_extra_rounds(self):
         """Generate the transposed extra exercises if requested"""
@@ -618,7 +661,7 @@ naturalizeMusic =
         pool = multiprocessing.Pool(processes=max_processes)
         pool.map(poolwrap_create_media, media_list)
 
-        self.target.copy_files()
+        self.target.include_fixed_images(self.fixed_images)
         self.expand_alternative_questions()
         self.target.write(self.index)
 
@@ -645,7 +688,7 @@ if __name__ == "__main__":
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
 
-    target_choices = ["puredjango", "simple_html"]
+    target_choices = ["puredjango", "simple_html", "android"]
     host_types = ["macports", "linux"]
     image_formats = ["png", "svg"]
 
@@ -689,6 +732,8 @@ if __name__ == "__main__":
         TARGET = PureDjangoTarget()
     elif ARGS.target == "simple_html":
         TARGET = SimpleHtmlTarget()
+    elif ARGS.target == "android":
+        TARGET = AndroidResourceTarget()
 
     CONTENT = Content(
         TARGET, lecture=ARGS.lecture, only_new=ARGS.only_new,

@@ -9,3 +9,4 @@ vesamusictraining/news/migrations
 *~
 venv
 db.sqlite3
+android_assets
