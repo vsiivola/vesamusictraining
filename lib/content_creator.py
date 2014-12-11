@@ -94,11 +94,11 @@ LILYPOND_TEMPLATE = r"""
 
 class Content(object):
     """Parse the content definitions and create the associated files"""
-    def __init__(self, target=PureDjangoTarget(), lecture=None, fname_list=None,
+    def __init__(self, target=PureDjangoTarget(), lectures=None, fname_list=None,
                  image_format="svg", host_type="macports", only_new=False,
                  lilypond_path=None, tmpdir=None):
         self.tmpdir = tmpdir if tmpdir\
-          else os.path.join(os.path.dirname(__file__), "..", "work", "tmp")
+          else os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "work", "tmp"))
         if not os.path.isdir(self.tmpdir):
             os.makedirs(self.tmpdir)
 
@@ -114,14 +114,14 @@ class Content(object):
             with open(os.path.join(dname, fname), 'r') as ifh:
                 self.index.append(yaml.load(ifh))
 
-        if lecture:
+        if lectures:
             available_lectures = set([i["languages"]["en"]["Title"] for i in self.index])
             self.index = [i for i in self.index
-                          if i["languages"]["en"]["Title"] == lecture]
+                          if i["languages"]["en"]["Title"] in lectures]
 
             if not len(self.index):
                 LOGGER.critical(
-                    "Lecture '%s' not found, choose one of %s", lecture,
+                    "Lecture '%s' not found, choose one of %s", lectures,
                     sorted(available_lectures))
                 sys.exit(-1)
             available_lectures = None # List not needed later
@@ -411,7 +411,7 @@ class Content(object):
         pool = multiprocessing.Pool(processes=max_processes)
         pool.map(poolwrap_create_media, media_list)
 
-        self.target.include_fixed_images(self.fixed_images)
+        self.target.include_images(self.fixed_images)
         self._expand_alternative_questions()
         self.target.write(self.index)
 
@@ -449,7 +449,8 @@ def main():
                         choices=target_choices,
                         default=target_choices[0])
     parser.add_argument("-l", "--lecture",
-                        help="Generate content only for LECTURE",
+                        help="Generate content only for LECTURE "\
+                        "(or list of semicolon separated lectures)",
                         metavar="LECTURE", default=None)
     parser.add_argument("-n", "--only_new", action="store_true",
                         help="Generate files only for missing stuff.")
@@ -486,8 +487,9 @@ def main():
     elif args.target == "android":
         target = AndroidResourceTarget()
 
+    lectures = set(args.lecture.split(";")) if args.lecture else None
     content = Content(
-        target, lecture=args.lecture, only_new=args.only_new,
+        target, lectures=lectures, only_new=args.only_new,
         host_type=args.host_type, lilypond_path=args.lilypond_path,
         image_format=args.image_format)
     content.compile()
