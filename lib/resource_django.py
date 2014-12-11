@@ -4,7 +4,6 @@ Music Trainer."""
 
 #import logging
 import os
-import random
 import re
 import yaml
 
@@ -76,13 +75,6 @@ class PureDjangoTarget(BuildTarget):
                                  "fields": fields_dict})
 
                 for exer in doc["Exercises"]:
-                    exer["correct"] = True
-                    for cexer in exer["confusers"]:
-                        cexer["correct"] = False
-
-                    alts = [exer] + exer["confusers"]
-                    random.shuffle(alts)
-
                     fixtures.append({
                         "model": "exercise.Exercise",
                         "pk": eidx,
@@ -97,7 +89,7 @@ class PureDjangoTarget(BuildTarget):
                               "text" in exer and exer["text"] else ""
                         }})
 
-                    for alt in alts:
+                    for alt in self._get_choices(exer):
                         fixtures.append({
                             "model" : "exercise.Choice",
                             "pk" : cidx,

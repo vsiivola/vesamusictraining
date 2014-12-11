@@ -98,7 +98,7 @@ class Content(object):
                  image_format="svg", host_type="macports", only_new=False,
                  lilypond_path=None, tmpdir=None):
         self.tmpdir = tmpdir if tmpdir\
-          else os.path.join(os.path.dirname(__file__), "..", "work", "tmp")
+          else os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "work", "tmp"))
         if not os.path.isdir(self.tmpdir):
             os.makedirs(self.tmpdir)
 
@@ -411,7 +411,7 @@ class Content(object):
         pool = multiprocessing.Pool(processes=max_processes)
         pool.map(poolwrap_create_media, media_list)
 
-        self.target.include_fixed_images(self.fixed_images)
+        self.target.include_images(self.fixed_images)
         self._expand_alternative_questions()
         self.target.write(self.index)
 
