@@ -2,7 +2,6 @@
 
 import os
 import subprocess
-import sys
 import xml.dom.minidom
 
 class SvgTransform:
