@@ -55,7 +55,7 @@ class AndroidResourceTarget(BuildTarget):
                 cmd = ["inkscape", "-z", "-f="+fname,
                        "--export-png="+new_fname, "-h=%d"%dpi]
                 LOGGER.debug(" ".join(cmd))
-                #subprocess.call(cmd)
+                subprocess.call(cmd)
 
     def write(self, index):
         """Write the resource files"""
@@ -66,7 +66,6 @@ class AndroidResourceTarget(BuildTarget):
 
             for exer in doc["Exercises"]:
                 #LOGGER.debug("excercise %s", repr(exer))
-
                 for alt in self._get_choices(exer):
                     self.include_images([alt["image"]])
                     sound = alt["ogg"]
