@@ -16,7 +16,8 @@ LOGGER = logging.getLogger(__name__)
 
 def _new_fname(orig_fname, target_dir, new_ext=None):
     """Get the name with full path for the new media resource"""
-    fname = os.path.basename(re.sub("-", "_", orig_fname)) # No dash for android resources
+    # No dash or uppercase forandroid resources
+    fname = re.sub("-", "_", os.path.basename(orig_fname)).lower()
     if new_ext:
         fname = os.path.splitext(fname)[0] + new_ext
     fname = os.path.join(target_dir, fname)
@@ -24,25 +25,28 @@ def _new_fname(orig_fname, target_dir, new_ext=None):
 
 class AndroidResourceTarget(BuildTarget):
     """Create resources for the android app"""
-    def __init__(self, asset_dir=None):
-        if not asset_dir:
-            asset_dir = os.path.abspath(os.path.join(
+    def __init__(self, resource_dir=None):
+        if not resource_dir:
+            resource_dir = os.path.abspath(os.path.join(
                 os.path.dirname(__file__),
-                "..", "android_assets", "res"))
+                "..", "android_assets"))
+        res_dir = os.path.join(resource_dir, "res")
         super(AndroidResourceTarget, self).__init__(
-            None, None, os.path.join(asset_dir, "sounds"))
+            None, None, os.path.join(resource_dir, "sounds"))
 
         resolutions = [("mdpi", 48), ("hdpi", 72), ("xhdpi", 96), ("xxhdpi", 144),
                        ("xxxhdpi", 192)]
 
-        self.image_destinations = [(os.path.join(asset_dir, "drawable-" + dpiname), dpi)
+        self.image_destinations = [(os.path.join(res_dir, "drawable-" + dpiname), dpi)
                                    for dpiname, dpi in resolutions]
 
-        for dname, _ in self.image_destinations:
+        self.asset_dir = os.path.join(resource_dir, "assets")
+        self.dbname = os.path.join(self.asset_dir, "exercises.db")
+
+        for dname, _ in self.image_destinations + [(self.asset_dir, "foo")]:
             if not os.path.isdir(dname):
                 os.makedirs(dname)
 
-        self.dbname = os.path.join(asset_dir, "exercises.db")
 
     def include_images(self, fnames):
         """Create scaled versions of the fixed assets."""
