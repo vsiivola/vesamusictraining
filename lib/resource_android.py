@@ -65,12 +65,10 @@ class AndroidResourceTarget(BuildTarget):
         """Write the resource files"""
         asq = AndroidSqlite(self.dbname)
 
-        for doc in index:
-            asq.insert_lecture(doc)
-
-            for exer in doc["Exercises"]:
-                #LOGGER.debug("excercise %s", repr(exer))
-                for alt in self._get_choices(exer):
-                    self.include_images([alt["image"]])
-                    sound = alt["ogg"]
-                    shutil.copy(sound, _new_fname(sound, self.sound_dir))
+        for lecture in index:
+            for lang, ldoc in lecture["languages"].items():
+                lec_key = asq.insert_lecture(lecture, ldoc, lang)
+                for exer in lecture["Exercises"]:
+                    exer_key = asq.insert_exercise(lec_key, lang, exer)
+                    for alt in self._get_choices(exer):
+                        asq.insert_choice(exer_key, exer["answer_type"], lang, alt)
