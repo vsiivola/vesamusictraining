@@ -73,7 +73,7 @@ class BuildTarget(object):
 
             lct = LilyCompileTask(lyfname, self.image_formats,
                                   os.path.join(self.tmp_dir, id_str),
-                                  os.path.join(self.sound_dir, id_str))
+                                  os.path.join(self.image_dir, id_str))
 
             image_tasks[signature] = lct
             #LOGGER.debug(lct)
