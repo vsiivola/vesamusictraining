@@ -6,8 +6,6 @@ import logging
 import os
 import re
 import subprocess
-import shutil
-import sys
 
 from resource_base import BuildTarget
 from android_sqlite import AndroidSqlite
@@ -32,7 +30,7 @@ class AndroidResourceTarget(BuildTarget):
                 "..", "android_assets"))
         res_dir = os.path.join(resource_dir, "res")
         super(AndroidResourceTarget, self).__init__(
-            None, None, os.path.join(resource_dir, "sounds"))
+            None, os.path.join(resource_dir, "sounds"))
 
         resolutions = [("mdpi", 48), ("hdpi", 72), ("xhdpi", 96), ("xxhdpi", 144),
                        ("xxxhdpi", 192)]
@@ -46,7 +44,6 @@ class AndroidResourceTarget(BuildTarget):
         for dname, _ in self.image_destinations + [(self.asset_dir, "foo")]:
             if not os.path.isdir(dname):
                 os.makedirs(dname)
-
 
     def include_images(self, fnames):
         """Create scaled versions of the fixed assets."""
@@ -72,3 +69,7 @@ class AndroidResourceTarget(BuildTarget):
                     exer_key = asq.insert_exercise(lec_key, lang, exer)
                     for alt in self._get_choices(exer):
                         asq.insert_choice(exer_key, exer["answer_type"], lang, alt)
+
+    def clean_fname(self, fname):
+        #FIXME
+        return fname

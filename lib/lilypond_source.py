@@ -272,13 +272,12 @@ class LilyCompiler:
             if not ly_task.png_fname and not ly_task.svg_fname:
                 # Need to run lilypond with some params to get the midi file
                 # even if no image is requested
-                cmd = "%s/lilypond --png -dpixmap-format=pngalpha %s" % (
+                cmd = "%s/lilypond %s" % (
                     self.lilypond_path, os.path.basename(ly_task.lilysource))
                 LOGGER.debug(cmd)
                 if subprocess.call(cmd.split(), cwd=os.path.dirname(ly_task.tmp_fname),
                                    stdout=fnull, stderr=fnull):
                     raise LilySourceException("Failed '%s'" % cmd)
-
 
             # Set the source lilypond filename to the correct slot in the template
             timidity_cmd = self.timidity_base[:1] + [ly_task.tmp_fname + ".midi"] \

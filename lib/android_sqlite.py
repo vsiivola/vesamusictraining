@@ -93,7 +93,7 @@ class AndroidSqlite():
         cmd = """INSERT INTO exercises VALUES (%d, "%s", "%s", %d, "%s", "%s", "%s")""" %(
             self.exercise_primary_key, exer["name"][lang],
             exer["question_type"], lec_key,
-            exer["mp3"], exer["image"],
+            exer["mp3"], exer["png"],
             exer["text"][lang] if "text" in exer and exer["text"] else "")
         LOGGER.debug("%s", cmd)
         cursor.execute(cmd)
@@ -108,7 +108,7 @@ class AndroidSqlite():
               """(%d, "%s", %d, %d, "%s", "%s", "%s")""" %(
                   self.choice_primary_key, answer_type,
                   exer_key, 1 if alt["correct"] else 0,
-                  alt["mp3"], alt["image"],
+                  alt["mp3"], alt["png"],
                   alt["text"][lang] if "text" in alt and alt["text"] else "")
         LOGGER.debug("%s", cmd)
         cursor.execute(cmd)
