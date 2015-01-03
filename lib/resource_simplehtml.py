@@ -2,13 +2,13 @@
 """Creates the media files and database fixtures for Vesa's
 Music Trainer."""
 
-#import logging
+import logging
 import os
 import re
 
 from resource_base import BuildTarget
 
-#LOGGER = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 HTML_TEMPLATE = """<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0
 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -31,23 +31,26 @@ class SimpleHtmlTarget(BuildTarget):
         super(SimpleHtmlTarget, self).__init__(
             mediadir, mediadir, sound_formats=set(["mp3", "ogg"]))
 
+    @staticmethod
+    def clean_fname(fname):
+        """Fix the file names to be relative to the index.html"""
+        if not fname:
+            return fname
+        return re.sub('^.*simple_html/', '', fname)
+
     def write(self, content_index):
         """Write the web pages and the corresponding media"""
-        def clean_fname(fname):
-            """Fix the file names to be relative to the index.html"""
-            return re.sub('^simple_html/', '', fname)
 
         def image_str(fname):
             """HTML string for showing the image"""
-            return '<img src="%s"></img>' % clean_fname(fname)
+            return '<img src="%s"></img>' % fname
 
         def audio_str(oggname, mp3name):
             """HTML string for playing the audio"""
             return """<audio controls="controls">
 <source src="%s" type="audio/ogg" />
 <source src="%s" type="audio/mpeg" />
-<a href="%s">Play</a></audio>""" % (
-    clean_fname(oggname), clean_fname(mp3name), clean_fname(mp3name))
+<a href="%s">Play</a></audio>""" % (oggname, mp3name, mp3name)
 
         pagestr = ""
         pagestr += "<h2>Musical Notation Trainer</h2>\n"

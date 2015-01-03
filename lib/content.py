@@ -130,7 +130,7 @@ class Content(object):
         """Generate different permutations of a question if requested"""
         def replace_media(orig, new):
             """Replace media info in orig with the info in new"""
-            orig["lysrc"].notes = new["lysrc"].notes
+            orig["lysrc"] = copy.deepcopy(new["lysrc"])
             orig["text"] = new["text"] if "text" in new else None
 
         for doc in self.index:
@@ -212,23 +212,21 @@ class Content(object):
                 for alt in exer["confusers"]:
                     yield alt
 
-    def insert_filenames(self, sound_tasks, image_tasks):
+    def insert_filenames(self, sound_tasks, image_tasks, fname_modfunc=None):
         """Insert deduplicated media fnames into the lecture index."""
-        for eresp in self.get_questions_and_choices():
-            LOGGER.debug("Initial %s", eresp)
-            lysrc = eresp["lysrc"]
-            ssign = lysrc.sound_signature()
+        fcl = fname_modfunc if fname_modfunc else lambda x: x
 
+        for eresp in self.get_questions_and_choices():
+            lysrc = eresp["lysrc"]
+
+            ssign = lysrc.sound_signature()
             if ssign in sound_tasks:
-                LOGGER.debug("Found ssign")
                 ly_task = sound_tasks[ssign]
-                eresp["mp3"] = ly_task.mp3_fname
-                eresp["ogg"] = ly_task.ogg_fname
+                eresp["mp3"] = fcl(ly_task.mp3_fname)
+                eresp["ogg"] = fcl(ly_task.ogg_fname)
 
             isign = lysrc.image_signature()
             if isign in image_tasks:
-                LOGGER.debug("Found isign")
                 ly_task = image_tasks[isign]
-                eresp["png"] = ly_task.png_fname
-                eresp["svg"] = ly_task.svg_fname
-            LOGGER.debug("After %s", eresp)
+                eresp["png"] = fcl(ly_task.png_fname)
+                eresp["svg"] = fcl(ly_task.svg_fname)

@@ -78,7 +78,7 @@ def main():
     target.include_images(content.fixed_images)
     sound_tasks, image_tasks = target.media_compile_tasklist(
         [e["lysrc"] for e in content.get_questions_and_choices()])
-    content.insert_filenames(sound_tasks, image_tasks)
+    content.insert_filenames(sound_tasks, image_tasks, target.clean_fname)
     target.write(content.index)
 
     if args.host_type == "macports":
@@ -94,7 +94,7 @@ def main():
         lilypond_path = args.lilypond_path
 
     lcc = LilyCompiler(lilypond_path, imagemagick_path, inkscape_path, timidity_path)
-    lcc.compile(list(sound_tasks.values()) + list(image_tasks.values()))
+    lcc.compile(list(sound_tasks.values()) + list(image_tasks.values()), 4)
 
 
 
