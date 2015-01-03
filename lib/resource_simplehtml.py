@@ -23,13 +23,13 @@ class SimpleHtmlTarget(BuildTarget):
     """Create simple raw html pages for debugging."""
 
     def __init__(self, htmlfile=None, mediadir=None):
-        basedir = os.path.join(os.path.dirname(__file__), "..", "simple_html")
+        basedir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "simple_html"))
         self.htmlfile = htmlfile if htmlfile else\
           os.path.join(basedir, "index.html")
         mediadir = mediadir if mediadir else\
-          os.path.join(os.path.dirname(__file__), "..", "simple_html", "media")
+          os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "simple_html", "media"))
         super(SimpleHtmlTarget, self).__init__(
-            None, mediadir, mediadir, mediadir)
+            mediadir, mediadir, sound_formats=set(["mp3", "ogg"]))
 
     def write(self, content_index):
         """Write the web pages and the corresponding media"""
@@ -67,7 +67,7 @@ class SimpleHtmlTarget(BuildTarget):
                 if exer["question_type"] == "audio":
                     pagestr += audio_str(exer["ogg"], exer["mp3"])
                 else:
-                    pagestr += image_str(exer["image"])
+                    pagestr += image_str(exer["png"])
                 pagestr += "</td></tr>\n"
                 alternatives = []
                 for alt in [exer] + exer["confusers"]:
@@ -75,12 +75,12 @@ class SimpleHtmlTarget(BuildTarget):
                       if "text" in alt and alt["text"] else None
                     if exer["answer_type"] == "image":
                         alternatives.append(
-                            (image_str(alt["image"]),
+                            (image_str(alt["png"]),
                              audio_str(alt["ogg"], alt["mp3"]), text))
                     elif exer["answer_type"] == "audio":
                         alternatives.append(
                             (audio_str(alt["ogg"], alt["mp3"]),
-                             image_str(alt["image"]), text))
+                             image_str(alt["png"]), text))
                 pagestr += "<tr>\n"
 
                 # FIXME: randomize order
