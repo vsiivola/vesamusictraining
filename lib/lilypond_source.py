@@ -265,7 +265,7 @@ class LilyCompiler:
                 if subprocess.call(cmd.split(), cwd=os.path.dirname(ly_task.tmp_fname),
                                    stdout=fnull, stderr=fnull):
                     raise LilySourceException("Failed '%s'" % cmd)
-                strans = SvgTransform.init_from_file(ly_task.tmpfname, self.inkscape_path)
+                strans = SvgTransform.init_from_file(ly_task.tmp_fname+".svg", self.inkscape_path)
                 strans.crop()
                 strans.write(ly_task.svg_fname)
 
@@ -281,7 +281,7 @@ class LilyCompiler:
 
 
             # Set the source lilypond filename to the correct slot in the template
-            timidity_cmd = self.timidity_base[:1] + [ly_task.tmp_fname + ".midi" ] \
+            timidity_cmd = self.timidity_base[:1] + [ly_task.tmp_fname + ".midi"] \
                            + self.timidity_base[2:]
 
             for afname in [ly_task.mp3_fname, ly_task.ogg_fname]:

@@ -2,18 +2,19 @@
 """Creates the media files and database fixtures for Vesa's
 Music Trainer."""
 
-#import logging
+import logging
 import os
 import re
 import yaml
 
 from resource_base import BuildTarget
 
-#LOGGER = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 class PureDjangoTarget(BuildTarget):
     """Create media and corresponding Django db fixtures"""
-    def __init__(self, media_target_dir=None, fixture_target=None):
+    def __init__(self, media_target_dir=None, fixture_target=None,
+                 image_format="svg"):
         """Arguments:
         media_target_dir: Where to put the generated media assets
         fixture_target_dir: Where to put the Django db init fixtures.
@@ -23,30 +24,32 @@ class PureDjangoTarget(BuildTarget):
                 os.path.dirname(__file__), "..", "vesamusictraining",
                 "static", "generated_assets")
 
-        if not fixture_target:
-            fixture_target = os.path.join(
+        self.fixture_target = fixture_target if fixture_target\
+            else os.path.join(
                 os.path.dirname(__file__), "..", "vesamusictraining",
                 "exercise", "fixtures", "initial_data.yaml")
 
+        self.image_format = image_format
+
         super(PureDjangoTarget, self).__init__(
-            fixture_target,
             os.path.join(self.media_target_dir, "images"),
-            os.path.join(self.media_target_dir, "sounds"))
+            os.path.join(self.media_target_dir, "sounds"),
+            sound_formats=set(["mp3", "ogg"]),
+            image_formats=set([image_format])
+        )
 
     def write(self, index):
         """Write the fixtures"""
-        if self.yaml_fname:
-            with open(self.yaml_fname, "w") as ofh:
-                ofh.write(yaml.dump(self._fixturize(index)))
+        with open(self.fixture_target, "w") as ofh:
+            ofh.write(yaml.dump(self._fixturize(index)))
+
+    def clean_fname(self, fname):
+        """Modify the filenames for the web server"""
+        # hardcoded path
+        return re.sub(self.media_target_dir, "/static/generated_assets", fname)
 
     def _fixturize(self, index, lang="fi"):
         """Convert the human readable course definitions to Django fixtures"""
-        def clean_fname(fname):
-            """Modify the filenames for the web server"""
-            # FIXME: hardcoded path
-            return re.sub(
-                self.media_target_dir, "/static/generated_assets", fname)
-
         fixtures = []
         eidx = 0
         cidx = 0
@@ -82,9 +85,9 @@ class PureDjangoTarget(BuildTarget):
                             "title": exer["name"][lang],
                             "question_type": exer["question_type"],
                             "lecture": lidx,
-                            "question_mp3": clean_fname(exer["mp3"]),
-                            "question_ogg": clean_fname(exer["ogg"]),
-                            "question_image": clean_fname(exer["image"]),
+                            "question_mp3": exer["mp3"],
+                            "question_ogg": exer["ogg"],
+                            "question_image": exer[self.image_format],
                             "text": exer["text"][lang] if \
                               "text" in exer and exer["text"] else ""
                         }})
@@ -97,9 +100,9 @@ class PureDjangoTarget(BuildTarget):
                                 "answer_type": exer["answer_type"],
                                 "exercise": eidx,
                                 "correct": alt["correct"],
-                                "image": clean_fname(alt["image"]),
-                                "ogg": clean_fname(alt["ogg"]),
-                                "mp3": clean_fname(alt["mp3"]),
+                                "image": alt[self.image_format],
+                                "ogg": alt["ogg"],
+                                "mp3": alt["mp3"],
                                 "text": alt["text"][lang] if \
                                 "text" in alt and alt["text"] else ""}})
                         cidx += 1

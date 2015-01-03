@@ -34,8 +34,6 @@ class SimpleHtmlTarget(BuildTarget):
     @staticmethod
     def clean_fname(fname):
         """Fix the file names to be relative to the index.html"""
-        if not fname:
-            return fname
         return re.sub('^.*simple_html/', '', fname)
 
     def write(self, content_index):

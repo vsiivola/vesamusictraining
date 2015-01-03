@@ -222,11 +222,11 @@ class Content(object):
             ssign = lysrc.sound_signature()
             if ssign in sound_tasks:
                 ly_task = sound_tasks[ssign]
-                eresp["mp3"] = fcl(ly_task.mp3_fname)
-                eresp["ogg"] = fcl(ly_task.ogg_fname)
+                eresp["mp3"] = fcl(ly_task.mp3_fname) if ly_task.mp3_fname else None
+                eresp["ogg"] = fcl(ly_task.ogg_fname) if ly_task.ogg_fname else None
 
             isign = lysrc.image_signature()
             if isign in image_tasks:
                 ly_task = image_tasks[isign]
-                eresp["png"] = fcl(ly_task.png_fname)
-                eresp["svg"] = fcl(ly_task.svg_fname)
+                eresp["png"] = fcl(ly_task.png_fname) if ly_task.png_fname else None
+                eresp["svg"] = fcl(ly_task.svg_fname) if ly_task.svg_fname else None

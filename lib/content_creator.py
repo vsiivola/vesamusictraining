@@ -42,10 +42,10 @@ def main():
                         default=host_types[0],
                         help="Host type for setting the paths to binaries. "\
                           "Options: " + repr(host_types) + ".")
-    parser.add_argument("-i", "--image_format", choices=image_formats,
-                        default=image_formats[0],
-                        help="Image output format. "\
-                          "Options: " + repr(host_types) + ".")
+   # parser.add_argument("-i", "--image_format", choices=image_formats,
+   #                     default=image_formats[0],
+   #                     help="Image output format. "\
+   #                       "Options: " + repr(host_types) + ".")
     parser.add_argument("-L", "--lilypond_path", metavar="path",
                         help="Lilypond executable path",
                         default=None)
