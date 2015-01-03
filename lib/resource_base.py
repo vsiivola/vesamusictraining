@@ -36,8 +36,10 @@ class BuildTarget(object):
         self.image_formats = image_formats
         self.sound_formats = sound_formats
 
+        self.media_callbacks = dict()
 
     def media_compile_tasklist(self, lysrc_list):
+        """Create a list of media compile tasks"""
         unique_sounds = dict()
         unique_images = dict()
 

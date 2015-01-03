@@ -93,7 +93,8 @@ def main():
     if args.lilypond_path:
         lilypond_path = args.lilypond_path
 
-    lcc = LilyCompiler(lilypond_path, imagemagick_path, inkscape_path, timidity_path)
+    lcc = LilyCompiler(lilypond_path, imagemagick_path, inkscape_path, timidity_path,
+                       target.media_callbacks)
     lcc.compile(list(sound_tasks.values()) + list(image_tasks.values()), 4)
 
 

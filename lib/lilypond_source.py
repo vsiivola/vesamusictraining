@@ -177,7 +177,7 @@ class LilyCompileTask:
             self.png_fname = None
 
         if "svg" in output_formats:
-            self.svg_fname = output_basename + ".png"
+            self.svg_fname = output_basename + ".svg"
             recognized_formats += 1
         else:
             self.svg_fname = None
@@ -219,11 +219,21 @@ def poolwrap_compile_one(argtuple):
 
 class LilyCompiler:
     """Compile the media assets"""
-    def __init__(self, lilypond_path, imagemagick_path, inkscape_path, timidity_path):
+    def __init__(self, lilypond_path, imagemagick_path, inkscape_path, timidity_path,
+                 target_processors=dict()):
         self.lilypond_path = lilypond_path
         self.imagemagick_path = imagemagick_path
         self.inkscape_path = inkscape_path
         self.timidity_path = timidity_path
+
+        self.png_callback = target_processors["png_processor"] \
+                            if "png_processor" in target_processors else None
+        self.svg_callback = target_processors["svg_processor"] \
+                            if "svg_processor" in target_processors else None
+        self.mp3_callback = target_processors["mp3_processor"] \
+                            if "mp3_processor" in target_processors else None
+        self.ogg_callback = target_processors["ogg_processor"] \
+                            if "ogg_processor" in target_processors else None
 
         self.sox_base = ["%s/sox" % self.imagemagick_path, "-t", "raw", "-r", "44100",
                          "-b", "24", "-e", "signed-integer", "-c", "1", "-"]
@@ -257,6 +267,9 @@ class LilyCompiler:
                     self.imagemagick_path, ly_task.tmp_fname+".png", ly_task.png_fname)
                 if subprocess.call(cmd.split(), stdout=fnull, stderr=fnull):
                     raise LilySourceException("Failed '%s'" % cmd)
+                if self.png_callback:
+                    self.png_callback(ly_task.png_fname)
+
 
             if ly_task.svg_fname:
                 cmd = "%s/lilypond -dbackend=svg %s" % (
@@ -268,6 +281,8 @@ class LilyCompiler:
                 strans = SvgTransform.init_from_file(ly_task.tmp_fname+".svg", self.inkscape_path)
                 strans.crop()
                 strans.write(ly_task.svg_fname)
+                if self.svg_callback:
+                    self.svg_callback(ly_task.svg_fname)
 
             if not ly_task.png_fname and not ly_task.svg_fname:
                 # Need to run lilypond with some params to get the midi file
@@ -283,7 +298,8 @@ class LilyCompiler:
             timidity_cmd = self.timidity_base[:1] + [ly_task.tmp_fname + ".midi"] \
                            + self.timidity_base[2:]
 
-            for afname in [ly_task.mp3_fname, ly_task.ogg_fname]:
+            for afname, callback in [(ly_task.mp3_fname, self.mp3_callback),
+                                    (ly_task.ogg_fname, self.ogg_callback)]:
                 if not afname:
                     continue
                 LOGGER.debug("timidity open %s", timidity_cmd)
@@ -300,3 +316,5 @@ class LilyCompiler:
                     raise RuntimeError("Failed sox '%s'" %
                                        " ".join(self.sox_base + [afname]))
 
+                if callback:
+                    callback(afname)

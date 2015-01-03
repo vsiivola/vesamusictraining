@@ -30,7 +30,8 @@ class AndroidResourceTarget(BuildTarget):
                 "..", "android_assets"))
         res_dir = os.path.join(resource_dir, "res")
         super(AndroidResourceTarget, self).__init__(
-            None, os.path.join(resource_dir, "sounds"))
+            None, os.path.join(resource_dir, "sounds"),
+            image_formats=set(["svg"]))
 
         resolutions = [("mdpi", 48), ("hdpi", 72), ("xhdpi", 96), ("xxhdpi", 144),
                        ("xxxhdpi", 192)]
@@ -45,18 +46,24 @@ class AndroidResourceTarget(BuildTarget):
             if not os.path.isdir(dname):
                 os.makedirs(dname)
 
-    def include_images(self, fnames):
-        """Create scaled versions of the fixed assets."""
-        for fname in fnames:
-            if not fname.endswith(".svg"):
-                LOGGER.debug("Skipping fixed image %s", fname)
-                continue
+        self.media_callbacks["svg_processor"] = self.include_image
+
+    def include_image(self, fname):
+        """Create scaled bitmap versions of the svg images."""
+        if not fname.endswith(".svg"):
+            return
+        with open(os.devnull, 'w') as fnull:
             for dname, dpi in self.image_destinations:
                 new_fname = _new_fname(fname, dname, ".png")
                 cmd = ["inkscape", "-z", "-f="+fname,
                        "--export-png="+new_fname, "-h=%d"%dpi]
                 LOGGER.debug(" ".join(cmd))
-                subprocess.call(cmd)
+                subprocess.call(cmd, stdout=fnull)
+
+    def include_images(self, fnames):
+        """Create scaled versions of the fixed assets."""
+        for fname in fnames:
+            self.include_image(fname)
 
     def write(self, index):
         """Write the resource files"""
