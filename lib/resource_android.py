@@ -15,7 +15,7 @@ LOGGER = logging.getLogger(__name__)
 def _new_fname(orig_fname, target_dir, new_ext=None):
     """Get the name with full path for the new media resource"""
     # No dash or uppercase forandroid resources
-    fname = re.sub("-", "_", os.path.basename(orig_fname)).lower()
+    fname = "ad"+re.sub("-", "_", os.path.basename(orig_fname)).lower()
     if new_ext:
         fname = os.path.splitext(fname)[0] + new_ext
     fname = os.path.join(target_dir, fname)
@@ -28,7 +28,6 @@ class AndroidResourceTarget(BuildTarget):
             resource_dir = os.path.abspath(os.path.join(
                 os.path.dirname(__file__),
                 "..", "android_assets"))
-        res_dir = os.path.join(resource_dir, "res")
         super(AndroidResourceTarget, self).__init__(
             None, os.path.join(resource_dir, "sounds"),
             image_formats=set(["svg"]))
@@ -36,7 +35,7 @@ class AndroidResourceTarget(BuildTarget):
         resolutions = [("mdpi", 48), ("hdpi", 72), ("xhdpi", 96), ("xxhdpi", 144),
                        ("xxxhdpi", 192)]
 
-        self.image_destinations = [(os.path.join(res_dir, "drawable-" + dpiname), dpi)
+        self.image_destinations = [(os.path.join(resource_dir, "drawable-" + dpiname), dpi)
                                    for dpiname, dpi in resolutions]
 
         self.asset_dir = os.path.join(resource_dir, "assets")
