@@ -4,7 +4,6 @@
 import logging
 
 from content import Content
-#from media_resources import MediaResourceHandler
 from lilypond_source import LilyCompiler
 
 from resource_simplehtml import SimpleHtmlTarget
@@ -24,8 +23,8 @@ def main():
 
 
     target_choices = ["puredjango", "simple_html", "android"]
-    host_types = ["macports", "linux"]
-    image_formats = ["png", "svg"]
+    host_types = ["homebrew", "macports", "linux"]
+    #image_formats = ["png", "svg"]
 
     parser.add_argument("-t", "--target",
                         help="Generate content for which format. "\
@@ -83,6 +82,8 @@ def main():
 
     if args.host_type == "macports":
         binpath = "/opt/local/bin"
+    elif args.host_type == "homebrew":
+        binpath = "/usr/local/bin"
     elif args.host_type == "linux":
         binpath = "/usr/bin"
 
@@ -96,12 +97,3 @@ def main():
     lcc = LilyCompiler(lilypond_path, imagemagick_path, inkscape_path, timidity_path,
                        target.media_callbacks)
     lcc.compile(list(sound_tasks.values()) + list(image_tasks.values()), 4)
-
-
-
-
-
-
-
-
-
