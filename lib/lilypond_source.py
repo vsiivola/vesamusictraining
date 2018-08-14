@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 """Creates the excercise contents."""
+from __future__ import annotations
 
 import multiprocessing
 import logging
 import os
 import random
 import subprocess
+from typing import Dict, List, Optional, Set, Tuple, Union
 
 from svgtransform import SvgTransform
 
@@ -87,15 +89,21 @@ class LilySourceException(Exception):
     """Exception in handling Lilypond source file"""
     pass
 
-def get_random_transpose_key():
+def get_random_transpose_key() -> str:
     """Get a random key to transpose to."""
     return random.choice(TRANSPOSE_MAJOR)
 
 
 class LilySource:
     """Generate the lilypond source and media files."""
-    def __init__(self, notes, annotation, tempo=None, hidden_tempo=None, style=None,
-                 instrument=None, transpose=None):
+    def __init__(self,
+                 notes: str,
+                 annotation: str,
+                 tempo: Optional[int] = None,
+                 hidden_tempo: Optional[int] = None,
+                 style: Optional[str] = None,
+                 instrument: Optional[str] = None,
+                 transpose: Optional[str] = None) -> None:
         self.notes = notes
         self.annotation = annotation
         self.tempo = tempo
@@ -107,24 +115,25 @@ class LilySource:
             self.instrument = instrument
         self.transpose = transpose
 
-    def eq_image(self, other):
+    def eq_image(self, other: LilySource) -> bool:
         """Will the generated image be same."""
         return self.image_signature() == other.image_signature()
 
-    def eq_sound(self, other):
+    def eq_sound(self, other: LilySource) -> bool:
         """Will the generated image be same."""
         return self.sound_signature() == other.sound_signature()
 
-    def sound_signature(self):
+    def sound_signature(self) -> Tuple[
+            str, str, Optional[int], Optional[int], Optional[str], str, Optional[str]]:
         """We need something hashable for removing duplicate sounds"""
         return (self.notes, self.annotation, self.tempo, self.hidden_tempo,
                 self.style, self.instrument, self.transpose)
 
-    def image_signature(self):
+    def image_signature(self) -> Tuple[Optional[str], Optional[str], Optional[str], Optional[str]]:
         """We need something hashable for removing duplicate images"""
         return (self.notes, self.annotation, self.style, self.transpose)
 
-    def str(self):
+    def __str__(self) -> str:
         """Create the source lilypond notation"""
         notes = self.notes
         if self.transpose:
@@ -164,40 +173,44 @@ class LilySource:
 
 class LilyCompileTask:
     """Single compilation task."""
-    def __init__(self, lilysource, output_formats, tmp_fname, output_basename):
+    def __init__(self,
+                 lilysource: str,
+                 output_formats: Union[List[str], Set[str]],
+                 tmp_fname: str,
+                 output_basename: str) -> None:
         self.lilysource = lilysource
         self.output_formats = output_formats
         self.tmp_fname = tmp_fname
 
         recognized_formats = 0
         if "png" in output_formats:
-            self.png_fname = output_basename + ".png"
+            self.png_fname: Optional[str] = output_basename + ".png"
             recognized_formats += 1
         else:
             self.png_fname = None
 
         if "svg" in output_formats:
-            self.svg_fname = output_basename + ".svg"
+            self.svg_fname: Optional[str] = output_basename + ".svg"
             recognized_formats += 1
         else:
             self.svg_fname = None
 
         if "mp3" in output_formats:
-            self.mp3_fname = output_basename + ".mp3"
+            self.mp3_fname: Optional[str] = output_basename + ".mp3"
             recognized_formats += 1
         else:
             self.mp3_fname = None
 
         if "ogg" in output_formats:
-            self.ogg_fname = output_basename + ".ogg"
+            self.ogg_fname: Optional[str] = output_basename + ".ogg"
             recognized_formats += 1
         else:
             self.ogg_fname = None
 
-        if len(output_formats) != recognized_formats or len(output_formats) == 0:
+        if len(output_formats) != recognized_formats or output_formats == 0:
             raise LilySourceException("Request has unknown formats '%s'" % output_formats)
 
-    def __str__(self):
+    def __str__(self) -> str:
         ostr = "LCT - source: %s" % self.lilysource
         if self.png_fname:
             ostr += ", png: " + self.png_fname
@@ -209,7 +222,7 @@ class LilyCompileTask:
             ostr = ", ogg: " + self.ogg_fname
         return ostr
 
-def poolwrap_compile_one(argtuple):
+def poolwrap_compile_one(argtuple: Tuple) -> bool:
     """A wrapper for media creation since multiprocessing.Pool
     cannot handle in-class functions."""
     cinstance, lytask = argtuple
@@ -219,8 +232,8 @@ def poolwrap_compile_one(argtuple):
 
 class LilyCompiler:
     """Compile the media assets"""
-    def __init__(self, lilypond_path, imagemagick_path, inkscape_path, timidity_path,
-                 target_processors=dict()):
+    def __init__(self, lilypond_path: str, imagemagick_path: str, inkscape_path: str,
+                 timidity_path: str, target_processors: Dict = dict()) -> None:
         self.lilypond_path = lilypond_path
         self.imagemagick_path = imagemagick_path
         self.inkscape_path = inkscape_path
@@ -238,11 +251,11 @@ class LilyCompiler:
         self.sox_base = ["%s/sox" % self.imagemagick_path, "-t", "raw", "-r", "44100",
                          "-b", "24", "-e", "signed-integer", "-c", "1", "-"]
 
-        self.timidity_base = ["%s/timidity" % self.timidity_path, None,
+        self.timidity_base = ["%s/timidity" % self.timidity_path, "",
                               "-Or2slM", "-o", "-", "-s", "44100 ",
                               "--volume-compensation"]
 
-    def compile(self, ly_tasklist, max_processes=1):
+    def compile(self, ly_tasklist: List[LilyCompileTask], max_processes: int = 1) -> None:
         """Compile a list of tasks."""
         if max_processes > 1:
             pool = multiprocessing.Pool(processes=max_processes)
@@ -251,7 +264,7 @@ class LilyCompiler:
             for ly_task in ly_tasklist:
                 self.compile_one(ly_task)
 
-    def compile_one(self, ly_task):
+    def compile_one(self, ly_task: LilyCompileTask) -> None:
         """Create the image and corresponding midi file from lilypond source."""
         with open(os.devnull, 'w') as fnull:
             LOGGER.debug(ly_task)
@@ -299,7 +312,7 @@ class LilyCompiler:
                            + self.timidity_base[2:]
 
             for afname, callback in [(ly_task.mp3_fname, self.mp3_callback),
-                                    (ly_task.ogg_fname, self.ogg_callback)]:
+                                     (ly_task.ogg_fname, self.ogg_callback)]:
                 if not afname:
                     continue
                 LOGGER.debug("timidity open %s", timidity_cmd)
@@ -310,10 +323,10 @@ class LilyCompiler:
                 soxp.communicate()
                 timidityp.communicate()
                 if timidityp.returncode:
-                    raise RuntimeError("Failed timidity '%s'" %
+                    raise RuntimeError("Failed timidity '%s'" % \
                                        " ".join(self.timidity_base))
                 if soxp.returncode:
-                    raise RuntimeError("Failed sox '%s'" %
+                    raise RuntimeError("Failed sox '%s'" % \
                                        " ".join(self.sox_base + [afname]))
 
                 if callback:

@@ -5,6 +5,7 @@ Music Trainer."""
 import logging
 import os
 import re
+from typing import Dict, List, Optional
 import yaml
 
 from resource_base import BuildTarget
@@ -13,8 +14,9 @@ LOGGER = logging.getLogger(__name__)
 
 class PureDjangoTarget(BuildTarget):
     """Create media and corresponding Django db fixtures"""
-    def __init__(self, media_target_dir=None, fixture_target=None,
-                 image_format="svg"):
+    def __init__(self, media_target_dir: Optional[str] = None,
+                 fixture_target: Optional[str] = None,
+                 image_format: str = "svg") -> None:
         """Arguments:
         media_target_dir: Where to put the generated media assets
         fixture_target_dir: Where to put the Django db init fixtures.
@@ -38,17 +40,17 @@ class PureDjangoTarget(BuildTarget):
             image_formats=set([image_format])
         )
 
-    def write(self, index):
+    def write(self, index: Dict) -> None:
         """Write the fixtures"""
         with open(self.fixture_target, "w") as ofh:
             ofh.write(yaml.dump(self._fixturize(index)))
 
-    def clean_fname(self, fname):
+    def clean_fname(self, fname: str) -> str:
         """Modify the filenames for the web server"""
         # hardcoded path
         return re.sub(self.media_target_dir, "/static/generated_assets", fname)
 
-    def _fixturize(self, index, lang="fi"):
+    def _fixturize(self, index: Dict, lang: str = "fi") -> List[Dict]:
         """Convert the human readable course definitions to Django fixtures"""
         fixtures = []
         eidx = 0
@@ -109,6 +111,3 @@ class PureDjangoTarget(BuildTarget):
                     eidx += 1
                 lidx += 1
         return fixtures
-
-
-

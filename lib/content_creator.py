@@ -6,6 +6,7 @@ import logging
 from content import Content
 from lilypond_source import LilyCompiler
 
+from resource_base import BuildTarget
 from resource_simplehtml import SimpleHtmlTarget
 from resource_django import PureDjangoTarget
 from resource_android import AndroidResourceTarget
@@ -13,7 +14,7 @@ from resource_android import AndroidResourceTarget
 
 LOGGER = logging.getLogger(__name__)
 
-def main():
+def main() -> None:
     """Create content"""
     import argparse
 
@@ -68,7 +69,7 @@ def main():
     content.expand()
 
     if args.target == "puredjango":
-        target = PureDjangoTarget()
+        target: BuildTarget = PureDjangoTarget()
     elif args.target == "simple_html":
         target = SimpleHtmlTarget()
     elif args.target == "android":

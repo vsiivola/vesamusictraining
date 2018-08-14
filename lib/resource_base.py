@@ -9,16 +9,20 @@ import os
 import random
 import shutil
 import uuid
+from typing import Callable, Dict, Iterable, List, Optional, Set, Tuple
 
-from lilypond_source import LilyCompileTask
+from lilypond_source import LilyCompileTask, LilySource
 
 LOGGER = logging.getLogger(__name__)
 
-class BuildTarget(object):
+class BuildTarget():
     """Defines a basic function class for creating the media
     and database files. Should be inherited from."""
-    def __init__(self, image_dir=None, sound_dir=None, tmp_dir=None,
-                 image_formats=set(["png"]), sound_formats=set(["mp3"])):
+    def __init__(self, image_dir: Optional[str] = None,
+                 sound_dir: Optional[str] = None,
+                 tmp_dir: Optional[str] = None,
+                 image_formats: Set[str] = set(["png"]),
+                 sound_formats: Set[str] = set(["mp3"])) -> None:
         self.image_dir = image_dir if image_dir \
           else os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "work", "png"))
         self.sound_dir = sound_dir if sound_dir\
@@ -36,9 +40,9 @@ class BuildTarget(object):
         self.image_formats = image_formats
         self.sound_formats = sound_formats
 
-        self.media_callbacks = dict()
+        self.media_callbacks: Dict[str, Callable[[str], None]] = dict()
 
-    def media_compile_tasklist(self, lysrc_list):
+    def media_compile_tasklist(self, lysrc_list: List[LilySource]) -> Tuple[Dict, Dict]:
         """Create a list of media compile tasks"""
         unique_sounds = dict()
         unique_images = dict()
@@ -52,46 +56,46 @@ class BuildTarget(object):
 
         # Create media compile tasks for unique outputs
         sound_tasks = dict()
-        for signature, lysrc in unique_sounds.items():
+        for sound_signature, lysrc in unique_sounds.items():
             id_str = str(uuid.uuid4())
             lyfname = os.path.join(self.tmp_dir, id_str+".ly")
             with open(lyfname, "w") as lyout:
-                lyout.write(lysrc.str())
+                lyout.write(lysrc.__str__())
 
             lct = LilyCompileTask(lyfname, self.sound_formats,
                                   os.path.join(self.tmp_dir, id_str),
                                   os.path.join(self.sound_dir, id_str))
-            sound_tasks[signature] = lct
+            sound_tasks[sound_signature] = lct
             #LOGGER.debug(lct)
 
         image_tasks = dict()
-        for signature, lysrc in unique_images.items():
+        for image_signature, lysrc in unique_images.items():
             id_str = str(uuid.uuid4())
             lyfname = os.path.join(self.tmp_dir, id_str+".ly")
             with open(lyfname, "w") as lyout:
-                lyout.write(lysrc.str())
+                lyout.write(lysrc.__str__())
 
             lct = LilyCompileTask(lyfname, self.image_formats,
                                   os.path.join(self.tmp_dir, id_str),
                                   os.path.join(self.image_dir, id_str))
 
-            image_tasks[signature] = lct
+            image_tasks[image_signature] = lct
             #LOGGER.debug(lct)
 
         return sound_tasks, image_tasks
 
-    def include_images(self, orig_images):
+    def include_images(self, orig_images: Iterable[str]) -> None:
         """Default copy for static image files."""
         for fname in orig_images:
             shutil.copy(fname, self.image_dir)
 
-    def write(self, _):
+    def write(self, _) -> None:
         """Stub for writing out any DBs or fictures. Must be implemented
         by the child."""
         pass
 
     @staticmethod
-    def _get_choices(exer, shuffle=True):
+    def _get_choices(exer: Dict, shuffle: bool = True) -> List:
         """Return a list that contains both correct and incorrect choices"""
 
         # Mark which one is correct and which are false
@@ -104,4 +108,6 @@ class BuildTarget(object):
             random.shuffle(alts)
         return alts
 
-
+    def clean_fname(self, fname: str) -> str:
+        """Stub for modifying the filenames according to the target."""
+        return fname

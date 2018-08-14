@@ -7,6 +7,7 @@ import logging
 import os
 import random
 import re
+from typing import Callable, Generator, Dict, List, Optional, Set, Union
 import yaml
 
 from lilypond_source import get_random_transpose_key, LilySource
@@ -17,9 +18,11 @@ class ContentException(Exception):
     """Exception in handling content YAML files"""
     pass
 
-class Content(object):
+class Content():
     """Parse the content definitions."""
-    def __init__(self, lectures=None, fname_list=None):
+    def __init__(self,
+                 lectures: Optional[Set[str]] = None,
+                 fname_list: Optional[List[str]] = None) -> None:
         if not fname_list:
             # No lectures spesified, find all in default dir
             dname = os.path.join(
@@ -27,22 +30,21 @@ class Content(object):
                 "..", "content", "lectures")
             fname_list = [f for f in os.listdir(dname) if f.endswith(".yaml")]
 
-        self.index = []
+        self.index: List[Dict] = [] # should we have stricter typing?
         for fname in fname_list:
             with open(os.path.join(dname, fname), 'r') as ifh:
                 self.index.append(yaml.load(ifh))
 
         if lectures:
-            available_lectures = set([i["languages"]["en"]["Title"] for i in self.index])
+            available_lectures: Set[str] = {i["languages"]["en"]["Title"] for i in self.index}
             self.index = [i for i in self.index
                           if i["languages"]["en"]["Title"] in lectures]
 
-            if not len(self.index):
+            if not self.index:
                 LOGGER.critical(
                     "Lecture '%s' not found, choose one of %s", lectures,
                     sorted(available_lectures))
                 raise ContentException("Unknown lecture")
-            available_lectures = None # List not needed later
 
         for doc in self.index:
             if not "Exercises" in doc:
@@ -57,7 +59,7 @@ class Content(object):
                            "logo.svg", "logo-white.svg", "logo-gray.svg",
                            "fi.png", "gb.png"]]
 
-    def content2string(self):
+    def content2string(self) -> str:
         """Get a string representation of the content"""
         contstr = ""
         for doc in self.index:
@@ -76,7 +78,7 @@ class Content(object):
                 contstr += ', '.join([repr(c["notes"]) for c in exer["confusers"]]) +"\n"
         return contstr
 
-    def _generate_extra_rounds(self):
+    def _generate_extra_rounds(self) -> None:
         """Generate the transposed extra exercises if requested"""
         for doc in self.index:
             if "Rounds" in doc:
@@ -93,7 +95,7 @@ class Content(object):
             for eround in doc["Rounds"][roundskip:]:
                 tmp_exercises = copy.deepcopy(exercise_template)
                 if eround == "transpose random":
-                    transpose = "random"
+                    transpose: Union[bool, str] = "random"
                 else:
                     transpose = False
 
@@ -109,7 +111,7 @@ class Content(object):
                 doc["Exercises"].extend(tmp_exercises)
 
     @staticmethod
-    def _augment_missing_info(exer):
+    def _augment_missing_info(exer) -> None:
         """Fill in default values for the exercise, if missing"""
         if not "question_type" in exer or exer["question_type"] == "random":
             # Give audio question a 66% prob
@@ -126,9 +128,9 @@ class Content(object):
             #if not conf["lysrc"].instrument:
             conf["lysrc"].instrument = exer["lysrc"].instrument
 
-    def _expand_alternative_questions(self):
+    def _expand_alternative_questions(self) -> None:
         """Generate different permutations of a question if requested"""
-        def replace_media(orig, new):
+        def replace_media(orig: Dict, new: Dict) -> None:
             """Replace media info in orig with the info in new"""
             orig["lysrc"] = copy.deepcopy(new["lysrc"])
             orig["text"] = new["text"] if "text" in new else None
@@ -176,7 +178,7 @@ class Content(object):
                         perm["name"][lang] += " %d" % (i+1)
                     doc["Exercises"].append(perm)
 
-    def expand(self):
+    def expand(self) -> None:
         """Create all exercise rounds (repeats, transposes)."""
         self._generate_extra_rounds()
         for doc in self.index:
@@ -184,7 +186,7 @@ class Content(object):
                 self._augment_missing_info(exer)
         self._expand_alternative_questions()
 
-    def _convert_to_lilysource(self):
+    def _convert_to_lilysource(self) -> None:
         """Put the info needed for lilypond creation to LilySource object."""
         ly_var_keys = ["notes", "annotation", "tempo", "hidden_tempo",
                        "style", "instrument", "transpose"]
@@ -204,7 +206,7 @@ class Content(object):
             for ly_var in ly_var_keys:
                 del eresp[ly_var]
 
-    def get_questions_and_choices(self):
+    def get_questions_and_choices(self) -> Generator[Dict, None, None]:
         """List all items that need media resources"""
         for doc in self.index:
             for exer in doc["Exercises"]:
@@ -212,7 +214,10 @@ class Content(object):
                 for alt in exer["confusers"]:
                     yield alt
 
-    def insert_filenames(self, sound_tasks, image_tasks, fname_modfunc=None):
+    def insert_filenames(self,
+                         sound_tasks: Dict,
+                         image_tasks: Dict,
+                         fname_modfunc: Optional[Callable[[str], str]] = None) -> None:
         """Insert deduplicated media fnames into the lecture index."""
         fcl = fname_modfunc if fname_modfunc else lambda x: x
 

@@ -1,27 +1,30 @@
 #!/usr/bin/env python
+from __future__ import annotations
 
 import os
 import subprocess
 import xml.dom.minidom
 
+from typing import Tuple
+
 class SvgTransform:
-    def __init__(self, xml=None, inkscape_path="/usr/bin"):
+    def __init__(self, xml=None, inkscape_path: str = "/usr/bin") -> None:
         self.xml = xml
         self.fname = None
-        self.minx = None
-        self.miny = None
-        self.maxx = None
-        self.maxy = None
+        self.minx: float = -1
+        self.miny: float = -1
+        self.maxx: float = -1
+        self.maxy: float = -1
         self.inkscape_bin = os.path.join(inkscape_path, "inkscape")
 
-    def get_bounds(self, fname):
+    def get_bounds(self, fname: str) -> Tuple[float, float, float, float]:
         cmd = [self.inkscape_bin, "--without-gui", "--query-all", fname]
         #print (' '.join(cmd))
         proc = subprocess.Popen(cmd, stdout=subprocess.PIPE)
-        minx = 1000
-        maxx = 0
-        miny = 1000
-        maxy = 0
+        minx: float = 1000
+        maxx: float = 0
+        miny: float = 1000
+        maxy: float = 0
         for line in proc.stdout:
             _, a, b, c, d = line.decode('utf-8').split(',')
             x = float(a)
@@ -39,13 +42,13 @@ class SvgTransform:
         return minx/6.5, miny/6.5, maxx/5.9, maxy/5.9
 
     @classmethod
-    def init_from_file(cls, fname, inkscape_path="/opt/bin"):
+    def init_from_file(cls, fname: str, inkscape_path: str = "/opt/bin") -> SvgTransform:
         xmldoc = xml.dom.minidom.parse(fname)
         c = cls(xmldoc, inkscape_path)
         c.minx, c.miny, c.maxx, c.maxy = c.get_bounds(fname)
         return c
 
-    def crop(self):
+    def crop(self) -> None:
         doce = self.xml.getElementsByTagName("svg")[0]
         minx, miny, maxx, maxy = doce.getAttribute("viewBox").split()
         #width = float(doce.getAttribute("width")[:-2]) # remove "mm"
@@ -63,7 +66,7 @@ class SvgTransform:
         doce.setAttribute("width", "%.2f"% (6.5*(self.maxx-self.minx)))
         doce.setAttribute("height", "%.2f"% (6.5*(self.maxy-self.miny)))
 
-    def write(self, fname):
+    def write(self, fname: str) -> None:
         fout = open(fname, "w")
         fout.write(self.xml.toprettyxml())
         fout.close()
@@ -72,5 +75,3 @@ if __name__ == "__main__":
     st = SvgTransform.init_from_file("work/tmp.svg")
     st.crop()
     st.write("work/tmp-mod.svg")
-
-

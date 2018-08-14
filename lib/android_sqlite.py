@@ -5,6 +5,8 @@ import logging
 import os
 import sqlite3
 
+from typing import Dict
+
 LOGGER = logging.getLogger(__name__)
 
 TABLE_CREATE_COMMANDS = [
@@ -51,7 +53,7 @@ class AndroidSqlite():
     """Create a sqlite database for the exercises"""
     # We could probably use Django object mapper to do this with less code
 
-    def __init__(self, fname):
+    def __init__(self, fname: str) -> None:
         if os.path.isfile(fname):
             os.unlink(fname)
 
@@ -67,11 +69,11 @@ class AndroidSqlite():
         self.exercise_primary_key = 0
         self.choice_primary_key = 0
 
-    def __del__(self):
+    def __del__(self) -> None:
         """Close connection to make sure everything is written to db."""
         self.conn.close()
 
-    def insert_lecture(self, doc, ldoc, lang):
+    def insert_lecture(self, doc: Dict, ldoc: Dict, lang) -> int:
         """Insert lecture info into db"""
         self.lecture_primary_key += 1
         cursor = self.conn.cursor()
@@ -86,7 +88,7 @@ class AndroidSqlite():
         self.conn.commit()
         return self.lecture_primary_key
 
-    def insert_exercise(self, lec_key, lang, exer):
+    def insert_exercise(self, lec_key: int, lang: str, exer: Dict) -> int:
         """Insert exercise into db"""
         self.exercise_primary_key += 1
         cursor = self.conn.cursor()
@@ -100,7 +102,7 @@ class AndroidSqlite():
         self.conn.commit()
         return self.exercise_primary_key
 
-    def insert_choice(self, exer_key, answer_type, lang, alt):
+    def insert_choice(self, exer_key: int, answer_type: str, lang: str, alt: Dict) -> int:
         """Insert choice into db"""
         self.choice_primary_key += 1
         cursor = self.conn.cursor()
@@ -114,4 +116,3 @@ class AndroidSqlite():
         cursor.execute(cmd)
         self.conn.commit()
         return self.choice_primary_key
-

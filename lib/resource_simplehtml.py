@@ -6,6 +6,8 @@ import logging
 import os
 import re
 
+from typing import Dict, Optional
+
 from resource_base import BuildTarget
 
 LOGGER = logging.getLogger(__name__)
@@ -22,7 +24,7 @@ Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 class SimpleHtmlTarget(BuildTarget):
     """Create simple raw html pages for debugging."""
 
-    def __init__(self, htmlfile=None, mediadir=None):
+    def __init__(self, htmlfile: Optional[str] = None, mediadir: Optional[str] = None) -> None:
         basedir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "simple_html"))
         self.htmlfile = htmlfile if htmlfile else\
           os.path.join(basedir, "index.html")
@@ -32,18 +34,18 @@ class SimpleHtmlTarget(BuildTarget):
             mediadir, mediadir, sound_formats=set(["mp3", "ogg"]))
 
     @staticmethod
-    def clean_fname(fname):
+    def clean_fname(fname: str) -> str:
         """Fix the file names to be relative to the index.html"""
         return re.sub('^.*simple_html/', '', fname)
 
-    def write(self, content_index):
+    def write(self, content_index: Dict) -> None:
         """Write the web pages and the corresponding media"""
 
-        def image_str(fname):
+        def image_str(fname: str) -> str:
             """HTML string for showing the image"""
             return '<img src="%s"></img>' % fname
 
-        def audio_str(oggname, mp3name):
+        def audio_str(oggname: str, mp3name: str) -> str:
             """HTML string for playing the audio"""
             return """<audio controls="controls">
 <source src="%s" type="audio/ogg" />
