@@ -1,31 +1,22 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import i18n, include, url
+from django.contrib import admin
+from django.urls import path
+from django.views import static
 
 # For internationalization
-from django.views.i18n import javascript_catalog
+from django.views.i18n import JavaScriptCatalog
 
-js_info_dict = {
-    'packages': ('vesamusictraining.home.views.home',
-                 'vesamusictraining.exercise.views',),
-}
+from . import home, user, settings
 
-from django.contrib import admin
-admin.autodiscover()
-
-# porting to py3, why is this needed
-import sys, os
-sys.path.append(os.path.dirname(__file__))
-
-import settings
-
-urlpatterns = patterns('',
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', "vesamusictraining.home.views.home"),
-    url(r'^static/(?P<path>.*?)$', 'django.views.static.serve',
-        {'document_root': settings.STATIC_DIR, 'show_indexes': True}),
-    url(r'^accounts/', include('registration.backends.simple.urls')),
+urlpatterns = [
+    url('admin/', admin.site.urls),
+    path('', home.views.home, name="home_views_home"),
+    url(r'^static/(?P<path>.*?)$', static.serve,
+        {'document_root': settings.STATIC_DIR, 'show_indexes': True}, name="static_page"),
+    url(r'^accounts/', include('registration.backends.simple.urls'), name="accounts"),
     url(r'^exercise/', include('vesamusictraining.exercise.urls')),
     url(r'^news/', include('vesamusictraining.news.urls')),
-    url(r'^users/', "vesamusictraining.user.views.home"),
-    url(r'^i18n/', include('django.conf.urls.i18n')),
-    url(r'^jsi18n/$', javascript_catalog, js_info_dict),
-)
+    #url(r'^users/', user.views.home, name="vesamusictraining.user.views.home"),
+    path('i18n/', include('django.conf.urls.i18n')), #path('i18n/', i18n, name="django_i18n"),
+    path(r'jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog')
+]

@@ -16,7 +16,7 @@ class Lecture(models.Model):
         return "%s, version %s" % (self.title, self.version)
 
 class Exercise(models.Model):
-    lecture = models.ForeignKey(Lecture)
+    lecture = models.ForeignKey(Lecture, on_delete=models.CASCADE)
     language = models.CharField(max_length=10)
     title = models.CharField(max_length=200)
     text = models.CharField(max_length=200)
@@ -29,7 +29,7 @@ class Exercise(models.Model):
         return self.question_mp3
 
 class Choice(models.Model):
-    exercise = models.ForeignKey(Exercise)
+    exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
     answer_type = models.CharField(max_length=10)
     correct = models.BooleanField()
     image = models.CharField(max_length=200)
@@ -45,7 +45,7 @@ mp3: %s,
 ogg:%s""" %(repr(self.correct), self.image, self.mp3, self.ogg)
 
 class Log(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     time = models.DateTimeField(auto_now=True)
     entry = models.CharField(max_length=200)
 
@@ -53,7 +53,7 @@ class Log(models.Model):
         return "%s %s: %s" %(user, time, entry)
 
 class UserLecture(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     lecture_name = models.CharField(max_length=200)
     lecture_version = models.CharField(max_length=10)
     num_questions = models.PositiveSmallIntegerField()

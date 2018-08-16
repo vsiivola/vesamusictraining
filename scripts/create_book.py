@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Creates the media files and database fixtures for Vesa's
 Music Trainer."""
 

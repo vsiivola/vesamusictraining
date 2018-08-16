@@ -1,3 +1,4 @@
+
 """
 Django settings for vesamusictraining project.
 
@@ -34,10 +35,9 @@ INSTALLED_APPS = (
     'registration',
     'vesamusictraining.exercise',
     'vesamusictraining.news',
-    'south',
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -72,13 +72,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 STATIC_URL = '/static/'
-TEMPLATE_DIRS = os.path.join(BASE_DIR, "vesamusictraining", "template_html")
+TEMPLATES = [{
+    'BACKEND': 'django.template.backends.django.DjangoTemplates',
+    'APP_DIRS': True,
+    'DIRS': [os.path.join(BASE_DIR, "vesamusictraining", "template_html")],
+    'OPTIONS': {
+        'context_processors': [
+            'django.contrib.auth.context_processors.auth',
+            'django.template.context_processors.i18n',
+        ]
+    }}]
 STATIC_DIR = os.path.join(BASE_DIR, "vesamusictraining", "static")
-
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.contrib.auth.context_processors.auth',
-    'django.core.context_processors.i18n',
-    )
 
 ACCOUNT_ACTIVATION_DAYS = 7
 

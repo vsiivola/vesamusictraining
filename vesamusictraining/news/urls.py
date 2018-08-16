@@ -1,6 +1,9 @@
-from django.conf.urls import patterns, url, include
+from django.conf.urls import url, include
+from django.urls import path
 
-urlpatterns = patterns('vesamusictraining.news.views',
-                       url(r'^$', "show_news"),
-                       url(r'^list_news/(?P<lang>.*)$', "list_news"),
-                       )
+from . import views
+
+urlpatterns = [
+    path(r'', views.show_news, name="show_news"),
+    url(r'^list_news/(?P<lang>.*)$', views.list_news, name="list_news"),
+]
