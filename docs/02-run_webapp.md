@@ -33,9 +33,12 @@ pip3 install django pyyaml south dj-database-url dj-static django-registration d
 Follow the instructions in file 01-create_exercises.gmd to generate
 the database initialization files (fixtures). You can install the
 fixtures with
-```python3 manage.py migrate```
+```python3 manage.py loaddata vesamusictraining/exercise/fixtures/initial_data.yaml```
 
 By default, this will create a local sqlite database in a file.
+
+Migrate command should replace south?
+```python3 manage.py migrate```
 
 ## Compile the localization files
 
